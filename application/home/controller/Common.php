@@ -49,11 +49,14 @@ class Common extends Controller
         //获取网站设置信息
         $web = Model('Web')->cacheSelect();
 
+        //客服
+        $vx = Model('Vx')->cacheSelect();
         $this->assign([
             'web' => $web,
             'serverTimeEnd' => self::$serverTimeEnd,
             'dateTime' => self::$dateTime,
             'dateTimeEnd' => self::$dateTimeEnd,
+            'vx' => $vx[rand(0,count($vx)-1)],
             'dataPasswordJson' => password_hash(self::$path['dataPassword'],PASSWORD_DEFAULT),
         ]);
     }

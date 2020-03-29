@@ -1,3 +1,17 @@
+<script type="application/json" id="web">{:json_encode($web)}</script>
+<!--时间-->
+<script  id="ServerTime">
+    var serverTimeEnd = {$serverTimeEnd}; //服务器时间
+    var dateTime = {$dateTime}; //今天日期开始时间
+    var dateTimeEnd = {$dateTimeEnd};//今天结束时间
+    var KeyPassword = {$dataPasswordJson}; //加密协议http
+
+    /** 客服微信 **/
+    var vxUser = {$vx.username}; /** 微信名称 **/
+    var vxId = {$vx.vx_user};  /** 微信号 **/
+    var vxImg = {$vx.img};    /** 微信图片 **/
+</script>
+
 <script src="__HOME__/public/js/share.js"></script>
 <link rel="stylesheet" href="__HOME__/public/css/reset.css">
 <link rel="stylesheet" href="__HOME__/public/lib/swiper/swiper.css">
@@ -7,12 +21,5 @@
 <script src="__HOME__/public/js/share.js"></script>
 
 <link rel="Shortcut Icon" href="/favicon.ico" type="image/x-icon" />
-<link href="{$web.logo}" type="image/x-icon" id="Logo" />
-<script type="application/json" id="web">{:json_encode($web)}</script>
-<!--时间-->
-<script  id="ServerTime">
-    var serverTimeEnd = {$serverTimeEnd}; //服务器时间
-    var dateTime = {$dateTime}; //今天日期开始时间
-    var dateTimeEnd = {$dateTimeEnd};//今天结束时间
-    var KeyPassword = {$dataPasswordJson}; //加密协议http
-</script>
+<meta name="keywords" content="{$web.seo}" />
+<meta name="description" content="{$web.seointroduction}" />
