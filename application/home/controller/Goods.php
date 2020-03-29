@@ -20,6 +20,7 @@ class Goods extends Common
                 $goods = Model('Rushgoods')->cacheGoods($input['id'],$input['date_id'],$input['time_id']);
 
                 if($goods) {
+                    //
                     return view('',[
                         'goods' => $goods,
                         'comment' => Model('Comment')->cacheSelect(false,$input['id']),

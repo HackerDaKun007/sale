@@ -51,12 +51,16 @@ class Common extends Controller
 
         //客服
         $vx = Model('Vx')->cacheSelect();
+        $vxVal = '';
+        if(!empty($vx)) {
+            $vxVal = $vx[rand(0,count($vx)-1)];
+        }
         $this->assign([
             'web' => $web,
             'serverTimeEnd' => self::$serverTimeEnd,
             'dateTime' => self::$dateTime,
             'dateTimeEnd' => self::$dateTimeEnd,
-            'vx' => $vx[rand(0,count($vx)-1)],
+            'vx' => $vxVal,
             'dataPasswordJson' => password_hash(self::$path['dataPassword'],PASSWORD_DEFAULT),
         ]);
     }
