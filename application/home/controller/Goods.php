@@ -14,6 +14,19 @@ namespace app\home\controller;
 class Goods extends Common
 {
     public function goodsdetail() {
-        return view();
+        $input = self::$reques->get();
+        if(!empty($input['id']) && !empty($input['date_id']) && !empty($input['time_id'])) {
+            if(is_numeric($input['id']) && is_numeric($input['time_id']) && is_numeric($input['date_id']) ) {
+                $goods = Model('Rushgoods')->cacheGoods($input['id'],$input['date_id'],$input['time_id']);
+                if($goods) {
+                    return view('',[
+                        'goods' => Model('Rushgoods')->cacheGoods($input['id'],$input['date_id'],$input['time_id']),
+                        'comment' => Model('Comment')->cacheSelect(false,$input['id']),
+                    ]);
+                    exit;
+                }
+            }
+        }
+        require(self::$server404);
     }
 }

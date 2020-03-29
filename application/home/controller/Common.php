@@ -26,6 +26,8 @@ class Common extends Controller
     protected static $dateTimeEnd;  //获取今天结束时间
     protected static $serverTimeEnd;  //获取今天服务器时间
 
+    protected static $server404;  //获取今天服务器时间
+
     use App;
     public function __construct(Request $request,Config $config) {
         parent::__construct();
@@ -37,6 +39,9 @@ class Common extends Controller
         self::$serverTimeEnd = strtotime(date('Y-m-d H:i:s'));//获取服务器时间
         self::$dateTime = strtotime(date('Y-m-d'));//获取今天日期开始时间
         self::$dateTimeEnd = (self::$dateTime+60*60*24)-1;//获取今天结束时间
+
+        //404
+        self::$server404 = dirname(getcwd()).'/home_404.html';
 
         //用户信息
         self::userInfo();
