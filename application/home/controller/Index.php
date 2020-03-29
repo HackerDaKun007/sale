@@ -15,8 +15,6 @@ class Index extends Common
 {
     public function index() {
 
-        print_r(Model('Rushgoods')->cacheSelect(self::$dateTime));
-        exit;
         return view('',[
             'recogoods' => Model('Recogoods')->cacheDate(self::$dateTime), //获取今天推荐信息
             'rushgoods' => Model('Rushgoods')->cacheSelect(self::$dateTime), //获取今天抢购商品信息
