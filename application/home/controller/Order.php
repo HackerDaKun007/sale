@@ -101,15 +101,14 @@ class Order extends Common
 
                     }
                     //判断地址数据
-                    if($bool) {
-                        if(!$validate->scene('user')->check($data)) {
-                            $msg = $validate->getError();
-                        }else {
-                            $model = Model('Order')->add($data,$goods);
-                            $msg = $model['msg'];
-                            $code = $model['code'];
-                            $url = '/home/order/orderconfirm.html?id='.self::respass($model['data']);
-                        }
+                    if(!$validate->scene('user')->check($data)) {
+                        $msg = $validate->getError();
+                    }else {
+                        $data['user_id'] = self::$userId;
+                        $model = Model('Order')->add($data,$goods,$bool);
+                        $msg = $model['msg'];
+                        $code = $model['code'];
+                        $url = '/home/order/orderconfirm.html?id='.self::respass($model['data']);
                     }
                 }
             }

@@ -18,7 +18,7 @@ class Order extends Common {
     /**
      * 添加
      */
-    public function add($data,$goods) {
+    public function add($data,$goods,$bool) {
         $allow = ['ip','ipadder','user_id','payment','username','tel','area','adder','goods_id','goods_user','price','freight','order_status','express','express_number','order_number','user_back'];
         $timeR = strtotime(date('Ymd'));
         $times = strtotime(date('His'));
@@ -90,6 +90,10 @@ class Order extends Common {
                             };
                             $msg = '添加成功';
                             $code = 1;
+                            //是否要添加地址
+                            if(!$bool) {
+                                Model('Useraddress')->editAdd($data);
+                            }
                             self::commit();
                         }
                     }catch (Exception $e) {

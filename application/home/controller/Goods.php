@@ -23,6 +23,7 @@ class Goods extends Common
                     return view('',[
                         'goods' => $goods,
                         'comment' => Model('Comment')->cacheSelect(false,$input['id']),
+                        'favorite' => Model('Favorite')->userCache(self::$userId), //收藏
                     ]);
                     exit;
                 }
