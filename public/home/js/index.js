@@ -61,77 +61,18 @@ $(function () {
 			})
 		}
 	})
-	var nowTime = Math.floor(new Date().getTime() / 1000); //服务器现在时间
-	var endTime = 1585324799; // 服务器今天结束时间
+	var nowTime = serverTimeEnd; //服务器现在时间
+	var endTime = dateTimeEnd; // 服务器今天结束时间
+
+
 	// 插入数据
 	var goods = [];
-	goods = [{
-			id: 1,
-			total: 2500,
-			sold: 654,
-			price: 499,
-			oldPrice: 899,
-			title: '飞克正品全自动机械手表男士时尚潮流防水曲弧面超薄休闲真皮腕表',
-			name: '全自动机械表',
-			img: './temp-images/img2.jpeg',
-			start_time: 1585292400,
-			end_time: 1585295999
-		},
-		{
-			id: 2,
-			total: 12000,
-			sold: 4500,
-			price: 89,
-			oldPrice: 389,
-			title: '欧佩二裂酵母润养修护套盒冬季补水六件套',
-			name: '润养修护套盒',
-			img: './temp-images/img2_1.jpg',
-			start_time: 1585288800,
-			end_time: 1585292399
-		},
-		{
-			id: 3,
-			total: 65000,
-			sold: 61002,
-			price: 39.9,
-			oldPrice: 338,
-			title: '膜法世家黑面膜补水保湿清洁收缩毛孔面膜保湿补水学生女官方正品',
-			name: '黑面膜',
-			img: '//t00img.yangkeduo.com/goods/images/2020-03-13/2c4aad94-c6f6-4af0-8971-418bec91cc2c.jpg',
-			start_time: 1585299599,
-			end_time: 1585299599
-		},
-		{
-			id: 4,
-			total: 880000,
-			sold: 668002,
-			price: 14.9,
-			oldPrice: 78,
-			title: '贝斯迪维生素e软胶囊200粒可搭祛痘印斑美白疤痕产品',
-			name: '维生素e软胶囊',
-			img: '//t00img.yangkeduo.com/goods/images/2019-07-30/2ece5488-0e5f-4a9e-b36c-f28cba9abdf9.png',
-			start_time: 1585382400,
-			end_time: 1585396800
-		},
-		{
-			id: 5,
-			total: 7500,
-			sold: 1380,
-			price: 58,
-			oldPrice: 168,
-			title: '百雀羚套装正品 补水保湿 精萃惊喜礼盒 洁面水乳霜4件套装护肤品',
-			name: '百雀羚套装',
-			img: '//t00img.yangkeduo.com/goods/images/2020-02-27/20f95311-1486-4818-8c6f-d8199fd1577f.jpg',
-			start_time: 1585198800,
-			end_time: 1585223999
-		}
-	]
 	var scrollList = $('.scroll-list');
 
 	function getNewGoods() {
 		let scrollListHtml = '';
-		if (goods) {
-			let newGoodsArr = JSON.parse(JSON.stringify(goods));
+		if (recogoods) {
+			let newGoodsArr = JSON.parse(JSON.stringify(recogoods));
 			let goodsEnd = [];
 			newGoodsArr.sort(function (a, b) {
 				return a.end_time - b.end_time;
@@ -485,20 +426,21 @@ $(function () {
 		let activeSaleHtml = '';
 		let goodsArr = [];
 		let key = 0;
-		let newArr = JSON.parse(JSON.stringify(array[0].retu));
-		newArr.sort(function (a, b) {
-			return a.end_time - b.end_time;
-		});
-		if (newArr.length > 0) {
-			newArr.forEach(function (e, k) {
-				let bool = '';
-				if (e.start_time < time && e.end_time > time) {
-					startHtml = `<div class="sale-list"></div>`
-					activeStr = e.start_time;
-					activeEnd = e.end_time;
-					e.goods.map(function (i) {
-						soldPercent = Math.floor((i.sold / i.total) * 100) //换算成已售百分比
-						startListHtml += `
+		if (new Date(array.date * 1000).getDate() == new Date(nowTime * 1000).getDate()) {
+			let newArr = JSON.parse(JSON.stringify(array.rushtime));
+			newArr.sort(function (a, b) {
+				return a.end_time - b.end_time;
+			});
+			if (newArr.length > 0) {
+				newArr.forEach(function (e, k) {
+					let bool = '';
+					if (e.start_time < time && e.end_time > time) {
+						startHtml = `<div class="sale-list"></div>`
+						activeStr = e.start_time;
+						activeEnd = e.end_time;
+						e.goods.map(function (i) {
+							soldPercent = Math.floor((i.sold / i.total) * 100) //换算成已售百分比
+							startListHtml += `
 			  <a class="list-item" href="./goods/goodsdetail.html?goodsId=${i.id}">
 			  <img src='/temp-images/default.jpg' data-src=${i.img} alt="" />
 			  <div class="detail">
@@ -523,16 +465,16 @@ $(function () {
 			  </div>
 		  </a> 
 			  `;
-					})
-					key = k;
+						})
+						key = k;
 
-				}
-				if (e.end_time > time && activeEnd < e.end_time) {
-					if (k == key + 1) {
-						bool = 'active';
-						e.goods.map(function (i) {
-							soldPercent = Math.floor((i.sold / i.total) * 100) //换算成已售百分比
-							activeSaleHtml += `
+					}
+					if (e.end_time > time && activeEnd < e.end_time) {
+						if (k == key + 1) {
+							bool = 'active';
+							e.goods.map(function (i) {
+								soldPercent = Math.floor((i.sold / i.total) * 100) //换算成已售百分比
+								activeSaleHtml += `
 				  <a class="list-item" href="./goods/goodsdetail.html?goodsId=${i.id}">
 				  <img src="/temp-images/default.jpg" data-src=${i.img} alt="" />
 				  <div class="detail">
@@ -557,35 +499,36 @@ $(function () {
 				  </div>
 			  </a> 
 				  `;
-						
-						})
+
+							})
+						}
+						categoryTimeHtml += `<li class="item ${bool}">${e.username}</li>`;
+						notstartHtml += `<div class="sale-list ${bool}"></div>`;
+						goodsArr.push(e.goods);
 					}
-					categoryTimeHtml += `<li class="item ${bool}">${e.username}</li>`;
-					notstartHtml += `<div class="sale-list ${bool}"></div>`;	
-					goodsArr.push(e.goods);
+				})
+
+				if (goodsArr.length < 1) {
+					notstartHtml = `<div class="nocontent">
+				<p>活动尚未开始</p>
+				</div>`;
 				}
-			})
-				
-			if (goodsArr.length < 1) {
-				notstartHtml = `<div class="nocontent">
+				if (activeEnd == 0) {
+					startHtml = `<div class="nocontent">
 				<p>活动尚未开始</p>
 				</div>`;
+				}
 			}
-			if (activeEnd == 0) {
-				startHtml = `<div class="nocontent">
-				<p>活动尚未开始</p>
-				</div>`;
-			}
+			categoryTimesList.html(categoryTimeHtml);
+			notstart.html(notstartHtml);
+			start.html(startHtml);
+
+			let startList = $('.sale.start .sale-list');
+			startList.append(startListHtml);
+
+			let activeSale = $('.notstart.sale .sale-list.active');
+			activeSale.append(activeSaleHtml);
 		}
-		categoryTimesList.html(categoryTimeHtml);
-		notstart.html(notstartHtml);
-		start.html(startHtml);
-
-		let startList = $('.sale.start .sale-list');
-		startList.append(startListHtml);
-
-		let activeSale = $('.notstart.sale .sale-list.active');
-		activeSale.append(activeSaleHtml);
 
 		return {
 			activeStr: activeStr,
@@ -593,7 +536,7 @@ $(function () {
 			goodsArr: goodsArr,
 		};
 	}
-	var jus = getArray(array, nowTime);
+	var jus = getArray(rushgoods, nowTime);
 	var activeStr = jus.activeStr;
 	var activeEnd = jus.activeEnd;
 	var goodsArr = jus.goodsArr;
@@ -664,9 +607,10 @@ $(function () {
 
 	var num = 0;
 	var numb = nowTime + num;
+	var intervalTimer;
 	countDown(num, nowTime, activeEnd, topTimer);
 
-	setInterval(function () {
+	intervalTimer = setInterval(function () {
 		num++;
 		numb = nowTime + num;
 		reload(numb);
@@ -689,9 +633,8 @@ $(function () {
 		//如果当前时间大于今日结束时间，强制刷新页面
 		if (endTime < num) {
 			window.location.reload(true);
-			console.log('reload');
-			
 			return false;
+
 		}
 		// 即将开始栏目的到点触发
 		else if (activeEnd < num && activeStr < num) {
