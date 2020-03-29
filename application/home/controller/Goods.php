@@ -32,5 +32,7 @@ class Goods extends Common
     }
 
     //更新收藏
-    public function
+    public function favorite() {
+
+    }
 }
