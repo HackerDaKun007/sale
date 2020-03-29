@@ -150,6 +150,7 @@ $(function () {
 	var paymentHtml = '';
 	var selectGoodsValueHtml = '';
 	var selectGoodsInfoHtml = '';
+	var promotionHtml = '';
 	var goodsEndTime = 0;
 	var nowTime = Math.floor(new Date().getTime() / 1000); //服务器现在时间
 	goods.forEach(function (e) {

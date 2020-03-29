@@ -66,12 +66,12 @@ $(function () {
 
 
 	// 插入数据
-	var goods = [];
 	var scrollList = $('.scroll-list');
-
+	
 	function getNewGoods() {
 		let scrollListHtml = '';
-		if (recogoods) {
+		
+		if (recogoods) {			
 			let newGoodsArr = JSON.parse(JSON.stringify(recogoods));
 			let goodsEnd = [];
 			newGoodsArr.sort(function (a, b) {
@@ -81,6 +81,7 @@ $(function () {
 				let dayInfo = 0;
 				let title = '';
 				if (e.start_time < endTime && e.end_time > nowTime) {
+					console.log(recogoods);
 					title = '距结束还剩';
 					goodsEnd.push(e.end_time);
 					scrollListHtml += `
@@ -93,12 +94,12 @@ $(function () {
 						</div>
 						<div class="goods-desc">
 							<div class="goods-img">
-								<img src="${e.img}" alt="">
+								<img src="${e.home_img}" alt="">
 							</div>
 							<div class="goods-detail">
-								<div class="price">￥<span>${e.price}</span></div>
-								<div class="name">${e.name}</div>
-								<div class="tips">已抢${e.sold}件</div>
+								<div class="price">￥<span>${e.price_val}</span></div>
+								<div class="name">${e.title}</div>
+								<div class="tips">已抢${e.num_back - e.num}件</div>
 							</div>
 						</div>
 					</a>
@@ -108,18 +109,18 @@ $(function () {
 					dayInfo = new Date(e.start_time * 1000).getDate() - new Date().getDate();
 
 					scrollListHtml += `
-					<a class="item" href="./goods/goodsdetail.html?id=${e.id}">
+					<a class="item" href="./goods/goodsdetail.html?id=${e.goods_id}&date_id=${e.rushdate_id}&time_id=${e.rushtime_id}">
 						<div class="timer">
 							<div>${title}</div>
 							<span>${dayInfo}天</span>
 						</div>
 						<div class="goods-desc">
 							<div class="goods-img">
-								<img src="${e.img}" alt="">
+								<img src="${e.home_img}" alt="">
 							</div>
 							<div class="goods-detail">
-								<div class="price">￥<span>${e.price}</span></div>
-								<div class="name">${e.name}</div>
+								<div class="price">￥<span>${e.price_val}</span></div>
+								<div class="name">${e.title}</div>
 								<div class="tips">即将开始</div>
 							</div>
 						</div>
@@ -128,6 +129,7 @@ $(function () {
 				}
 			})
 			scrollList.append(scrollListHtml);
+
 			return {
 				goodsEnd
 			};
@@ -135,281 +137,8 @@ $(function () {
 	}
 	let a = getNewGoods();
 	let goodsEnd = a.goodsEnd;
-
-	var array = [{
-		'date': '1584979200',
-		'id': 123,
-		'retu': [{
-				'id': 1,
-				start_time: 1585292400,
-				end_time: 1585295999,
-				username: '15:00',
-				goods: [{
-						id: 1,
-						total: 2500,
-						sold: 654,
-						price: 499,
-						oldPrice: 899,
-						title: '飞克正品全自动机械手表男士时尚潮流防水曲弧面超薄休闲真皮腕表',
-						name: '全自动机械表',
-						img: './temp-images/img2.jpeg'
-					},
-					{
-						id: 2,
-						total: 12000,
-						sold: 4500,
-						price: 89,
-						oldPrice: 389,
-						title: '欧佩二裂酵母润养修护套盒冬季补水六件套',
-						name: '润养修护套盒',
-						img: './temp-images/img2_1.jpg'
-					},
-					{
-						id: 3,
-						total: 65000,
-						sold: 61002,
-						price: 39.9,
-						oldPrice: 338,
-						title: '膜法世家黑面膜补水保湿清洁收缩毛孔面膜保湿补水学生女官方正品',
-						name: '黑面膜',
-						img: '//t00img.yangkeduo.com/goods/images/2020-03-13/2c4aad94-c6f6-4af0-8971-418bec91cc2c.jpg'
-					},
-					{
-						id: 4,
-						total: 880000,
-						sold: 668002,
-						price: 14.9,
-						oldPrice: 78,
-						title: '贝斯迪维生素e软胶囊200粒可搭祛痘印斑美白疤痕产品',
-						name: '维生素e软胶囊',
-						img: '//t00img.yangkeduo.com/goods/images/2019-07-30/2ece5488-0e5f-4a9e-b36c-f28cba9abdf9.png'
-					},
-					{
-						id: 5,
-						total: 7500,
-						sold: 1380,
-						price: 58,
-						oldPrice: 168,
-						title: '百雀羚套装正品 补水保湿 精萃惊喜礼盒 洁面水乳霜4件套装护肤品',
-						name: '百雀羚套装',
-						img: '//t00img.yangkeduo.com/goods/images/2020-02-27/20f95311-1486-4818-8c6f-d8199fd1577f.jpg'
-					}
-				]
-			},
-			{
-				'id': 1,
-				start_time: 1585288800,
-				end_time: 1585292399,
-				username: '14:00',
-				goods: [{
-						id: 1,
-						total: 2500,
-						sold: 654,
-						price: 499,
-						oldPrice: 899,
-						title: '飞克正品全自动机械手表男士时尚潮流防水曲弧面超薄休闲真皮腕表',
-						name: '全自动机械表',
-						img: './temp-images/img2.jpeg'
-					},
-					{
-						id: 2,
-						total: 12000,
-						sold: 4500,
-						price: 89,
-						oldPrice: 389,
-						title: '欧佩二裂酵母润养修护套盒冬季补水六件套',
-						name: '润养修护套盒',
-						img: './temp-images/img2_1.jpg'
-					},
-					{
-						id: 3,
-						total: 65000,
-						sold: 61002,
-						price: 39.9,
-						oldPrice: 338,
-						title: '膜法世家黑面膜补水保湿清洁收缩毛孔面膜保湿补水学生女官方正品',
-						name: '黑面膜',
-						img: '//t00img.yangkeduo.com/goods/images/2020-03-13/2c4aad94-c6f6-4af0-8971-418bec91cc2c.jpg'
-					},
-					{
-						id: 4,
-						total: 880000,
-						sold: 668002,
-						price: 14.9,
-						oldPrice: 78,
-						title: '贝斯迪维生素e软胶囊200粒可搭祛痘印斑美白疤痕产品',
-						name: '维生素e软胶囊',
-						img: '//t00img.yangkeduo.com/goods/images/2019-07-30/2ece5488-0e5f-4a9e-b36c-f28cba9abdf9.png'
-					},
-					{
-						id: 5,
-						total: 7500,
-						sold: 1380,
-						price: 58,
-						oldPrice: 168,
-						title: '百雀羚套装正品 补水保湿 精萃惊喜礼盒 洁面水乳霜4件套装护肤品',
-						name: '百雀羚套装',
-						img: '//t00img.yangkeduo.com/goods/images/2020-02-27/20f95311-1486-4818-8c6f-d8199fd1577f.jpg'
-					},
-					{
-						id: 2,
-						total: 12000,
-						sold: 4500,
-						price: 89,
-						oldPrice: 389,
-						title: '欧佩二裂酵母润养修护套盒冬季补水六件套',
-						name: '润养修护套盒',
-						img: './temp-images/img2_1.jpg'
-					},
-				]
-			},
-			{
-				'id': 1,
-				'start_time': 1585285200,
-				end_time: 1585288799,
-				username: '13:00',
-				goods: [{
-						id: 3,
-						total: 65000,
-						sold: 61002,
-						price: 39.9,
-						oldPrice: 338,
-						title: '膜法世家黑面膜补水保湿清洁收缩毛孔面膜保湿补水学生女官方正品',
-						name: '黑面膜',
-						img: '//t00img.yangkeduo.com/goods/images/2020-03-13/2c4aad94-c6f6-4af0-8971-418bec91cc2c.jpg'
-					},
-					{
-						id: 1,
-						total: 2500,
-						sold: 654,
-						price: 499,
-						oldPrice: 899,
-						title: '飞克正品全自动机械手表男士时尚潮流防水曲弧面超薄休闲真皮腕表',
-						name: '全自动机械表',
-						img: './temp-images/img2.jpeg'
-					},
-				]
-			},
-			{
-				'id': 1,
-				'start_time': 1585224000,
-				end_time: 1585227599,
-				username: '20:00',
-				goods: [{
-						id: 2,
-						total: 12000,
-						sold: 4500,
-						price: 89,
-						oldPrice: 389,
-						title: '欧佩二裂酵母润养修护套盒冬季补水六件套',
-						name: '润养修护套盒',
-						img: './temp-images/img2_1.jpg'
-					},
-					{
-						id: 5,
-						total: 7500,
-						sold: 1380,
-						price: 58,
-						oldPrice: 168,
-						title: '百雀羚套装正品 补水保湿 精萃惊喜礼盒 洁面水乳霜4件套装护肤品',
-						name: '百雀羚套装',
-						img: '//t00img.yangkeduo.com/goods/images/2020-02-27/20f95311-1486-4818-8c6f-d8199fd1577f.jpg'
-					}
-				]
-			},
-			{
-				'id': 1,
-				'start_time': 1585227600,
-				end_time: 1585231199,
-				username: '21:00',
-				goods: [{
-						id: 1,
-						total: 2500,
-						sold: 654,
-						price: 499,
-						oldPrice: 899,
-						title: '飞克正品全自动机械手表男士时尚潮流防水曲弧面超薄休闲真皮腕表',
-						name: '全自动机械表',
-						img: './temp-images/img2.jpeg'
-					},
-					{
-						id: 2,
-						total: 12000,
-						sold: 4500,
-						price: 89,
-						oldPrice: 389,
-						title: '欧佩二裂酵母润养修护套盒冬季补水六件套',
-						name: '润养修护套盒',
-						img: './temp-images/img2_1.jpg'
-					},
-					{
-						id: 1,
-						total: 2500,
-						sold: 654,
-						price: 499,
-						oldPrice: 899,
-						title: '飞克正品全自动机械手表男士时尚潮流防水曲弧面超薄休闲真皮腕表',
-						name: '全自动机械表',
-						img: './temp-images/img2.jpeg'
-					},
-				]
-			},
-			{
-				'id': 1,
-				'start_time': 1585206000,
-				end_time: 1585209599,
-				username: '15:00',
-				goods: [{
-						id: 2,
-						total: 12000,
-						sold: 4500,
-						price: 89,
-						oldPrice: 389,
-						title: '欧佩二裂酵母润养修护套盒冬季补水六件套',
-						name: '润养修护套盒',
-						img: './temp-images/img2_1.jpg'
-					},
-					{
-						id: 1,
-						total: 2500,
-						sold: 654,
-						price: 499,
-						oldPrice: 899,
-						title: '飞克正品全自动机械手表男士时尚潮流防水曲弧面超薄休闲真皮腕表',
-						name: '全自动机械表',
-						img: './temp-images/img2.jpeg'
-					},
-				]
-			},
-			{
-				'id': 1,
-				'start_time': 1585209600,
-				end_time: 1585213199,
-				username: '16:00',
-				goods: [{
-						id: 3,
-						total: 65000,
-						sold: 61002,
-						price: 39.9,
-						oldPrice: 338,
-						title: '膜法世家黑面膜补水保湿清洁收缩毛孔面膜保湿补水学生女官方正品',
-						name: '黑面膜',
-						img: '//t00img.yangkeduo.com/goods/images/2020-03-13/2c4aad94-c6f6-4af0-8971-418bec91cc2c.jpg'
-					},
-					{
-						id: 1,
-						total: 2500,
-						sold: 654,
-						price: 499,
-						oldPrice: 899,
-						title: '飞克正品全自动机械手表男士时尚潮流防水曲弧面超薄休闲真皮腕表',
-						name: '全自动机械表',
-						img: './temp-images/img2.jpeg'
-					},
-				]
-			},
-		]
-	}];
+	console.log(goodsEnd);
+	
 
 	// 判断在当前小时内的数据并插入HTML中
 	var categoryTimesList = $('.category .list');
@@ -426,7 +155,8 @@ $(function () {
 		let activeSaleHtml = '';
 		let goodsArr = [];
 		let key = 0;
-		if (new Date(array.date * 1000).getDate() == new Date(nowTime * 1000).getDate()) {
+
+		if (new Date(array.date * 1000).getDate() == new Date(nowTime * 1000).getDate() && array.date < nowTime) {
 			let newArr = JSON.parse(JSON.stringify(array.rushtime));
 			newArr.sort(function (a, b) {
 				return a.end_time - b.end_time;
@@ -439,25 +169,25 @@ $(function () {
 						activeStr = e.start_time;
 						activeEnd = e.end_time;
 						e.goods.map(function (i) {
-							soldPercent = Math.floor((i.sold / i.total) * 100) //换算成已售百分比
+							soldPercent = Math.floor(((i.num_back- i.num) / i.num_back) * 100) //换算成已售百分比
 							startListHtml += `
-			  <a class="list-item" href="./goods/goodsdetail.html?goodsId=${i.id}">
-			  <img src='/temp-images/default.jpg' data-src=${i.img} alt="" />
+			  <a class="list-item" href="./goods/goodsdetail.html?id=${i.goods_id}&date_id=${i.rushdate_id}&time_id=${i.rushtime_id}">
+			  <img src='/temp-images/default.jpg' data-src=${i.home_img} alt="" />
 			  <div class="detail">
-				  <div class="sale-top">
-					  <div class="name">${i.title}</div>
+				  <div class="sale-top">F
+					  <div class="name">${i.username}</div>
 					  <div class="sale-progress">
 						  <span class="progress-bar" style="--progressWidth:${
 							soldPercent <= 5 ? 5 : soldPercent
 						  }%" data-percent="${soldPercent}%"></span>
-						  <div class="sold">已抢${i.sold}件</div>
+						  <div class="sold">已抢${i.num_back - num}件</div>
 					  </div>
 				  </div>
 				  <div class="sale-bottom">
 					  <div class="price">
-						  <div class="now-price">￥<span>${i.price}</span></div>
+						  <div class="now-price">￥<span>${i.price_val}</span></div>
 						  <div class="old-price">￥<span>${
-							i.oldPrice
+							i.orprice_val
 						  }</span></div>
 					  </div>
 					  <div class="sale-btn">马上抢<i class="iconfont icon-right"></i></div>
@@ -618,7 +348,7 @@ $(function () {
 	}, 1000);
 
 	goodsEnd.forEach(function (e, k) {
-		goods.forEach(function (sube) {
+		recogoods.forEach(function (sube) {
 			if (sube.end_time == e) {
 				let nTimer = recomTimer.eq(k);
 				countDown(num, nowTime, e, nTimer);
@@ -634,11 +364,10 @@ $(function () {
 		if (endTime < num) {
 			window.location.reload(true);
 			return false;
-
 		}
 		// 即将开始栏目的到点触发
 		else if (activeEnd < num && activeStr < num) {
-			let jus = getArray(array, num);
+			let jus = getArray(rushgoods, num);
 			if (jus.activeStr != 0 && jus.activeEnd != 0) {
 				activeStr = jus.activeStr;
 				activeEnd = jus.activeEnd;
