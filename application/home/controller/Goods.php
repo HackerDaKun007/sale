@@ -30,4 +30,7 @@ class Goods extends Common
         }
         require(self::$server404);
     }
+
+    //更新收藏
+    public function
 }
