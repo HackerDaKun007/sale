@@ -4,12 +4,14 @@
     var serverTimeEnd = {$serverTimeEnd}; //服务器时间
     var dateTime = {$dateTime}; //今天日期开始时间
     var dateTimeEnd = {$dateTimeEnd};//今天结束时间
-    var KeyPassword = {$dataPasswordJson}; //加密协议http
+    var KeyPassword = "{$dataPasswordJson}"; //加密协议http
 
     /** 客服微信 **/
-    var vxUser = {$vx.username}; /** 微信名称 **/
-    var vxId = {$vx.vx_user};  /** 微信号 **/
-    var vxImg = {$vx.img};    /** 微信图片 **/
+    {if $vx}
+    var vxUser = "{$vx.username}"; /** 微信名称 **/
+    var vxId = "{$vx.vx_user}";  /** 微信号 **/
+    var vxImg = "{$vx.img}";    /** 微信图片 **/
+    {/if}
 </script>
 
 <script src="__HOME__/public/js/share.js"></script>
