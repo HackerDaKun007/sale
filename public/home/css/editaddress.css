@@ -1,0 +1,79 @@
+/* header */
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 3rem;
+    max-width: 414px;
+    min-width: 320px;
+    margin: 0 auto;
+    background-color: #fff;
+    display: flex;
+    border-bottom: 1px solid #f6f6f6 ;
+    z-index: 10;
+}
+.header .header-bar {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+}
+.header .header-bar button.icon-right {
+    transform: rotate(180deg);
+    font-size: 1.5rem;
+}
+.header .page-title {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate3d(-50%, -50%,0);
+}
+.header .del-btn {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translate3d(-5%, -50%,0);
+    color: #777;
+    font-size: 0.8rem;
+}
+/* form */
+.address-form{
+    display: flex;
+    flex-direction: column;
+    margin-top: 3.2rem;
+}
+
+.form-item {
+    /* margin-bottom: 10px; */
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+}
+
+.form-item label {
+    width: 30%;
+}
+
+.form-item input {
+    width: 70%;
+}
+.for, ::-webkit-input-placeholder {
+    font-size: 0.9rem;
+}
+
+/* confirm-btn */
+.confirm-btn {
+    margin: 3rem auto;
+    width: 92%;
+    border-radius: 4px;
+    padding: 10px;
+    color: #fff;
+    background-color: #ee2d2d;
+  }
+  

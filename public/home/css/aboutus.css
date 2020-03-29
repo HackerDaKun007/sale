@@ -1,0 +1,30 @@
+.main {
+    margin-top: 3rem;
+    overflow-y: scroll;
+    background-color: #fff;
+    padding: 15px;
+}
+.main h3 {
+    text-align: center;
+    padding: 15px 10px 0px;
+}
+.main div {
+    padding: 15px;
+}
+.main ul li {
+    margin-top: 15px;
+}
+.main ul li p.text{
+    font-size: 0.9rem;
+    line-height: 1.7;
+    padding-top: 5px;
+    color: #666;
+}
+.main ul li p span {
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+    padding-top: 3px;
+    color: #666;
+}

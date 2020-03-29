@@ -11,10 +11,12 @@
 // | 前台首页
 // +----------------------------------------------------------------------
 namespace app\home\controller;
-use think\Controller;
-class Index extends Controller
+class Index extends Common
 {
     public function index() {
+
+        //获取今天推荐信息
+        
         return view();
     }
 }

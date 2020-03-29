@@ -1,0 +1,83 @@
+/* header */
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 3rem;
+    max-width: 414px;
+    min-width: 320px;
+    margin: 0 auto;
+    background-color: #fff;
+    display: flex;
+    border-bottom: 1px solid #f6f6f6 ;
+    z-index: 10;
+}
+.header .header-bar {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+}
+.header .header-bar button.icon-right {
+    transform: rotate(180deg);
+    font-size: 1.5rem;
+}
+.header .page-title {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate3d(-50%, -50%,0);
+}
+.add-btn {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    transform: translate3d(-5%, -50%,0);
+    color: #333;
+    font-size: 0.8rem;
+}
+/* address-list */
+.address-list {
+    margin-top: 3.2rem;
+}
+.address-list .address-item {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 15px;
+}
+.first-word {
+    background-color: #aaa;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 1.2rem;
+}
+.address-detail {
+    flex: 1;
+    margin: 0 10px 0 15px;
+}
+.address-detail .name {
+    font-size: 1rem;
+}
+.address-detail .telnum {
+    font-size: 0.8rem;
+    color: #999;
+}
+.address-detail .address {
+    font-size: 0.9rem;
+    padding-top: 3px;
+}
+.address-item .edit {
+    color: #999;
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    border-left: 1px solid #eee;
+
+}

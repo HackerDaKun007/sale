@@ -1,0 +1,69 @@
+.main {
+  margin-top: 3rem; 
+}
+/* form */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.form-item {
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 15px 10px;
+  border-bottom: 1px solid #eee;
+}
+.form-item label {
+  width: 30%;
+}
+.form-item input {
+  width: 70%;
+}
+.form-item .verify-bar {
+  width: 70%;
+  display: flex;
+}
+.form-item .verify-bar input {
+  width: 100px;
+}
+.form-item .verify-bar img {
+  width: 80px;
+  height: 100%;
+  margin-left: 10px;
+}
+
+/* confirm-btn */
+.confirm-btn {
+  margin: 3rem auto;
+  width: 92%;
+  border-radius: 4px;
+  padding: 10px;
+  color: #fff;
+  background-color: #ee2d2d;
+}
+
+/* edit gender */
+.gender {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.gender input[type="radio"] {
+  opacity: 0;
+}
+.gender i.icon-check {
+  color: #ee2d2d;
+  font-size: 1.5rem;
+  opacity: 0;
+  visibility: hidden;
+}
+.gender input[type="radio"]:disabled + i.icon-check {
+  opacity: 0;
+  visibility: hidden;
+}
+.gender input[type="radio"]:checked + i.icon-check {
+  opacity: 1;
+  visibility: visible;
+}

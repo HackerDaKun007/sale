@@ -1,0 +1,108 @@
+.main {
+  margin-top: 3rem;
+}
+.change-user {
+  /* position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0; */
+  height: 3rem;
+  /* max-width: 414px;
+  min-width: 320px; */
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  background-color: #fff;
+  font-size: 1.2rem;
+}
+
+/* client-info */
+.client-info {
+  margin-top: 5px;
+  padding: 10px;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+}
+.client-info .avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  margin-right: 20px;
+  display: flex;
+  background-color: #fff;
+  align-items: center;
+  justify-content: center;
+}
+.client-info .avatar img{
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+}
+.client-info .client-name {
+  font-size: 1.2rem;
+}
+.client-info .client-name .id{
+  color: #555;
+  margin-top: 2px;
+  font-size: 0.8rem;
+}
+
+/* tips */
+#tips {
+  color: #fff;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.3);
+  text-align: center;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.manage-list .pass-item #initial-pass {
+  display: flex;
+  align-items: center;
+}
+
+.manage-list .pass-item #initial-pass .pass {
+  flex: 1;
+  text-align: center;
+  color: #999;
+}
+
+.manage-list .list-item,
+.manage-list .pass-item {
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+
+.manage-list .list-item .item,
+.manage-list .pass-item .item {
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.manage-list .item i.icon-right {
+  font-size: 1.4rem;
+  color: #999;
+}
+
+.change-user {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 414px;
+  min-width: 320px;
+  width: 100%;
+  color: #ececec;
+  background-color: #ee2d2d;
+}

@@ -1,0 +1,43 @@
+.main {
+  margin-top: 2.6rem;
+}
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.form-item {
+  /* margin-bottom: 10px; */
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 15px 10px;
+  border-bottom: 1px solid #eee;
+}
+.form-item input {
+  margin-left: 20px;
+  flex: 1;
+}
+
+.form-item .verify-bar {
+  width: 70%;
+  display: flex;
+}
+.form-item .verify-bar input {
+  width: 100px;
+}
+.form-item .verify-bar img {
+  width: 80px;
+  height: 100%;
+  margin-left: 10px;
+}
+/* confirm-btn */
+.confirm-btn {
+  margin: 3rem auto;
+  width: 98%;
+  border-radius: 4px;
+  padding: 10px;
+  color: #ececec;
+  background-color: #ee2d2d;
+}

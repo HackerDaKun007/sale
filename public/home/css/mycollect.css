@@ -1,0 +1,42 @@
+
+/*  */
+.wrapper ul {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 3.2rem;
+}
+.wrapper ul li{
+    border-radius: 4px;
+    padding: 5px;
+    width: 32.33%;
+    background-color: #fff;
+    /* margin: 5px 0 5px 5px; */
+    margin-right: 1.5%;
+    margin-bottom: 1.5%;
+    box-shadow: 1px 1px 0px rgba(0,0,0,0.1);
+}
+.wrapper ul li:nth-of-type(3n) {
+    margin-right: 0;
+}
+.wrapper ul li img {
+    width: 100%;
+}
+.wrapper ul li .price span{
+    color: #f00;
+}
+.wrapper ul li .price span:nth-child(2) {
+    font-size: 0.8rem;
+    color: #999;
+    text-decoration: line-through;
+    /* font-style: italic; */
+}
+
+@media (width: 320px) {
+    .wrapper ul li .price span {
+        font-size: 0.65rem;
+    }
+    .wrapper ul li .price span:nth-child(2) {
+        font-size: 0.5rem;
+    }
+}

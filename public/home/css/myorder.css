@@ -1,0 +1,120 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+}
+/* header */
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 3rem;
+    max-width: 414px;
+    min-width: 320px;
+    margin: 0 auto;
+    background-color: #fff;
+    display: flex;
+    border-bottom: 1px solid #f6f6f6 ;
+    z-index: 10;
+}
+.header .header-bar {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 10px;
+}
+.header .header-bar button.icon-right {
+    transform: rotate(180deg);
+    font-size: 1.5rem;
+}
+.header .page-title {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate3d(-50%, -50%,0);
+}
+
+/* order-nav */
+.order-nav {
+    position: fixed;
+    top: 3rem;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 414px;
+    min-width: 320px;
+    margin: 0 auto;
+    background-color: #fff;
+    z-index: 10;
+}
+.order-nav ul{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 5px;
+}
+.order-nav ul li {
+    padding: 5px;
+    cursor: pointer;
+}
+.order-nav ul li.active {
+    color: #f00;
+    border-bottom: 1px solid #f00;
+}
+
+.main {
+    overflow-y: scroll;
+    margin-top: 5.8rem;
+}
+/* order-list */
+.order-list {
+    /* display: flex; */
+    align-items: center;
+    flex-direction: column;
+    display: none;
+}
+.order-list.active{
+    display: flex;
+}
+.order-list .list-item a{
+    padding: 10px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    background-color: #fff;
+}
+.order-list .list-item img {
+    width: 30%;
+    border-radius: 4px;
+}
+.order-list .list-item .order-info {
+    flex: 1;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.order-list .list-item .order-info .name {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    font-size: 0.9rem;
+}
+.order-list .list-item .order-info .price{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #999;
+    padding: 5px 0;
+    width: 100%;
+}
+
+.order-list .list-item .order-info .tips {
+    color: #f00;
+    font-size: 0.9rem;
+}

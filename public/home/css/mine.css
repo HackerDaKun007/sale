@@ -1,0 +1,110 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* background-color: #fefefe; */
+}
+
+/* header */
+.header {
+    padding: 0 20px;
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #222;
+    background: #fff;  
+    margin-bottom: 10px;
+    box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+}
+.header .client-info {
+    display: flex;
+    align-items: center;
+}
+.header .client-info .avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    margin-right: 20px;
+    display: flex;
+    background-color: #fff;
+    align-items: center;
+    justify-content: center;
+}
+.header .client-info .avatar img{
+    width: 100%;
+    height: 100%;
+    border-radius: 100%;
+}
+.header .client-info .client-name {
+    font-size: 1.2rem;
+}
+
+.header .edit-btn {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+}
+.header .edit-btn i.icon-xitong {
+    font-size: 1.8rem;
+    color: #aaa;
+}
+
+/* main */
+.main a {
+  color: #000;
+}
+.service-bar {
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+.service-bar .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 10px;
+}
+.service-bar .head .check-more {
+    color: #999;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+.service-bar .head .check-more .i.icon-right{
+    font-size: 1rem;
+}
+
+.service-bar .bar-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+.service-bar .bar-list .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.8rem;
+    color: #555;
+}
+.service-bar .bar-list .item i.iconfont{
+    font-size: 2rem;
+    /* color: red; */
+}
+
+.service-list {
+  background-color: #fff;
+}
+
+.service-list .list-item .item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 10px;
+  border-bottom: 1px solid #eee;
+}
+.service-list .list-item .item i.icon-right {
+  font-size: 1.4rem;
+  color: #999;
+}

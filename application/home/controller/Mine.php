@@ -14,14 +14,20 @@ namespace app\home\controller;
 class Mine extends Common
 {
 
+    /* 关于我们 */
     public function aboutus() {
 
-        return view();
+        return view('',[
+            'data' => Model('About')->cacheSelect(),
+        ]);
     }
 
+    /* 售后服务 */
     public function aftersale() {
 
-        return view();
+        return view('',[
+            'data' => Model('Aftersale')->cacheSelect(),
+        ]);
     }
 
     public function editaddress() {

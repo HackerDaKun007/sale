@@ -1,0 +1,109 @@
+.wrapper {
+    background-color: #fff;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+.header {
+    height: 3rem;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    border-bottom: 1px solid #eee;
+}
+.main {
+    background-color: #fff;
+    /* height: calc(100vh - 3rem);
+    height: -webkit-calc(100vh - 3rem);
+    height: -moz-calc(100vh - 3rem); */
+    overflow-y: scroll;
+}
+.head {
+    padding: 25px 25px 0 25px;
+    background-color: #fff;
+    text-align: center;
+}
+.head p {
+    font-size: 1.4rem;
+    color: #ee2d2d;
+}
+.head i {
+
+    color: #ee2d2d;
+    font-size: 8rem;
+}
+
+.order-info {
+    /* background-color: #f9f9f9; */
+    padding: 12px;
+}
+.order-info p {
+    font-size: 0.92rem;
+    color: #999;
+    text-align: center;
+}
+.order-info .date {
+    padding-top: 5px;
+}
+
+.btns {
+    margin: 20px 20px 0;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-around; */
+}
+.btns a {
+    flex: 1;
+    padding: 10px 0;
+    text-align: center;
+    color: #fff;
+    background-color: #009688;
+    border-radius: 4px;
+}
+.btns a:nth-child(1) {
+    background-color: #ee2d2d;
+    color: #fff;
+    margin-right: 20px;
+}
+
+/* wx-info */
+.wx-info {
+    /* margin-top: 10px; */
+    padding: 10px 20px;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+.wx-info .title {
+    flex: 1;
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.wx-info .title p {
+    padding-bottom: 5px;
+}
+.wx-info .title #wx-id span{
+    color: #ee2d2d;
+}
+
+/* tips */
+.tips {
+    padding: 10px 10px;
+    font-size: 0.9rem;
+    background-color: #f8f8f8;
+}
+.tips p {
+    display: flex;
+    color: #ee2d2d;
+}
+.tips .info {
+    flex: 1;
+    color: #999;
+}
