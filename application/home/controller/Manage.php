@@ -13,7 +13,23 @@
 namespace app\home\controller;
 class Manage extends Common
 {
-    public function index() {
-        echo 1;
+    public function bindmobile() {
+
+        return view();
+    }
+
+    public function editgender() {
+
+        return view();
+    }
+
+    public function editpass() {
+
+        return view();
+    }
+
+    public function manage() {
+
+        return view();
     }
 }

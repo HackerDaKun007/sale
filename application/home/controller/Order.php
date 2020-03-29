@@ -13,7 +13,23 @@
 namespace app\home\controller;
 class Order extends Common
 {
-    public function index() {
-        echo 1;
+    public function myorder() {
+
+        return view();
+    }
+
+    public function order() {
+
+        return view();
+    }
+
+    public function orderconfirm() {
+
+        return view();
+    }
+
+    public function orderdetail() {
+
+        return view();
     }
 }

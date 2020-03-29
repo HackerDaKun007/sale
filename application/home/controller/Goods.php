@@ -13,7 +13,7 @@
 namespace app\home\controller;
 class Goods extends Common
 {
-    public function index() {
-        echo 1;
+    public function goodsdetail() {
+        return view();
     }
 }

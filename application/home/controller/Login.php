@@ -13,7 +13,7 @@
 namespace app\home\controller;
 class Login extends Common
 {
-    public function index() {
-        echo 1;
+    public function login() {
+       return view();
     }
 }
