@@ -61,7 +61,7 @@ class Common extends Controller
         $userImg = cookie(self::$path['userImg']);//用户头像
         $initialPass = cookie(self::$path['initialPass']);//初始密码
         $userId = cookie(self::$path['userId']); //用户ID
-
+        $bool = false;
         if(!empty($userId) && !empty($userImg)  && !empty($userSex) && !empty($memberUser)  && !empty($userName)) {
             $userId = self::repassJie($userId);
             if(is_numeric($userId)) {
