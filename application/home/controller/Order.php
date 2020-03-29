@@ -51,8 +51,20 @@ class Order extends Common
     public function addorder() {
         $code = 0;
         $msg = 'error';
-//        if() {
-//
-//        }
+        $url = '';
+        if(self::yzPost()) {
+            $input = self::$reques->post();
+            $validate = Validate('Order');
+            if(!$validate->scene('goods')->check($input)) {
+                $msg = $validate->getError();
+            }
+            $goods = Model('Rushgoods')->cacheGoods($input['id'],$input['date_id'],$input['time_id']);
+            if($goods) {
+                if($goods['start_time'] <= self::$serverTimeEnd) {
+
+                }
+            }
+        }
+        echo self::dataJson($code,$msg,'',$url);
     }
 }

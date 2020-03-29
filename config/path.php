@@ -138,6 +138,9 @@ return [
 
     //评论
     'cacehComment' => 'cacehComment',
+
+    //提交数据加密
+    'dataPassword' => 'dakun007@qq.com,gzlmgvip',
 ];
 
 ?>

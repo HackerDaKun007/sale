@@ -54,6 +54,7 @@ class Common extends Controller
             'serverTimeEnd' => self::$serverTimeEnd,
             'dateTime' => self::$dateTime,
             'dateTimeEnd' => self::$dateTimeEnd,
+            'dataPasswordJson' => password_hash(self::$path['dataPassword'],PASSWORD_DEFAULT),
         ]);
     }
 
@@ -85,5 +86,16 @@ class Common extends Controller
             cookie(self::$path['userId'],null); //用户ID
             Model('User')->add(true);
         }
+    }
+
+    //判断post https协议
+    protected static function yzPost() {
+        $bool = false;
+        if(self::$reques->method() == 'POST' && !empty(self::$reques->server()['HTTP_KEY'])) {
+            if(password_verify(self::$path['dataPassword'],self::$reques->server()['HTTP_KEY'])) {
+                $bool = true;
+            }
+        }
+        return $bool;
     }
 }

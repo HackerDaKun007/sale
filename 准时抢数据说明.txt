@@ -256,6 +256,8 @@ id          order_id
 日期        time
 用户备注     user_back
 系统备注     os_back
+ip         ip
+ip地址      ipadder
 添加时间:    create_time
 修改时间:    update_time
 
