@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8" />
+<meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no" />
+<meta name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+{include file="public/header"}
+
+<link rel="stylesheet" href="__HOME__/css/order.css">
+<title>确认订单</title>
+</head>
+
+
+<body>
+  <div class="wrapper">
+    <main class="main">
+      <section class="address-info">
+        <!-- <div class="address-detail" id="haveaddress">
+          <i class="iconfont icon-iconfontdingwei"></i>
+          <div class="address">
+            <div class="top">
+              <span class="name">刘生</span>
+              <span class="telnum">12345678912</span>
+            </div>
+            <div class="bottom">广东省广州市越秀区南京路123456广东省广州市越秀区南京路123456</div>
+          </div>
+          <i class="iconfont icon-right"></i>
+        </div> -->
+
+
+      </section>
+
+  
+
+      <section class="order-detail">
+        <div class="goods-detail">
+          <img src="../temp-images/img2.jpeg" alt="">
+          <div>
+            <div class="goodsinfo">
+              <p class="goodsname">飞克正品手表</p>
+              <p class="goodstype">蓝色表盘</p>
+            </div>
+
+            <p class="price">
+              ￥499/件
+            </p>
+          </div>
+        </div>
+
+        <div class="buynum">
+          <p class="title">购买数量 <span>（限购5件）</span></p>
+          <div>
+            <button id="decrease"><i class="iconfont icon-jian"></i></button>
+            <input type="text" readonly value="1" id="buynumber">
+            <button id="increase"><i class="iconfont icon-jia"></i></button>
+          </div>
+        </div>
+      </section>
+      <section class="default">
+        <p>货到付款</p>
+        <i class="iconfont icon-check"></i>
+      </section>
+
+      <section class="remark-area">
+        <label for="remark">备注：</label>
+        <textarea name="remark" rows="3" placeholder="请输入内容"></textarea>
+      </section>
+    </main>
+    <div class="payment-bar">
+      <div class="price">
+        <span>实付款：</span>
+        <span>￥499</span>
+      </div>
+      <div class="payment-btn">
+        <button type="button" id="toPay">立即支付</button>
+      </div>
+    </div>
+  </div>
+  <!-- 地址页 -->
+  <div id="address-page">
+    <div class="address-header">
+      <div class="header-bar">
+        <button type="button" class="iconfont icon-right address-back"></button>
+        <span class="page-title">选择地址</span>
+        <a href="/mine/editaddress.html" class="add-btn">添加新地址</a>
+      </div>
+    </div>
+
+    <div class="address-content">
+      <ul class="address-list">
+        <li class="address-item">
+          <div class="first-word">金</div>
+          <div class="address">
+            <div class="top">
+              <span class="name">刘生</span>
+              <span class="telnum">12345678912</span>
+            </div>
+            <div class="bottom">广东省广州市越秀区南京路123456广东省广州市越秀区南京路123456</div>
+          </div>
+        </li>
+        <li class="address-item">
+          <div class="first-word">刘</div>
+          <div class="address">
+            <div class="top">
+              <span class="name">刘生</span>
+              <span class="telnum">12345678912</span>
+            </div>
+            <div class="bottom">广东省广州市越秀区南京路123456广东省广州市越秀区南京路123456</div>
+          </div>
+        </li>
+        <li class="address-item">
+          <div class="first-word">金</div>
+          <div class="address">
+            <div class="top">
+              <span class="name">刘生</span>
+              <span class="telnum">12345678912</span>
+            </div>
+            <div class="bottom">广东省广州市越秀区南京路123456广东省广州市越秀区南京路123456</div>
+          </div>
+        </li>
+        <li class="address-item">
+          <div class="first-word">金</div>
+          <div class="address">
+            <div class="top">
+              <span class="name">刘生</span>
+              <span class="telnum">12345678912</span>
+            </div>
+            <div class="bottom">广东省广州市越秀区南京路123456广东省广州市越秀区南京路123456</div>
+          </div>
+      </ul>
+    </div>
+  </div>
+</body>
+
+</html>
+
+<script src="__HOME__/js/order.js"></script>
+<script src="__HOME__/public/js/public.js"></script>
+<script src="__HOME__/public/lib/weui-citypicker/addrData.js"></script>
+<script src="__HOME__/public/lib/weui-citypicker/weui.min.js"></script>
+<script>
+  // 地址选择器
+  $('#city-picker').on('click', function () {
+    var _this = this;
+    weui.picker(addrData, {
+      onChange: function (result) {},
+      onConfirm: function (result) {
+        $(_this).val(result[0].label + result[1].label + result[2].label)
+      }
+    });
+  });
+</script>

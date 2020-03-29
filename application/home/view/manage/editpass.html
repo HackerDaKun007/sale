@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+    {include file="public/header"}
+
+    <link rel="stylesheet" href="__HOME__/css/editpass.css" />
+    <title>修改密码</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="main">
+        <form class="edit-form">
+          <div class="form-item">
+            <label for="oldpassword">原先密码</label>
+            <input type="text" id="oldpassword" placeholder="请输入原先密码" />
+          </div>
+          <div class="form-item">
+            <label for="password">新密码</label>
+            <input type="text" id="password" placeholder="请输入不小于6位的密码" />
+          </div>
+          <div class="form-item">
+            <label for="password2">确认新密码</label>
+            <input type="text" id="password2" placeholder="确认密码" />
+          </div>
+
+          <div class="form-item">
+            <label for="verify">验证码</label>
+            <div class="verify-bar">
+              <input type="text" id="verify" placeholder="验证码">
+              <img class="verify-img" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1320441599,4127074888&fm=26&gp=0.jpg">  
+            </div>
+          </div>
+
+          <button type="button" class="confirm-btn">确认提交</button>
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>
+
+<script src="../../public/js/public.js"></script>
+<script src="./js/editpass.js"></script>

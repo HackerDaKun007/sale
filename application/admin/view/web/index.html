@@ -1,0 +1,129 @@
+<style>
+    #favicon {
+        width: 100px;
+        height: 100%;
+        border:1px solid #e6e6e6;
+        cursor: pointer;
+    }
+</style>
+<div class='public-backdrop-white '>
+    <!--  内容   -->
+    <div class="public-content">
+
+        <form class="layui-form " action="">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">网站名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" value="{$data.username}"  autocomplete="off" placeholder="请输入网站名称" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">Logo</label>
+                <div class="layui-input-block">
+                    <img src="{$data.logo}" id="favicon">
+                </div>
+            </div>
+
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+                <legend>IPC备案号</legend>
+            </fieldset>
+            <div class="layui-form-item">
+                <label class="layui-form-label">IPC备案号</label>
+                <div class="layui-input-block">
+                    <input type="text" name="ipc" value="{$data.ipc}" autocomplete="off" placeholder="请输入IPC备案号" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">IPC跳转地址</label>
+                <div class="layui-input-block">
+                    <input type="text" name="ipc_url" value="{$data.ipc_url}" autocomplete="off" placeholder="请输入IPC跳转地址" class="layui-input">
+                </div>
+            </div>
+            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+                <legend>SEO设置</legend>
+            </fieldset>
+            <div class="layui-form-item">
+                <label class="layui-form-label">SEO标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="SEO" value="{$data.seo}" autocomplete="off" placeholder="请输入SEO标题" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">SEO介绍</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入SEO介绍" value="" name="seointroduction" class="layui-textarea">{$data.seointroduction}</textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item public-center public-marign-top-15" >
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'layer', 'table','upload'], function() {
+        var layer = layui.layer,
+            form = layui.form,
+            upload = layui.upload,
+            table = layui.table;
+
+        //提交地址
+        var public_url = $.Public.url + 'web/';
+
+        var Img = ''; //头像变量
+
+        var ImgUser = '';
+        //上传头像
+        function uploadImg() {
+            var uploadInst = upload.render({
+                elem: '#favicon'
+                ,size:100
+                ,url: public_url + 'index.html' //改成您自己的上传接口
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        // $('#demo1').attr('src', result); //图片链接（base64）
+                        ImgUser = result;
+                    });
+                }
+                ,done: function(res){
+                    //上传成功
+                    if(res.code == 1) {
+                        layer.msg('上传成功', {icon:1, time:1000});
+                        Img = res.data;
+                        $('#favicon').attr('src', ImgUser);
+                    }else {
+                        //如果上传失败
+                        layer.msg(res.msg, {icon:2, time:1000});
+                        Img = '';
+                    }
+                }, data:{
+                    request:201,
+                }
+            });
+        }
+
+        uploadImg();
+
+        //监听提交
+        form.on('submit(submit)', function(data){
+            var action = public_url+'edit.html';
+            var field = data.field;
+            field.img = Img; //头像
+            $.Public.post({
+                type:'post',
+                url: action,
+                data: field,
+                success: function() {
+                    ImgUser = '';
+                    Img = '';
+                },
+            });
+            return false;
+        });
+
+    })
+</script>

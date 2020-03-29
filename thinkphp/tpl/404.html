@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>404 - 页面不存在</title>
+    <link href="/404/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- -->
+    <script>var __links = document.querySelectorAll('a'); function __linkClick(e) { parent.window.postMessage(this.href, '*'); }; for (var i = 0, l = __links.length; i < l; i++) { if (__links[i].getAttribute('data-t') == '_blank') { __links[i].addEventListener('click', __linkClick, false); } }</script>
+    <script src="/public/js/jquery.js"></script>
+</head>
+
+<body>
+    <!-- contact-form -->
+    <div class="message warning">
+        <div class="inset">
+            <div class="login-head">
+                <h1>404 - 您访问的页面不存在！</h1>
+            </div>
+            <form>
+
+                <div class="clear"> </div>
+                <div>
+                    <h2 class="h2">对不起，您访问的页面丢失了，我们会很快将他找回。</h2><br /><br />
+                    <div class="column">
+                        <a href="/" class="left">返回首页</a>
+                        <a href="javascript:;" class="right" onclick=" window.history.go(-1);return false;">返回上一页</a>
+                    </div>
+
+                    <div class="clear"> </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    <div class="clear"> </div>
+    <!--- footer --->
+    <div class="footer">
+        <p>Copyright &copy; <span class="diam"></span></p>
+    </div>
+
+</body>
+
+</html>
+
+<script>
+$('.diam').html(window.location.host);
+$('.alert-close').on('click', function (c) {
+    $('.message').fadeOut('slow', function (c) {
+        $('.message').remove();
+    });
+});
+</script>

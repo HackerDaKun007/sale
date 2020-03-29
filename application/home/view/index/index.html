@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <!-- 公共引入文件 -->
+    {include file="public/header"}
+
+    <link rel="stylesheet" href="__HOME__/css/index.css">
+
+    <title>限时抢购</title>
+</head>
+
+<body>
+    <div class="scroll-fixed">
+        <div class="hot-nav">
+            <div class="nav-item active start">正在疯抢</div>
+            <div class="nav-item notstart">即将开抢</div>
+        </div>
+        <div class="category">
+            <div class="category-title">全部时间</div>
+            <ul class="list" id="top-list">
+            </ul>
+            <div class="total">
+                <i class="iconfont icon-right"></i>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="header">
+            <div class="log"><img src="__HOME__/temp-images/logo.png" alt=""></div>
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img class="swiper-image" src="__HOME__/temp-images/banner2.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="swiper-image" src="__HOME__/temp-images/banner3.jpg" alt=""></div>
+                    <div class="swiper-slide"><img class="swiper-image" src="__HOME__/temp-images/banner4.jpg" alt=""></div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+            <div class="quality">
+                <div class="icon">
+                    <i class="iconfont icon-zhiliangbaozheng"></i>
+                    <span>品质保障</span>
+                </div>
+                <div class="service">
+                    <span>品牌授权</span> |
+                    <span>假一赔十</span> |
+                    <span>售后无忧</span>
+                </div>
+            </div>
+            <div class="scroll-view">
+                <div class="scroll-list">
+                </div>
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="top">
+                <div class="title">
+                    <img class="icon" src="__HOME__/temp-images/icon_miao.png" alt="">
+                    <span>限时抢购</span>
+                </div>
+                <div class="timer">
+                    <div class="timer-title">距活动结束</div>
+                    <span class="hours">00</span> :
+                    <span class="minutes">00</span> :
+                    <span class="seconds">00</span>
+                </div>
+            </div>
+            <div class="scroll-top-nav">
+                <div class="hot-nav">
+                    <div class="nav-item active start">正在疯抢</div>
+                    <div class="nav-item notstart">即将开抢</div>
+                </div>
+                <div class="category">
+                    <div class="category-title">全部时间</div>
+                    <ul class="list" id="time-list">
+                    </ul>
+                    <div class="total">
+                        <i class="iconfont icon-right"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="sale start active">
+                
+            </div>
+            <div class="sale notstart">
+            </div>
+        </div>
+        <footer class="footer">
+            <a href="http://beian.miit.gov.cn">
+                <img src="__HOME__/temp-images/TB1y.png" alt="">
+                <p>粤ICP备20020815号-1</p>
+            </a>
+        </footer>
+    </div>
+    <div class="nav-fixed">
+        <div class="nav">
+            <a href="#" class="nav-btn active"> <i class="iconfont icon-xianshi"></i> 限时抢购</a>
+            <a href="/home/mine/mine.html" class="nav-btn"> <i class="iconfont icon-mine"></i> 个人中心</a>
+        </div>
+    </div>
+
+    <div class="scroll-to-top-btn">
+        <i class="iconfont icon-right"></i>
+    </div>
+
+</body>
+
+</html>
+
+<script src="__HOME__/public/js/scroll.js"></script>
+<script src="__HOME__/public/lib/swiper/swiper.js"></script>
+<script src="__HOME__/js/index.js"></script>
+<script>
+    // 轮播
+    var swiper = new Swiper('.swiper-container', {
+        pagination: {
+            el: '.swiper-pagination',
+        },
+    });
+</script>
+<script src="__HOME__/public/js/public.js"></script>

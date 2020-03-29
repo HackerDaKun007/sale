@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>后台管理系统 - admin</title>
+    {include file="public/header"}
+    <link rel="stylesheet" type="text/css" href="__ADMIN__/public/index.css" />
+</head>
+<body class="layui-layout-body">
+
+<!--屏幕小于992px-->
+<div class="backdrop-992"></div>
+
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">后台管理系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item column-right"><a href="javascript:;">
+                <i class="layui-icon layui-icon-spread-left" ></i>
+            </a></li>
+            <li class="layui-nav-item refresh"><a href="javascript:;">
+                <i class="layui-icon layui-icon-refresh-3 " ></i>
+            </a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="javascript:;">
+                <i class="layui-icon layui-icon-notice " ></i>
+                <span class="layui-badge-dot"></span>
+            </a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="__UPL__/{$AdminArray['img']}" class="layui-nav-img">
+                    <span class="layui-side-user">{$AdminArray['username']}</span>
+                </a>
+                <dl class="layui-nav-child public-child">
+                    <dd><a href="javascript:;" class="index-personal">基本资料</a></dd>
+                    <dd><a href="javascript:;" class="index-personal">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item logout"><a href="javascript:;">
+                <i class="layui-icon layui-icon-logout" ></i>
+            </a></li>
+
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                {foreach $column as $k => $v}
+                    {if $v['whether'] == 1 }
+                        {if !empty($v['grade2']) &&  $v['grade2'][0]['whether'] == 1}
+
+                            <li class="layui-nav-item">
+                                <a href="javascript:;">{$v.username}</a>
+                                <dl class="layui-nav-child">
+                                    {foreach $v['grade2'] as $ve}
+                                        {if $ve['whether'] == 1 }
+                                        <dd><a href="javascript:;" class="index-column-url" url="/{$ve.url}.html" title="{$v.username}">{$ve.username}</a></dd>
+                                        {/if}
+                                    {/foreach}
+                                </dl>
+                            </li>
+                        {else /}
+                            <li class="layui-nav-item ">
+                                <a class="index-column-url" href="javascript:;" url="/{$v.url}.html" title="{$v.username}">{$v.username}</a>
+                            </li>
+                        {/if}
+                    {/if}
+                {/foreach}
+
+
+
+            </ul>
+
+        </div>
+    </div>
+
+
+<!--   <div class="layui-body-back"></div> -->
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+
+    </div>
+
+</div>
+<script type="application/json" id="personal">{$personal | raw}</script>
+<script src="__ADMIN__/js/index.js"></script>
+
+</body>
+</html>

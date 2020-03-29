@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  {include file="public/header"}
+  <link rel="stylesheet" href="__HOME__/css/manage.css" />
+  <title>账户设置</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="main">
+      <div class="client-info">
+        <div class="avatar"><img src="../../temp-images/avatar/ava2.png" alt=""></div>
+        <div class="client-name">
+          <p class="name">淘淘会员_3253589</p>
+          <p class="id">会员ID：123456</p>
+        </div>
+      </div>
+      <div id="tips">
+        为了您的账户安全，请尽快修改初始密码!
+      </div>
+
+      <div class="manage-list">
+        <div class="pass-item">
+          <div class="item" id="initial-pass">
+            <span>初始密码：</span>
+            <span class="pass"></span>
+          </div>
+          <a class="item" href="./editpass.html">
+            <span>修改密码</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+        </div>
+
+        <div class="list-item">
+          <a class="item" href="./bindmobile.html">
+            <span>手机绑定</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+          <a class="item" href="./editgender.html">
+            <span>修改性别</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <a class="change-user" href="../../login.html">
+      切换用户
+    </a>
+  </div>
+</body>
+
+</html>
+
+<script src="__HOME__/public/js/public.js"></script>
+<script src="__HOME__/js/manage.js"></script>

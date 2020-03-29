@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+    <!-- 外部引入文件 -->
+    {include file="public/header"}
+
+    <link rel="stylesheet" href="__HOME__/css/login.css" />
+    <title>用户登录</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="main">
+        <form class="edit-form">
+          <div class="form-item">
+            <label for="username">用户名</label>
+            <input type="text" id="username" placeholder="请输入用户名" />
+          </div>
+          <div class="form-item">
+            <label for="password">密　码</label>
+            <input type="text" id="password" placeholder="请输入密码" />
+          </div>
+
+
+          <div class="form-item">
+            <label for="verify">验证码</label>
+            <div class="verify-bar">
+              <input type="text" id="verify" placeholder="验证码">
+              <img class="verify-img" src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1320441599,4127074888&fm=26&gp=0.jpg">  
+            </div>
+          </div>
+
+          <button type="button" class="confirm-btn">登录</button>
+        </form>
+      </div>
+    </div>
+
+  </body>
+</html>
+
+<script src="__HOME__/public/js/public.js"></script>
+<script src="__HOME__/js/login.js"></script>

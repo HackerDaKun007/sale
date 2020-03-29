@@ -1,0 +1,75 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+html {
+    font-style: 13px;
+    scroll-behavior: smooth;
+}
+body {
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    background-color: #f5f5f5;
+    scroll-behavior:smooth;
+    -webkit-text-size-adjust: 100%!important;
+    text-size-adjust: 100%!important;
+    -moz-text-size-adjust: 100%!important;
+}
+a {
+    text-decoration: none;
+}
+li {
+    list-style: none;
+}
+button, input[type="text"], textarea {
+    border: none;
+    background: none;
+    appearance: none;
+    font-size: 1rem;
+    outline: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+textarea { resize: none;}
+input:focus { outline: none; } 
+div, img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.wrapper {
+    max-width: 414px;
+    min-width: 320px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* swiper */
+.swiper-container {
+    width: 100%;
+    line-height: 0;
+}
+.swiper-container img {
+    width: 100%;
+}
+body .swiper-pagination-bullet-active {
+    background: red;
+}
+
+
+/* media query */
+@media (min-width: 1025px){
+    .wrapper {
+        overflow-y: scroll;
+    }
+}

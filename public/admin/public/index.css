@@ -1,0 +1,258 @@
+html {
+    background-color: #f2f2f2;
+    color: #666;
+}
+.layui-side {
+    z-index: 13;
+}
+
+.layui-layout-admin .layui-header {
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,.05);
+}
+.layui-layout-admin .layui-logo{
+    background-color: #20222A;
+    color: rgba(255,255,255,.8);
+    font-size: 14px;
+    box-shadow: 0 1px 1px 0 rgba(255,255,255,.3);
+}
+body .layui-nav-bar{
+    height: 3px;
+}
+
+body .layui-nav .layui-this:after{
+    height: 0px;
+    background: #fff;
+}
+
+.layui-header .layui-nav .layui-nav-item a {
+    color: #333;
+}
+
+.layui-header .layui-nav .layui-nav-more {
+    border-color: #333 transparent transparent;
+}
+
+.layui-header .layui-nav .layui-nav-mored,.layui-header .layui-nav-itemed>a .layui-nav-more{
+    border-color:transparent transparent #333;
+}
+
+body .layui-layout-admin .layui-body {
+    bottom: 0;
+    padding: 15px;
+    left: 220px;
+    z-index:1;
+}
+
+.layui-header .layui-nav .layui-icon {
+    font-size:16px;
+}
+.layui-header .layui-nav .layui-icon.layui-icon-logout, .layui-icon-notice{
+    font-size: 18px !important;
+}
+
+
+.layui-layout-admin .layui-logo, .layui-layout-admin .layui-side, .layui-nav-tree {
+    width: 220px;
+}
+.layui-layout-left {
+    left: 220px;
+}
+.layui-side-scroll {
+    width: 240px;
+}
+.layui-side-menu, .layui-bg-black{
+    background-color: #20222A !important;
+}
+
+.layui-nav {
+    background-color:unset;
+}
+
+.layui-header {
+    z-index:2;
+}
+
+.backdrop-992 {
+    position: fixed;
+    display: none;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.3);
+    z-index: 10;
+}
+
+body .layui-nav-bar {
+    z-index:2;
+}
+
+.public-marign-top-15 {
+    margin-top: 15px;
+}
+
+/*加载区域*/
+.layui-load {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
+    border-radius: 3px;
+    position: relative;
+}
+
+body .layui-load-tips {
+    height: 100%;
+    background: rgba(0,0,0,.1);
+    border-radius: 3px;
+    position: fixed;
+    bottom: 0;
+    z-index:9997;
+    right: 0px;
+    left: 220px;
+    width: unset;
+    top: 0;
+}
+.layui-body-back {
+    background: #fff;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.3);
+    border-radius: 3px;
+    position: relative;
+    padding: 10px;
+}
+.layui-load-tips .layui-load-sub p, body .layui-load-tips .layui-anim-loop{
+    color: #fff;
+}
+
+.layui-load .layui-anim-loop {
+    color: #bfbfbf;
+    font-size: 50px;
+}
+.layui-load-sub p{
+    font-size: 18px;
+    margin-top: 15px;
+}
+.layui-load .layui-icon-face-cry{
+    font-size: 50px;
+    color: red;
+}
+.layui-load-sub {
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform:translate(-50%,-50%);
+}
+
+
+/**
+* 公共部分
+*/
+.public-backdrop-white {
+    background: #fff;
+}
+.public-search {
+    padding: 10px;
+    border-bottom: 1px solid #f1f1f1;
+}
+.public-content {
+    padding: 10px;
+}
+.public-column-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.public-btn-sm {
+    height: 35px;
+    line-height: 35px;
+    padding: 0 15px;
+}
+.public-padding-10 {
+    padding: 10px;
+}
+.public-center {
+    width: 100%;
+    text-align: center;
+}
+.public-input-block {
+    /*border: 1px solid #e6e6e6;*/
+    width: unset;
+}
+.public-padding-left-15 {
+    padding: 15px;
+}.public-padding-left-25 {
+    padding: 25px;
+}
+
+img[src = ""] {
+    opacity: 0;
+}
+.public-images-30 {
+    width: 30px;
+    height: 30px;
+}
+.public-child dd.layui-this, .layui-nav .public-child dd.layui-this a{
+    background-color: unset;
+    color: #333;
+}
+
+.public-height-30 {
+    height: 30px;
+}
+
+.public-textarea-resize{
+    resize : none;
+}
+
+
+
+@media screen and (max-width: 992px) {
+    .layui-table td, .layui-table th {
+        font-size: 12px;
+    }
+    .layui-layout-left {
+        left: 0;
+    }
+    .layui-layout-admin .layui-logo {
+        z-index:4;
+        left: -220px;
+    }
+
+    body .layui-layout-admin .layui-body {
+        left: 0;
+    }
+
+    body .layui-side {
+        left: -220px;
+    }
+
+    body .layui-load-tips {
+        left: 0 !important;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .layui-header .layui-nav .layui-icon {
+        font-size:12px;
+    }
+    .layui-header .layui-nav .layui-icon.layui-icon-logout, .layui-icon-notice {
+        font-size: 12px !important;
+    }
+    .layui-header .layui-nav-img{
+        width: 15px;
+        height: 15px;
+    }
+    .layui-side-user {
+        font-size:12px;
+    }
+    .layui-header .layui-nav {
+        padding: 0 5px;
+    }
+    .layui-nav * {
+        font-size:12px;
+    }
+
+
+}

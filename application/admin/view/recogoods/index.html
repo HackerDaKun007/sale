@@ -1,0 +1,59 @@
+
+<div class="public-backdrop-white">
+
+    <!--  搜索  -->
+    <div class="public-search">
+        <form class="layui-form layui-form-pane">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">日期</label>
+                    <div class="layui-input-inline">
+                        <select name="rushdate_id" id="search-date" lay-search="">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit="" lay-filter="search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!--  内容   -->
+    <div class="public-content">
+        <!--    添加等操作    -->
+        <div class="public-column-bottom-10">
+            <button class="layui-btn public-btn-sm add" >添加</button>
+            <button class="layui-btn public-btn-sm uploadCache layui-btn-normal" >更新缓存</button>
+        </div>
+
+        <div class="public-content-table">
+            <table class="layui-hide" id="content" lay-filter="content"></table>
+        </div>
+        <script type="text/html" id="barDemo">
+            <a href="javascript:;" class="layui-btn layui-btn-xs modify" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+            <a href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+        </script>
+
+
+    </div>
+
+</div>
+<script type="text/html" id="rushsTime">
+    {{ $.Public.turnTime(d.date,false) }}
+</script>
+
+<script type="text/html" id="startTime">
+    {{ $.Public.turnTime(d.start_time,true,false) }}
+</script>
+<script type="text/html" id="endTime">
+    {{ $.Public.turnTime(d.end_time,true,false) }}
+</script>
+<script type="text/html" id="goodsId">
+    ( ID: {{ d.goods_id }} ) {{ d.username }}
+</script>
+<script type="application/json" id="rushdate">{$rushdate | raw}</script>
+<script src="__ADMIN__/js/recogoods.js"></script>

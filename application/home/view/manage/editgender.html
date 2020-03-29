@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+  <!-- 公共引入文件 -->
+  {include file="public/header"}
+
+  <link rel="stylesheet" href="__HOME__/css/editpass.css" />
+  <title>修改性别</title>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="main">
+      <form class="edit-form">
+        <div class="form-item gender checked" >
+          <label for="male">
+            男性
+          </label>
+          <input type="radio" id="male" value="1" checked  name="sex">
+          <i class="iconfont icon-check"></i>
+        </div>
+        <div class="form-item gender checked">
+          <label for="female">
+            女性
+          </label>
+          <input type="radio" id="female" value="2"  name="sex">
+          <i class="iconfont icon-check"></i>
+        </div>
+        <button type="submit" disabled class="confirm-btn">确认提交</button>
+      </form>
+    </div>
+  </div>
+
+</body>
+
+</html>
+<script src="__HOME__/public/js/public.js"></script>
+<script src="__HOME__/js/editgender.js"></script>

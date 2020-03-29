@@ -1,0 +1,399 @@
+<style>
+    #home_img {
+        width: 50px;
+        height: 50px;
+        border:1px solid #e6e6e6;
+        cursor: pointer;
+    }
+    .img {
+        width: 123px;
+        height: 123px;
+        border:1px solid #e6e6e6;
+        cursor: pointer;
+        margin-bottom: 10px;
+    }
+    .comment-img {
+        width: 123px;
+        height: 170px;
+        text-align: center;
+        margin-right: 10px;
+    }
+    .comment-input-block {
+        display: flex;
+        flex-wrap: wrap;
+    }
+</style>
+
+<div class="public-backdrop-white">
+
+<!--    搜索-->
+    <div class="public-search">
+        <form class="layui-form layui-form-pane">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">产品ID</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="goods_id"  placeholder="请输入产品ID" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit="" lay-filter="search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="public-content">
+        <!--    添加等操作    -->
+        <div class="public-column-bottom-10">
+            <button class="layui-btn public-btn-sm add" >添加</button>
+        </div>
+
+        <div class="public-content-table">
+            <table class="layui-hide" id="content" lay-filter="content"></table>
+        </div>
+
+        <script type="text/html" id="barDemo">
+            <a href="javascript:;" class="layui-btn layui-btn-xs modify" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+            <a href="javascript:;" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+        </script>
+
+        <script type="text/html" id="date">
+            {{ $.Public.turnTime(d.date) }}
+        </script>
+
+    </div>
+
+</div>
+
+<script>
+    layui.use(['form', 'layer', 'table', 'upload','laydate'], function() {
+        var layer = layui.layer,
+            form = layui.form,
+            upload = layui.upload,
+            laydate = layui.laydate,
+            table = layui.table;
+
+        //提交地址
+        var public_url = $.Public.url + 'comment/';
+
+
+        var tableIns = table.render({
+            elem: '#content'
+            ,where:{request:200}
+            , url: public_url + 'index.html'
+            , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            , cols: [[
+                {field: 'comment_id', width: 80, title: 'ID', sort: true}
+                , {field: 'username', width: 200, title: '名称'}
+                , {field: 'goods_id', width: 100, title: '商品ID'}
+                , {field: 'content', width: '',minWidth:300, title: '内容'}
+                , {field: 'create_time', width: 200, title: '添加时间'}
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
+            ]]
+            , limit: 10
+            , page: true
+        });
+        //搜索
+        form.on('submit(search)',function(data){
+            var field = data.field;
+            field.request = 200;
+            tableIns.reload({
+                where:field,
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false;
+        });
+
+        //上传头像
+        function uploadImg(val='',bool=false,edit=false) {
+            let ImgUser = '';
+            let pImg = '#home_img';
+            let homeImg = '.hom_img';
+            if(bool) {
+                pImg = '#img'+val;
+                homeImg = '.img'+val;
+            }
+            let aup = upload.render({
+                elem: pImg
+                ,size:100
+                ,url: public_url + 'index.html' //改成您自己的上传接口
+                ,before: function(obj){
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function(index, file, result){
+                        // $('#demo1').attr('src', result); //图片链接（base64）
+                        ImgUser = result;
+                    });
+                }
+                ,done: function(res){
+                    //上传成功
+                    if(res.code == 1) {
+                        layer.msg('上传成功', {icon:1, time:1000});
+                        if(edit && bool){
+                            $('.delimg'+val).val( $(pImg).attr('src'));
+                        }
+                        $(homeImg).val(res.data);
+                        $(pImg).attr('src', ImgUser);
+                    }else {
+                        //如果上传失败
+                        layer.msg(res.msg, {icon:2, time:1000});
+                    }
+                }, data:{
+                    request:201,
+                }
+            });
+        }
+
+        //添加
+        $('.add').bind('click', function() {
+            let add_url = public_url + 'add.html';
+            $.Public.yzPost({
+                type: 'post',
+                url: add_url,
+                data: '',
+                success: function () {
+                    layer.open({
+                        title: '添加评论'
+                        , type: 1
+                        , area: ['680px', '600px']
+                        , closeBtn: 1
+                        , shade: 0.3
+                        , id: 'LA_layer'
+                        , moveType: 1
+                        , zIndex: 50
+                        , content: '<div class="public-padding-10">' +
+                            '<form class="layui-form " action="'+add_url+'">' +
+                            '<input type="hidden" class="img1 images" value="" name="img1" />' +
+                            '<input type="hidden" class="img2 images" value="" name="img2" />' +
+                            '<input type="hidden" class="img3 images" value="" name="img3" />' +
+                            '<input type="hidden" class="img4 images" value="" name="img4" />' +
+                            '<input type="hidden" class="img5 images" value="" name="img5" />' +
+                            '<input type="hidden" class="img6 images" value="" name="img6" />' +
+                            '<input type="hidden" class="hom_img" value="" name="home_img" />' +
+                            '<input type="hidden" class="delimg1 " value="" name="delimg1" />' +
+                            '<input type="hidden" class="delimg2 " value="" name="delimg2" />' +
+                            '<input type="hidden" class="delimg3 " value="" name="delimg3" />' +
+                            '<input type="hidden" class="delimg4 " value="" name="delimg4" />' +
+                            '<input type="hidden" class="delimg5 " value="" name="delimg5" />' +
+                            '<input type="hidden" class="delimg6 " value="" name="delimg6" />' +
+                            '<div class="layui-form-item">\n' +
+                            '    <div class="layui-inline">\n' +
+                            '      <label class="layui-form-label">名称</label>\n' +
+                            '      <div class="layui-input-inline">\n' +
+                            '        <input type="text" name="username" placeholder="请输入名称" autocomplete="off" class="layui-input">\n' +
+                            '      </div>\n' +
+                            '    </div>\n' +
+                            '    <div class="layui-inline">\n' +
+                            '      <label class="layui-form-label">商品ID</label>\n' +
+                            '      <div class="layui-input-inline">\n' +
+                            '        <input type="number" name="goods_id"  placeholder="请输入商品ID" autocomplete="off" class="layui-input">\n' +
+                            '      </div>\n' +
+                            '    </div>\n' +
+                            '</div>' +
+                            '<div class="layui-form-item">\n' +
+                            '    <div class="layui-inline">\n' +
+                            '      <label class="layui-form-label">头像</label>\n' +
+                            '      <div class="layui-input-inline">\n' +
+                            '      <img src="'+$.Public.imagesBack+'" id="home_img" /> \n' +
+                            '      </div>\n' +
+                            '    </div>\n' +
+                            '    <div class="layui-inline">\n' +
+                            '      <label class="layui-form-label">评论时间</label>\n' +
+                            '      <div class="layui-input-inline">\n' +
+                            '        <input type="text" name="date" id="date1"  placeholder="请输入评论时间" autocomplete="off" class="layui-input">\n' +
+                            '      </div>\n' +
+                            '    </div>\n' +
+                            '</div>' +
+                            '<div class="layui-form-item layui-form-text">\n' +
+                            '    <label class="layui-form-label">内容</label>\n' +
+                            '    <div class="layui-input-block">\n' +
+                            '      <textarea placeholder="请输入内容" name="content" class="layui-textarea"></textarea>\n' +
+                            '    </div>\n' +
+                            '  </div>' +
+                            '<div class="layui-form-item">\n' +
+                            '    <label class="layui-form-label">评论图片</label>\n' +
+                            '    <div class="layui-input-block comment-input-block">\n' +
+                            '      <div class="comment-img"><img src="'+$.Public.imagesBack+'" id="img1" class="img " /><button type="button" class="layui-btn  layui-btn-xs delimg">删除</button></div> \n' +
+                            '      <div class="comment-img"><img src="'+$.Public.imagesBack+'" id="img2" class="img " /><button type="button" class="layui-btn  layui-btn-xs delimg">删除</button></div> \n' +
+                            '      <div class="comment-img"><img src="'+$.Public.imagesBack+'" id="img3" class="img " /><button type="button" class="layui-btn  layui-btn-xs delimg">删除</button></div> \n' +
+                            '      <div class="comment-img"><img src="'+$.Public.imagesBack+'" id="img4" class="img " /><button type="button" class="layui-btn  layui-btn-xs delimg">删除</button></div> \n' +
+                            '      <div class="comment-img"><img src="'+$.Public.imagesBack+'" id="img5" class="img " /><button type="button" class="layui-btn  layui-btn-xs delimg">删除</button></div> \n' +
+                            '      <div class="comment-img"><img src="'+$.Public.imagesBack+'" id="img6" class="img " /><button type="button" class="layui-btn  layui-btn-xs delimg">删除</button></div> \n' +
+                            '    </div>\n' +
+                            '</div>' +
+                            '   <div class="layui-form-item public-center">\n' +
+                            '      <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>\n' +
+                            '    </div>\n' +
+                            '</form>' +
+                            '</div>'
+                    })
+                    uploadImg();
+                    $('.img').each(function() {
+                        let $this = $(this);
+                        let num = $this.index('.img')+1;
+                        uploadImg(num,true);
+                    });
+                    $('.delimg').bind('click',function () {
+                        let $this = $(this);
+                        let num = $this.index('.delimg');
+                        $('.images').eq(num).val('');
+                        $('.img').eq(num).attr('src',$.Public.imagesBack);
+                        return false;
+                    });
+                    //常规用法
+                    laydate.render({
+                        elem: '#date1'
+                        ,type: 'datetime'
+                    });
+                }
+            })
+        })
+
+        //编辑/删除
+        table.on('tool(content)',function(obj) {
+            let data = obj.data;
+            if (obj.event == 'edit') {
+                let add_url = public_url + 'edit.html';
+                $.Public.yzPost({
+                    type: 'post',
+                    url: add_url,
+                    data: '',
+                    success: function () {
+                        layer.open({
+                            title: '修改评论'
+                            , type: 1
+                            , area: ['680px', '600px']
+                            , closeBtn: 1
+                            , shade: 0.3
+                            , id: 'LA_layer'
+                            , moveType: 1
+                            , zIndex: 50
+                            , content: '<div class="public-padding-10">' +
+                                '<form class="layui-form " action="'+add_url+'">' +
+                                '<input type="hidden" class="img1 images" value="" name="img1" />' +
+                                '<input type="hidden" class="img2 images" value="" name="img2" />' +
+                                '<input type="hidden" class="img3 images" value="" name="img3" />' +
+                                '<input type="hidden" class="img4 images" value="" name="img4" />' +
+                                '<input type="hidden" class="img5 images" value="" name="img5" />' +
+                                '<input type="hidden" class="img6 images" value="" name="img6" />' +
+                                '<input type="hidden" class="hom_img" value="" name="home_img" />' +
+                                '<input type="hidden" class="delimg1 delImgaes" value="" name="delimg1" />' +
+                                '<input type="hidden" class="delimg2 delImgaes" value="" name="delimg2" />' +
+                                '<input type="hidden" class="delimg3 delImgaes" value="" name="delimg3" />' +
+                                '<input type="hidden" class="delimg4 delImgaes" value="" name="delimg4" />' +
+                                '<input type="hidden" class="delimg5 delImgaes" value="" name="delimg5" />' +
+                                '<input type="hidden" class="delimg6 delImgaes" value="" name="delimg6" />' +
+                                '<input type="hidden" class="comment_id " value="'+$.Public.values(data.comment_id)+'" name="comment_id" />' +
+                                '<div class="layui-form-item">\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">名称</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" value="'+$.Public.values(data.username)+'" name="username" placeholder="请输入名称" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">商品ID</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="number" value="'+$.Public.values(data.goods_id)+'" name="goods_id"  placeholder="请输入商品ID" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '</div>' +
+                                '<div class="layui-form-item">\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">头像</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '      <img src="'+$.Public.values(data.home_img,$.Public.imagesBack)+'" id="home_img" /> \n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">评论时间</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" name="date" value="'+$.Public.values(data.date)+'" id="date1"  placeholder="请输入评论时间" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '</div>' +
+                                '<div class="layui-form-item layui-form-text">\n' +
+                                '    <label class="layui-form-label">内容</label>\n' +
+                                '    <div class="layui-input-block">\n' +
+                                '      <textarea placeholder="请输入内容" name="content" class="layui-textarea">'+$.Public.values(data.content)+'</textarea>\n' +
+                                '    </div>\n' +
+                                '  </div>' +
+                                '<div class="layui-form-item">\n' +
+                                '    <label class="layui-form-label">评论图片</label>\n' +
+                                '    <div class="layui-input-block comment-input-block">\n' +
+                                '      <div class="comment-img"><img src="'+$.Public.values(data.img1,$.Public.imagesBack)+'" id="img1" class="img " /><button type="button" class="layui-btn  layui-btn-xs delimg">删除</button></div> \n' +
+                                '      <div class="comment-img"><img src="'+$.Public.values(data.img2,$.Public.imagesBack)+'" id="img2" class="img " /><button type="button" class="layui-btn  layui-btn-xs delimg">删除</button></div> \n' +
+                                '      <div class="comment-img"><img src="'+$.Public.values(data.img3,$.Public.imagesBack)+'" id="img3" class="img " /><button type="button" class="layui-btn  layui-btn-xs delimg">删除</button></div> \n' +
+                                '      <div class="comment-img"><img src="'+$.Public.values(data.img4,$.Public.imagesBack)+'" id="img4" class="img " /><button type="button" class="layui-btn  layui-btn-xs delimg">删除</button></div> \n' +
+                                '      <div class="comment-img"><img src="'+$.Public.values(data.img5,$.Public.imagesBack)+'" id="img5" class="img " /><button type="button" class="layui-btn  layui-btn-xs delimg">删除</button></div> \n' +
+                                '      <div class="comment-img"><img src="'+$.Public.values(data.img6,$.Public.imagesBack)+'" id="img6" class="img " /><button type="button" class="layui-btn  layui-btn-xs delimg">删除</button></div> \n' +
+                                '    </div>\n' +
+                                '</div>' +
+                                '   <div class="layui-form-item public-center">\n' +
+                                '      <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>\n' +
+                                '    </div>\n' +
+                                '</form>' +
+                                '</div>'
+                        })
+                        uploadImg();
+                        $('.img').each(function() {
+                            let $this = $(this);
+                            let num = $this.index('.img')+1;
+                            uploadImg(num,true);
+                        });
+                        $('.delimg').bind('click',function () {
+                            let $this = $(this);
+                            let num = $this.index('.delimg');
+                            let img = $('.img').eq(num);
+                            if(img.attr('src') != '' && img.attr('src') != '/public/img/back.png') {
+                                $('.delImgaes').eq(num).val(img.attr('src'));
+                                $('.images').eq(num).val('');
+                                img.attr('src',$.Public.imagesBack);
+                            }
+                            return false;
+                        });
+                        //常规用法
+                        laydate.render({
+                            elem: '#date1'
+                            ,type: 'datetime'
+                        });
+                    }
+                })
+            }else if(obj.event == 'del') {
+                var id = data.comment_id;
+                layer.confirm('确定要删除么?', {icon:3,title:'提示'}, function(index) {
+                    layer.close(index);
+                    $.Public.post({
+                        type: 'post',
+                        url: public_url + 'del.html',
+                        data: {comment_id:id},
+                        success: function(msg) {
+                            $.Public.locationHref();
+                        }
+                    })
+                })
+            }
+        })
+
+        //监听提交
+        form.on('submit(submit)', function(data){
+            var action = data.form.action;
+            var field = data.field;
+            $.Public.post({
+                type:'post',
+                url: action,
+                data: field,
+                success: function() {
+                    layer.closeAll();
+                    $.Public.locationHref();
+                },
+            });
+            return false;
+        });
+
+    })
+</script>

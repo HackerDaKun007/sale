@@ -1,0 +1,117 @@
+<div class="public-backdrop-white">
+
+    <!--  搜索  -->
+    <div class="public-search">
+
+    </div>
+
+    <!--  内容   -->
+    <div class="public-content">
+
+        <!--    添加等操作    -->
+        <div class="public-column-bottom-10">
+            <button class="layui-btn public-btn-sm add-1" >添加1级</button>
+            <button class="layui-btn public-btn-sm add-2" >添加2级</button>
+            <button class="layui-btn public-btn-sm add-3" >添加3级</button>
+            <button class="layui-btn public-btn-sm renew layui-btn-normal" >更新缓存</button>
+        </div>
+
+        <!--   展示区域     -->
+        <table class="layui-table">
+            <colgroup>
+                <col width="100">
+                <col>
+                <col width="150">
+                <col width="150">
+                <col width="200">
+            </colgroup>
+            <thead>
+            <tr>
+                <th></th>
+                <th>名称</th>
+                <th>排序</th>
+                <th>是否展示栏目</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach cacheShow as $v}
+                <tr>
+                    <td>
+                        {if !empty($v['grade2'])}
+                            <i class="layui-icon layui-icon-triangle-d"></i>
+                        {else /}
+                            <i class="layui-icon layui-icon-file"></i>
+                        {/if}
+                    </td>
+                    <td>{$v.username}</td>
+                    <td>{$v.sort}</td>
+                    <td>
+                        {if $v.whether == 1}
+                            <button type="button" class="layui-btn layui-btn-normal layui-btn-xs">是</button>
+                        {else /}
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">否</button>
+                        {/if}
+                    </td>
+                    <td>
+                        <a class="layui-btn layui-btn-xs edit1" lay-id="{$v.power_id}" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                        <a class="layui-btn layui-btn-danger layui-btn-xs del" lay-id="{$v.power_id}" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                    </td>
+                </tr>
+                {if !empty($v['grade2'])}
+                    {foreach $v['grade2'] as $ve}
+                        <tr>
+                            <td>
+                                {if !empty($ve['grade3'])}
+                                <i class="layui-icon layui-icon-triangle-d public-padding-left-15"></i>
+                                {else /}
+                                <i class="layui-icon layui-icon-file public-padding-left-15"></i>
+                                {/if}
+                            </td>
+                            <td>{$ve.username}</td>
+                            <td>{$ve.sort}</td>
+                            <td>
+                                {if $ve.whether == 1}
+                                <button type="button" class="layui-btn layui-btn-normal layui-btn-xs">是</button>
+                                {else /}
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">否</button>
+                                {/if}
+                            </td>
+                            <td>
+                                <a class="layui-btn layui-btn-xs edit2" lay-id="{$ve.power_id}" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                                <a class="layui-btn layui-btn-danger layui-btn-xs del" lay-id="{$ve.power_id}" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                            </td>
+                        </tr>
+                        {if !empty($ve['grade3'])}
+                            {foreach $ve['grade3'] as $vu}
+                            <tr>
+                                <td>
+                                    <i class="layui-icon layui-icon-file public-padding-left-25"></i>
+                                </td>
+                                <td>{$vu.username}</td>
+                                <td>{$vu.sort}</td>
+                                <td>
+                                    <button type="button" class="layui-btn layui-btn-primary layui-btn-xs">否</button>
+                                </td>
+                                <td>
+                                    <a class="layui-btn layui-btn-xs edit3" lay-id="{$vu.power_id}" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+                                    <a class="layui-btn layui-btn-danger layui-btn-xs del" lay-id="{$vu.power_id}" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+                                </td>
+                            </tr>
+                            {/foreach}
+                        {/if}
+                    {/foreach}
+                {/if}
+
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script type="application/json" id="controller">{$controller | raw}</script>
+<script type="application/json" id="PowerW1">{$PowerW1 | raw}</script>
+<script type="application/json" id="PowerW2">{$PowerW2 | raw}</script>
+<script type="application/json" id="PowerW3">{$PowerW3 | raw}</script>
+
+<script src="__ADMIN__/js/power.js"></script>

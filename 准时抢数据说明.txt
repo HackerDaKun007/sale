@@ -1,0 +1,293 @@
+商城名称: 联联周边游
+开发框架: tp5.1
+参与人员: 吴坤盛、杨总、施总、黄总
+技术人员: 吴坤盛(后端及前端开发)
+公司名称: 乐美购科技有限公司
+
+数据库名称: sale
+数据库前缀: sa_
+
+/**** 数据库功能表 ****/
+
+/* 权限表列表 */
+表名: sa_power
+id:          power_id
+名称:         username
+是否展示栏目:   whether(1是，2否)
+等级:         grade(1级，2级，3级)
+父级ID:       level
+控制器:       controller
+方法名:       method
+控制器方法合并:url
+排序:        sort
+添加时间:     create_time
+修改时间:     update_time
+
+/* 角色表 */
+表名: sa_role
+id:        role_id
+名称:       username
+超级管理员   admin(1是，2否)
+权限列表ID:  power_id(1,1,2,23)
+添加时间:    create_time
+修改时间:    update_time
+
+/* 管理员表 */
+表名: sa_admin
+id:        admin_id
+头像:       img
+角色id:     role_id
+用户名称:    username
+用户密码:    password
+用户加密:    encrypt
+是否禁用:    disable(1启用，2禁用)
+邮件:       mail(可以为空)
+姓名:       name(可以为空)
+电话:       tei(可以为空)
+性别:       sex(1男，2女)
+添加时间:    create_time
+修改时间:    update_time
+
+/** 登陆记录 **/
+表名：sa_adminrecord
+id:         adminrecord_id
+用户ID:      admin_id
+ip:         ip
+ip地区：     ipaddr
+游览器:      bro
+系统:        os
+登陆时间:     record_time
+
+/** 首页轮播图 **/
+表名：sa_carousel
+id:         carousel_id
+名称:        username
+图片:        img
+url:        url
+排序:        sort
+添加时间:    create_time
+修改时间:    update_time
+
+
+/* 服务说明 */
+表名：sa_service
+id:     service_id
+标题：     title
+内容：     content
+排序:        sort
+添加时间:    create_time
+修改时间:    update_time
+
+/** 产品类别 **/
+表名: sa_category
+ID         category_id
+名称        username
+排序        sort
+添加时间:    create_time
+修改时间:    update_time
+
+/** 产品添加 **/
+表名: sa_goods
+id:        goods_id
+类别ID：    category_id
+首页展示图片: home_img
+产品名称:   username
+付款方式:   payment (1货到付款)
+详情:      details
+款式标题：  styletitle
+上下架:    shelves(1是，2否)
+轮播图是否添加: carousel (1是，2否)
+产品款式是否添加: style (1是，2否)
+运费:        freight
+添加时间:    create_time
+修改时间:    update_time
+
+/** 商品评论  **/
+表名: sa_comment
+id:        comment_id
+商品ID      goods_id
+头像        home_img
+名称        username
+内容        content
+图片1       img1
+图片2       img2
+图片3       img3
+图片4       img4
+图片5       img5
+图片6       img6
+评论日期     date
+添加时间:    create_time
+修改时间:    update_time
+
+
+/** 产品轮播图 **/
+表名:sa_goodscarousel
+id:         goodscarousel_id
+图片:        img
+产品ID:      goods_id
+排序:        sort
+
+/** 产品款式 **/
+表名:sa_goodsstyle
+id:         goodsstyle_id
+产品ID:      goods_id
+名称:        username
+价格:        price
+原价:        regular_price
+库存:        available
+排序:        sort
+
+/** 产品参数 **/
+表名称:    sa_rarameter
+id          parameter_id
+产品ID:      goods_id
+标题:        title
+内容:        content
+排序:        sort
+
+/** 设置抢购日期 **/
+表名:sa_rushdate
+ID:        rushdate_id
+日期        date
+添加时间:    create_time
+修改时间:    update_time
+
+/** 设置抢购时间 **/
+表名:sa_rushtime
+ID:        rushtime_id
+名称:       username
+日期ID：    rushdate_id
+开始时间:    start_time
+结束时间:    end_time
+添加时间:    create_time
+修改时间:    update_time
+
+/** 绑定抢购商品 **/
+表名:sa_rushgoods
+ID:        rushgoods_id
+日期ID：    rushdate_id
+抢购时间ID： rushtime_id
+产品ID:     goods_id
+抢购金额:    price_val
+抢购原价:    orprice_val
+抢购数量:    num
+留底抢购数量: num_back
+款式ID:      style_id
+添加时间:    create_time
+修改时间:    update_time
+
+/** 推荐抢购商品 **/
+表名:sa_recogoods
+id:         recogoods_id
+抢购商品id:   rushgoods_id
+日期ID:      rushdate_id
+短标题介绍:   title
+排序:        sort
+添加时间:    create_time
+修改时间:    update_time
+
+/** 用户信息 **/
+表名称:sa_user
+id          user_id
+用户名称:    username
+会员名称:    member_user
+性别:        sex
+手机号:      tel
+头像:        img
+用户密码:    password
+用户加密:    encrypt
+初始密码:    initial_pass
+是否修改初始密码:  initialyes(1是，2否);
+是否修改头像:  initialimg(1是，2否);
+添加时间:    create_time
+修改时间:    update_time
+
+/** 用户近期登陆记录 **/
+表名:sa_userlogin
+id          userlogin_id
+用户ID      user_id
+ip         ip
+ip地区:    ip_adder
+登陆时间:   login_time
+
+/** 用户收藏记录 **/
+表名： sa_favorite
+ID      favorite_id
+用户ID     user_id
+日期ID     rushdate_id
+产品ID     goods_id
+时间ID     rushtime_id
+抢购金额    price
+原价金额    orprice
+展示图片    img
+添加时间:   add_time
+
+/** 用户收货地址 **/
+表名:sa_useraddress
+id          useraddress_id
+用户ID       user_id
+姓名：        username
+手机号        tel
+所在地区      area
+详情地址      adder
+添加时间:    create_time
+修改时间:    update_time
+
+/** 订单信息 **/
+表名:sa_order
+id          order_id
+用户ID       user_id
+付款方式      payment(1是货到付款);
+姓名：        username
+手机号        tel
+所在地区      area
+详情地址      adder
+产品ID       goods_id
+产品名称      goods_user
+款式         goods_style
+数量         number
+产品金额      price
+运费         freight
+订单状态      order_status(1、待发货，2、待收货，3、确定收货，4、取消，5、待确定，6、退货，7、售后服务)
+快递公司      express
+快递单号      express_number
+订单号       order_number
+日期        time
+用户备注     user_back
+系统备注     os_back
+添加时间:    create_time
+修改时间:    update_time
+
+/** 客服微信 **/
+表名:  sa_vx
+ID         vx_id
+名称        username
+微信号      vx_user
+图片        img
+启用禁用     disable(1启用，2禁用)
+添加时间:    create_time
+修改时间:    update_time
+
+/** 关于我们 **/
+表名: sa_about
+id          about_id
+内容          content
+添加时间:    create_time
+修改时间:    update_time
+
+/** 售后服务说明 **/
+表名: sa_aftersale
+id          aftersale_id
+内容          content
+添加时间:    create_time
+修改时间:    update_time
+
+/** 网站相关设置 **/
+表名: sa_web
+id          web_id
+网站名称:     username
+SEO          seo
+SEO介绍       seointroduction
+网站logo      logo
+ipc备案       ipc
+ipc跳转地址    ipc_url
