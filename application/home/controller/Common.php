@@ -69,7 +69,6 @@ class Common extends Controller
                 $bool = true;
             }
         }
-
         if(!$bool) {
             cookie(self::$path['userName'],null);//用户名称
             cookie(self::$path['memberUser'],null);//会员名称
