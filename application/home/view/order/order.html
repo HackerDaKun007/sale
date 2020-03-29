@@ -134,10 +134,16 @@
 
 </html>
 
+<!--产品数据-->
+<script id="goods" type="application/json">{:json_encode($goods)}</script>
+<!--产品地址-->
+<script id="useraddress" type="application/json">{:json_encode($useraddress)}</script>
+
 <script src="__HOME__/js/order.js"></script>
 <script src="__HOME__/public/js/public.js"></script>
 <script src="__HOME__/public/lib/weui-citypicker/addrData.js"></script>
 <script src="__HOME__/public/lib/weui-citypicker/weui.min.js"></script>
+
 <script>
   // 地址选择器
   $('#city-picker').on('click', function () {

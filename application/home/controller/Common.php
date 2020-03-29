@@ -40,8 +40,8 @@ class Common extends Controller
         self::$dateTime = strtotime(date('Y-m-d'));//获取今天日期开始时间
         self::$dateTimeEnd = (self::$dateTime+60*60*24)-1;//获取今天结束时间
 
-        //404
-        self::$server404 = dirname(getcwd()).'/home_404.html';
+        //404页面
+        self::$server404 = dirname(getcwd()).'/thinkphp/tpl/home_404.html';
 
         //用户信息
         self::userInfo();
@@ -62,10 +62,11 @@ class Common extends Controller
         $userName = cookie(self::$path['userName']);//用户名称
         $memberUser = cookie(self::$path['memberUser']);//会员名称
         $userSex = cookie(self::$path['userSex']);//用户性别
-        $userTel = cookie(self::$path['userTel']);//用户手机号码
+        //$userTel = cookie(self::$path['userTel']);//用户手机号码
         $userImg = cookie(self::$path['userImg']);//用户头像
-        $initialPass = cookie(self::$path['initialPass']);//初始密码
+        //$initialPass = cookie(self::$path['initialPass']);//初始密码
         $userId = cookie(self::$path['userId']); //用户ID
+        //$useraddressId = cookie(self::$path['useraddressId']); //用户ID
         $bool = false;
         if(!empty($userId) && !empty($userImg)  && !empty($userSex) && !empty($memberUser)  && !empty($userName)) {
             $userId = self::repassJie($userId);

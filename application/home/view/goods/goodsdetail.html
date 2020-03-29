@@ -8,7 +8,7 @@
         <!-- 公共引入文件 -->
     {include file="public/header"}
 
-    <link rel="stylesheet" href="__HOME__/goodsdetail.css">
+    <link rel="stylesheet" href="__HOME__/css/goodsdetail.css">
     <title>商品详情</title>
 </head>
 
@@ -176,7 +176,7 @@
                     </div>
                     <div class="comment-imgs">
                         <div class="img-item"><img src="__HOME__/temp-images/comm1.jpeg" alt=""></div>
-                        <div class="img-item"><img src="__HOME/temp-images/comm3.jpeg" alt=""></div>
+                        <div class="img-item"><img src="__HOME__/temp-images/comm3.jpeg" alt=""></div>
                         <div class="img-item"><img src="__HOME__/temp-images/comm3.jpeg" alt=""></div>
                         <div class="img-item"><img src="__HOME__/temp-images/comm4.jpg" alt=""></div>
                     </div>
@@ -216,12 +216,14 @@
 </body>
 
 </html>
-
-<script id="goods">{:json_encode($goods|raw)}</script>
+<!--产品数据-->
+<script id="goods" type="application/json">{:json_encode($goods)}</script>
+<!--评论数据-->
+<script id="comment" type="application/json">{:json_encode($comment)}</script>
 <script src="__HOME__/public/lib/swiper/swiper.js"></script>
 <script src="__HOME__/public/js/public.js"></script>
 
-<script src="__HOME__/goodsdetail.js"></script>
+<script src="__HOME__/js/goodsdetail.js"></script>
 
 <script>
     // 轮播
