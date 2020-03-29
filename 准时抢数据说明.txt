@@ -194,6 +194,7 @@ id          user_id
 性别:        sex
 手机号:      tel
 头像:        img
+默认地址ID    useraddress_id
 用户密码:    password
 用户加密:    encrypt
 初始密码:    initial_pass

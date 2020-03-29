@@ -18,9 +18,10 @@ class Goods extends Common
         if(!empty($input['id']) && !empty($input['date_id']) && !empty($input['time_id'])) {
             if(is_numeric($input['id']) && is_numeric($input['time_id']) && is_numeric($input['date_id']) ) {
                 $goods = Model('Rushgoods')->cacheGoods($input['id'],$input['date_id'],$input['time_id']);
+
                 if($goods) {
                     return view('',[
-                        'goods' => Model('Rushgoods')->cacheGoods($input['id'],$input['date_id'],$input['time_id']),
+                        'goods' => $goods,
                         'comment' => Model('Comment')->cacheSelect(false,$input['id']),
                     ]);
                     exit;

@@ -103,6 +103,7 @@ return [
     'initialPass' => 'initialPass', //初始密码
     'userId' => 'userId', //用户ID
     'userAvatar' => '/avatar/', //头像地址
+    'useraddressId' => 'useraddressId', //默认地址ID
 
 
     /**
