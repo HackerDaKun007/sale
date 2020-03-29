@@ -28,7 +28,7 @@ class Order extends Common
                 if($goods) {
                     return view('',[
                         'goods' => $goods,
-                        'useraddress' => Model('Useraddress')->userCache($input['id']),
+                        'useraddress' => Model('Useraddress')->userCache(self::$userId),
                     ]);
                     exit;
                 }
@@ -38,8 +38,27 @@ class Order extends Common
     }
 
     public function orderconfirm() {
-
-        return view();
+        $input = self::$reques->get();
+        if(!empty($input['id'])) {
+            $id = self::repassJie($input['id']);
+            if(is_numeric($id)) {
+                $data = cache(self::$path['Userorder']."_".self::$userId);
+                if($data) {
+                    foreach($data as $v) {
+                        if($id == $v['order_id']) {
+                            return view('',[
+                                'time' => date('Y-m-d H:i:s',$data['create_time']),
+                                'number' => $data['order_number'],
+                                'id' => $input['id'],
+                            ]);
+                            exit;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+       require(self::$server404);
     }
 
     public function orderdetail() {
@@ -60,8 +79,38 @@ class Order extends Common
             }
             $goods = Model('Rushgoods')->cacheGoods($input['id'],$input['date_id'],$input['time_id']);
             if($goods) {
-                if($goods['start_time'] <= self::$serverTimeEnd) {
+                if($goods['start_time'] <= self::$serverTimeEnd && $goods['end_time'] <= self::$serverTimeEnd) {
+                    //判断收货地址
+                    $address = Model('Useraddress')->userCache(self::$userId);
+                    $bool = false;
+                    if($address) { //如果地址存在，判断提交过来的地址ID
+                        if(!empty($input['adder_id'])) {
+                            foreach($address as $v) {
+                                if($v['useraddress_id'] == $input['adder_id']) {
+                                    $bool = true;
+                                    $data['username'] = $v['username'];
+                                    $data['tel'] = $v['tel'];
+                                    $data['area'] = $v['area'];
+                                    $data['adder'] = $v['adder'];
+                                    break;
+                                }
+                            }
+                        }else {
+                            $msg = '请选择收货地址';
+                        }
 
+                    }
+                    //判断地址数据
+                    if($bool) {
+                        if(!$validate->scene('user')->check($data)) {
+                            $msg = $validate->getError();
+                        }else {
+                            $model = Model('Order')->add($data,$goods);
+                            $msg = $model['msg'];
+                            $code = $model['code'];
+                            $url = '/home/order/orderconfirm.html?id='.self::respass($model['data']);
+                        }
+                    }
                 }
             }
         }

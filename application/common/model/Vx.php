@@ -50,6 +50,7 @@ class Vx extends  Common {
                 }
                 $msg = $bool?'修改成功':'添加成功';
                 $code = 1;
+                self::cacheSelect(true);
                 self::commit();
             }
         }catch (Exception $e) {
@@ -72,6 +73,7 @@ class Vx extends  Common {
                     unlink(self::$path['upload'].'/'.$find['img']);
                     $code = 1;
                     $msg = '删除成功';
+                    self::cacheSelect(true);
                     self::commit();
                 }
             }catch (Exception $e) {
@@ -83,10 +85,10 @@ class Vx extends  Common {
     }
 
     //更新缓存
-    public static function cacehSelect($bool=false) {
+    public static function cacheSelect($bool=false) {
         $data = cache(self::$path['vxUser']);
         if(!$data && $bool) {
-            $data = self::where('disable','=',1)->field('username,vx_id,img,disable')->select()->toArray();
+            $data = self::where('disable','=',1)->field('username,vx_user,img')->select()->toArray();
             cache(self::$path['vxUser'],$data);
         }
         return $data;

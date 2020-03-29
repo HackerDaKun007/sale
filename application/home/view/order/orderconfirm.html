@@ -24,20 +24,20 @@
                 <i class="iconfont icon-check1"></i>
             </div>
             <div class="order-info">
-                <p class="order-id">订单编号：12134588411</p>
-                <p class="date">购买日期：2020-03-23 16:58:26</p>
+                <p class="order-id">订单编号：{$number}</p>
+                <p class="date">购买日期：{$time}</p>
             </div>
             <div class="btns">
                 <a href='/'>返回首页</a>
-                <a href="/home/order/orderdetail.html">查看订单</a>
+                <a href="/home/order/orderdetail.html?id={$id}">查看订单</a>
             </div>
             <div class="wx-info">
                 <div class="title">
                     <p>相关信息请联系微信客服</p>
-                    <p id="wx-id">客服ID：<span>wx12488541</span></p>
+                    <p id="wx-id">客服ID：<span>{$vx.vx_user}</span></p>
                 </div>
                 <div class="qrcode">
-                    <img src="__HOME__/temp-images/qrcode.gif" alt="">
+                    <img src="/upload/{$vx.img}" alt="">
                 </div>
             </div>
             <div class="tips">
