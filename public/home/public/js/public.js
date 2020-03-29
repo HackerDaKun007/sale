@@ -33,8 +33,8 @@ var wxPopHtml = '';
 var popInfoHtml = '';
 var maskHtml = '<div class="mask"></div>'
 var wxDetail = {
-  wxID: 'wx-222222',
-  qrcode: '../temp-images/qrcode.gif'
+  wxID: vxId,
+  qrcode: imageaUrl+vxImg
 }
 
 wxPopHtml = `<div class="public-pop-wx">
