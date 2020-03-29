@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="cache-control" content="max-age=36000"/>
+    <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+    <!-- 公共引入文件 -->
+    <script src="/home/public/js/share.js"></script>
+    <link rel="stylesheet" href="/home/public/css/reset.css" />
+    <link rel="stylesheet" href="/home/public/css/_public.css" />
+    <link rel="stylesheet" href="/home/font/iconfont.css">
+
+    <link rel="stylesheet" href="/home/css/404.css" />
+
+    <title>此页面不存在</title>
+</head>
+<body>
+<div class="wrapper">
+    <header class="header">
+        <div class="page-title">404页面</div>
+    </header>
+    <div class="notfound">
+        <p class="title">404</p>
+        <p class="warn"><i class="iconfont icon-404"></i> 抱歉，此页面不存在</p>
+        <div class="btns">
+            <a href="/">回到首页</a>
+            <button type="button" id="back">返回上一页</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script>
+    document.getElementById('back').onclick = function() {
+        window.history.back();
+    }
+</script>
