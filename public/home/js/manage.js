@@ -1,15 +1,29 @@
 var tipsEl = $('#tips');
 var initPassEl = $('#initial-pass');
+var clientInfoEl = $('.client-info');
+var clientInfoHtml = '';
 
-document.cookie = `init_pass=2546789`;
-var cookie = document.cookie;
-var initPass = cookie.split('=')[1];
+var userName = getCookie('userName');
+var memberUser = getCookie('memberUser');
+var userImg = getCookie('userImg');
+var initialPass = getCookie('initialPass');
 
-if (typeof +initPass == 'number') {
-    initPassEl.eq(0).find('.pass').html(initPass);
-    tipsEl.show();
+if (initialPass != null && initialPass != '') {
+  initPassEl
+    .eq(0)
+    .find('.pass')
+    .html(initialPass);
+  tipsEl.show();
+} else {
+  tipsEl.hide();
+  initPassEl.hide();
 }
-else {
-    tipsEl.hide();
-    initPassEl.hide();
-}
+
+clientInfoHtml = `
+    <div class="avatar"><img src=${userImg} alt=""></div>
+    <div class="client-name">
+      <p class="name">${userName}</p>
+      <p class="id">会员名：${memberUser}</p>
+    </div>
+`;
+clientInfoEl.html(clientInfoHtml);

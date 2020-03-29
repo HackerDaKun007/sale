@@ -1,35 +1,98 @@
+// 测试数据
 var data = [{
     userId: 00000,
-    address: 'sss',
-    goods: [],
-}]
+    goods: [
+        {
+            id: 1,
+            title: '飞克正品全自动机械手表男士时尚潮流防水曲弧面超薄休闲真皮腕表',
+            name: '飞克正品全自动机械手表',
+            img: '/temp-images/img2.jpeg',
+            value: {
+                id: 01,
+                name: '蓝色表盘',
+                price: 499
+            }
+        }
+    ],
+    addressData: [{ 
+            id: 101,
+            username: '赵前',
+            phone: 13425794121,
+            address: '广东省广州市越秀区东园路123号'
+        },
+        {
+            id: 102,
+            username: '孙艺',
+            phone: 13425794121,
+            address: '广东省广州市越秀区东园路123号'
+        },
+        {
+            id: 103,
+            username: '李二',
+            phone: 13425794121,
+            address: '广东省广州市越秀区东园路123号'
+        },
+        {
+            id: 104,
+            username: '周吴',
+            phone: 13425794121,
+            address: '广东省广州市越秀区东园路123号'
+        },
+    ]
+}];
 
+var addressId = $('#address_id');
+var goodsValue = $('#goods_value');
 var addressInfo = $('.address-info');
 var addressInfoHtml = '';
+var addressList = $('.address-list');
+var addressListHtml = '';
+var goodsDetail = $('.goods-detail');
+var goodsDetailHtml = '';
+var price = $('.payment-bar .price');
+var priceHtml = '';
 
-if (data[0].address) {
-    addressInfoHtml = `
-        <div class="address-detail" id="haveaddress">
-            <i class="iconfont icon-iconfontdingwei"></i>
-            <div class="address">
-            <div class="top">
-                <span class="name">刘生</span>
-                <span class="telnum">12345678912</span>
-            </div>
-            <div class="bottom">广东省广州市越秀区南京路123456广东省广州市越秀区南京路123456</div>
-            </div>
-            <i class="iconfont icon-right"></i>
-        </div>`;
+var addressData = data[0].addressData;
+if (addressData) {
+    addressData.forEach(function (e, k) {
+        if (k == 0) {
+            addressId.val(e.id);
+            addressInfoHtml = `
+                <div class="address-detail" id="haveaddress">
+                    <i class="iconfont icon-iconfontdingwei"></i>
+                    <div class="address">
+                    <div class="top">
+                        <span class="name">${e.username}</span>
+                        <span class="telnum">${e.phone}</span>
+                    </div>
+                    <div class="bottom">${e.address}</div>
+                    </div>
+                    <i class="iconfont icon-right"></i>
+                </div>`;
+        }
+        addressListHtml += `
+            <li class="address-item">
+                <div class="first-word">${e.username[0]}</div>
+                <div class="address">
+                <div class="top">
+                    <span class="name">${e.username}</span>
+                    <span class="telnum">${e.phone}</span>
+                </div>
+                <div class="bottom">${e.address}</div>
+                </div>
+            </li>
+            `;
+    })
 } else {
     addressInfoHtml = `<div id="noaddress">
     <form action="">
       <div class="form-item">
         <label for="username">姓　　名：</label>
-        <input type="text" id="username" placeholder="请输入收货人姓名" />
+        <input type="text" id="username" name="username" placeholder="请输入收货人姓名" />
       </div>
       <div class="form-item">
         <label for="telnum">手机号码：</label>
-        <input type="text" id="telnum" placeholder="请输入手机号码" />
+        <input type="text" id="telnum" name="telnum" placeholder="请输入手机号码" />
       </div>
       <div class="form-item">
         <label for="region">所在地区：</label>
@@ -37,12 +100,69 @@ if (data[0].address) {
       </div>
       <div class="form-item">
         <label for="address">详细地址：</label>
-        <input type="text" id="address" placeholder="请输入详细地址" />
+        <input type="text" id="address" name="address" placeholder="请输入详细地址" />
       </div>
     </form>
   </div>`
 }
+
+var goodsData = data[0].goods[0];
+goodsValue.val(goodsData.value.id);
+goodsDetailHtml = `
+    <img src=${goodsData.img}>
+    <div>
+    <div class="goodsinfo">
+        <p class="goodsname">${goodsData.name}</p>
+        <p class="goodstype">${goodsData.value.name}</p>
+    </div>
+
+    <p class="price">
+        ￥${goodsData.value.price}/件
+    </p>
+`;
+priceHtml = ` <span>实付款：</span>
+        <span>￥${goodsData.value.price}</span>`
+
 addressInfo.html(addressInfoHtml);
+addressList.html(addressListHtml);
+goodsDetail.html(goodsDetailHtml);
+
+var toAddressPage = $('#haveaddress');
+var addressPage = $('#address-page')
+var main = $('.main');
+var pageHeader = $('.public-header');
+
+var addressItem = $('.address-item');
+addressItem.on('click', function() {
+    
+    let index = $(this).index();
+    let address = addressData[index];
+    addressId.val(address.id);
+
+    addressHtml = `
+        <i class="iconfont icon-iconfontdingwei"></i>
+        <div class="address">
+        <div class="top">
+            <span class="name">${address.username}</span>
+            <span class="telnum">${address.phone}</span>
+        </div>
+        <div class="bottom">${address.address}</div>
+        </div>
+        <i class="iconfont icon-right"></i>
+    `;
+    addressPage.stop().animate({
+        'margin-right': '-100%',
+    }, 300, function () {
+        main.show();
+        pageHeader.show()
+        addressPage.removeClass('active')
+    });
+    toAddressPage.html(addressHtml);
+})
+var form = $('#form');
+var formData = getForm(form);
+console.log(formData);
+
 
 // 增加和减少购买数量
 var decreaseBtn = $('#decrease');
@@ -100,20 +220,15 @@ window.addEventListener("popstate", function (e) {
             }
         });
     } else {
-        orderAddr = false;
+        orderAddr = true;
     }
 
     window.history.replaceState(state, "title", "#");
 }, false);
 
 // 切换到选择地址
-var toAddressPage = $('#haveaddress');
-var addressPage = $('#address-page')
-var main = $('.main');
-var pageHeader = $('.public-header');
-
 toAddressPage.on('click', function () {
-    orderAdder = true;
+    orderAddr = false;
     main.hide();
     pageHeader.hide()
     addressPage.addClass('active')
@@ -133,11 +248,10 @@ $('.address-back').on('click', function () {
         'margin-right': '-100%',
     }, 300, function () {
         main.show();
-        pageHeader.show()
-        addressPage.removeClass('active')
-    })
+        pageHeader.show();
+        addressPage.removeClass('active');
+    });
 });
-
 
 $('.add-btn').on('click', function (e) {
     // 不添加目标URL到历史URL堆栈

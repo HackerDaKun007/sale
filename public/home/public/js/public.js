@@ -114,6 +114,24 @@ function lazyload() {
     }
   }
 };
-    // console.log(window.history.length);
 
+// 获取form内容
+var getForm = function(val) {
+  var params = $(val).serializeArray();
+  // params = decodeURIComponent(params, true);
+  return params;
+}
+
+// 获取cookie
+function getCookie(name) {
+  let strCookie =document.cookie;
+  let arrCookie = strCookie.split(';');
+  for (let i of arrCookie) {
+    let arr = i.split('=');
+    if (arr[0].trim() == name) {
+      return  decodeURIComponent(arr[1], true);
+    }
+  }
+  return '';
+}
 
