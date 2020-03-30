@@ -42,7 +42,7 @@ class User extends Common {
             'username' => $username,
             'initial_pass' => $initial,
             'sex' => rand(1,2),
-            'useraddressId' => '',
+            'useraddress_id' => '',
             'tel' => 0,
         ];
         $code = 0;
@@ -76,7 +76,7 @@ class User extends Common {
         cookie(self::$path['userTel'],$data['tel']);//用户手机号码
         cookie(self::$path['userImg'],self::$path['userAvatar'].$data['img']);//用户头像
         cookie(self::$path['initialPass'],$data['initial_pass']);//初始密码
-        cookie(self::$path['useraddressId'],$data['useraddressId']);//收货地址ID
+        cookie(self::$path['useraddressId'],$data['useraddress_id']);//收货地址ID
         cookie(self::$path['userId'],self::respass($id)); //用户ID
     }
 
