@@ -110,6 +110,8 @@ $(function() {
               soldPercent = Math.floor(
                 ((i.num_back - i.num) / i.num_back) * 100
               ) //换算成已售百分比
+              console.log(soldPercent, i.num_back, i.num);
+              
               startListHtml += `
 			  <a class="list-item" href="./goods/goodsdetail.html?id=${
           i.goods_id
@@ -122,7 +124,7 @@ $(function() {
 						  <span class="progress-bar" style="--progressWidth:${
                 soldPercent <= 5 ? 5 : soldPercent
               }%" data-percent="${soldPercent}%"></span>
-						  <div class="sold">已抢${i.num_back - num}件</div>
+						  <div class="sold">已抢${i.num_back - i.num}件</div>
 					  </div>
 				  </div>
 				  <div class="sale-bottom">
@@ -155,7 +157,7 @@ $(function() {
 						  <span class="progress-bar" style="--progressWidth:${
                 soldPercent <= 5 ? 5 : soldPercent
               }%" data-percent="${soldPercent}%"></span>
-						  <div class="sold">已抢${i.num_back - num}件</div>
+						  <div class="sold">已抢${i.num_back - i.num}件</div>
 					  </div>
 				  </div>
 				  <div class="sale-bottom">
@@ -242,12 +244,12 @@ $(function() {
       .addClass('active')
 
     goodsArr[num].map(function(i) {
-      soldPercent = Math.floor((i.sold / i.total) * 100) //换算成已售百分比
+      soldPercent = Math.floor(((i.num_back - i.num) / i.num_back) * 100) //换算成已售百分比
       saleListHtml += `
           <a class="list-item" href="./goods/goodsdetail.html?id=${
             i.goods_id
           }&date_id=${i.rushdate_id}&time_id=${i.rushtime_id}">
-          <img src=${i.img} alt="" />
+          <img src=${i.home_img} alt="" />
           <div class="detail">
               <div class="sale-top">
                   <div class="name">${i.title}</div>
@@ -255,13 +257,13 @@ $(function() {
                       <span class="progress-bar" style="--progressWidth:${
                         soldPercent <= 5 ? 5 : soldPercent
                       }%" data-percent="${soldPercent}%"></span>
-                      <div class="sold">已抢${i.sold}件</div>
+                      <div class="sold">已抢${i.num_back - i.num}件</div>
                   </div>
               </div>
               <div class="sale-bottom">
                   <div class="price">
-                      <div class="now-price">￥<span>${i.price}</span></div>
-                      <div class="old-price">￥<span>${i.oldPrice}</span></div>
+                      <div class="now-price">￥<span>${i.price_val}</span></div>
+                      <div class="old-price">￥<span>${i.orprice_val}</span></div>
                   </div>
                   <div class="sale-btn">即将开抢</div>
               </div>
