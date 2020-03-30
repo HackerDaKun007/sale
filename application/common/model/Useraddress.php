@@ -27,7 +27,7 @@ class Useraddress extends Common {
         try {
             if(self::isUpdate($bool)->allowField($allow)->save($data,$id)) {
                 $data['useraddress_id'] = $bool?$data['useraddress_id']:$this->id;
-                $msg = $bool?'修改失败':'添加失败';
+                $msg = $bool?'修改成功':'添加成功';
                 $code = 1;
                 if($bool) { //修改缓存
                     self::editCache($data);

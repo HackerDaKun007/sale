@@ -88,13 +88,15 @@ class Mine extends Common
         }
         $bool = false;
         $data = '';
-       foreach ($useradder as $v) {
-           if($v['useraddress_id'] == $input['id']) {
-               $data = $v;
-               $bool = true;
-               break;
-           }
-       }
+        if($useradder) {
+            foreach ($useradder as $v) {
+                if($v['useraddress_id'] == $input['id']) {
+                    $data = $v;
+                    $bool = true;
+                    break;
+                }
+            }
+        }
        if($bool) {
            return view('',[
                'data' => $data,
