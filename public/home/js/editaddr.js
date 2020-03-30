@@ -1,30 +1,35 @@
-;$(function() {
-    var username = $('#username');
-    var telnum = $('#telnum');
-    var region = $('#city-picker');
-    var address = $('#address');
-    var addressForm = $('.address-form');
+var username = $('#username');
+var telnum = $('#telnum');
+var region = $('#city-picker');
+var address = $('#address');
+var addressForm = $('.address-form');
 
-    addressForm.find('.confirm-btn').bind('click', function () {
+addressForm.find('.confirm-btn').bind('click', function () {
+    let form = getForm(addressForm);
+    
+    if (form[0].value.length < 2) {
+        alertInfo('请输入收货人姓名');
 
-        if (username.val().length < 2) {
-            alertInfo('请输入收货人姓名');
-            username.focus();
+    } else if (form[1].value.length != 11 && typeof +form[1].value != 'number') {
+        alertInfo('请输入手机号码');
 
-        } else if (telnum.val().length != 11) {
-            alertInfo('请输入手机号码');
-            telnum.focus();
+    } else if (!form[2].value) {
+        alertInfo('请选择所在地区');
 
-        } else if (!region.val()) {
-            alertInfo('请选择所在地区');
+    } else if (form[3].value.length < 5) {
+        alertInfo('请填写详细地址');
 
-        } else if (address.val().length < 5) {
-            alertInfo('请填写详细地址');
-            address.focus();
-        } 
-
-        return false;
-    });    
+    } else {
+        _post({
+            url: '',
+            data: form,
+            success: function(msg) {
+                console.log(msg);
+                
+            }
+        })
+    }
+});    
    
     // let refer = document.referrer;
     // let splitArr = refer.split('/');
@@ -42,4 +47,3 @@
     // })
     // console.log(refer);
     
-});
