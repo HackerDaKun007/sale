@@ -56,16 +56,16 @@ class Mine extends Common
 
     //修改地址
     public function editaddress() {
+        $useradder = cache(self::$path['UserAdder']."_".self::$userId);
+        $input = self::$reques->param();
         //修改添加地址
         if(self::yzPost()) {
             $code = 0;
             $msg = '修改失败';
-            $input = self::$reques->post();
             $validate = Validate('Useraddress');
             if(!$validate->scene('edit')->check($input)) {
                 $msg = $validate->getError();
             }else {
-                $useradder = cache(self::$path['UserAdder']."_".self::$userId);
                 if($useradder) {
                     $bool = false;
                     foreach($useradder as $v) {
@@ -86,7 +86,22 @@ class Mine extends Common
             echo self::dataJson($code,$msg);
             exit;
         }
-        return view();
+        $bool = false;
+        $data = '';
+       foreach ($useradder as $v) {
+           if($v['useraddress_id'] == $input['id']) {
+               $data = $v;
+               $bool = true;
+               break;
+           }
+       }
+       if($bool) {
+           return view('',[
+               'data' => $data,
+           ]);
+       }else {
+            require (self::$server404);
+       }
     }
 
     //删除收货地址
