@@ -85,10 +85,10 @@ class Manage extends Common
         if(self::yzPost()) {
             $input = self::$reques->post();
             $validate = Validate('User');
+            $input['user_id'] = self::$userId;
             if(!$validate->scene('passw')->check($input)) {
                 $msg = $validate->getError();
             }else {
-                $input['user_id'] = self::$userId;
                 $model = Model('User');
                 $data = $model->userPassw($input);
                 $code = $data['code'];

@@ -16,4 +16,23 @@ class Login extends Common
     public function login() {
        return view();
     }
+
+    public function loginadd() {
+        $code = 0;
+        $msg = 'error';
+        if(self::yzPost()) {
+            $input = self::$reques->post();
+            $validate = Validate('User');
+            $input['user_id'] = self::$userId;
+            if(!$validate->scene('login')->check($input)) {
+                $msg = $validate->getError();
+            }else {
+                $model = Model('User');
+                $data = $model->login($input);
+                $code = $data['code'];
+                $msg = $data['msg'];
+            }
+        }
+        echo self::dataJson($code,$msg);
+    }
 }

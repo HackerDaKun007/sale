@@ -38,6 +38,7 @@ class User extends Validate {
     protected $scene = [
         'passw' => ['yzm','orpassword','password','ropassword','user_id'],
         'password' => ['password','ropassword','user_id'],
+        'login' => ['username','password','yzm'],
         'tel' => ['tel'],
         'sex' => ['sex'],
         'del' => ['user_id'],
