@@ -16,7 +16,7 @@ use think\Validate;
 class Useraddress extends Validate {
 
     protected $rule = [
-        'username' => 'require|length:3,32',
+        'username' => 'require|length:1,32',
         'tel' => 'require|length:11|mobile',
         'area' => 'require|length:3,32|length:1,150',
         'adder' => 'require|length:3,150',
