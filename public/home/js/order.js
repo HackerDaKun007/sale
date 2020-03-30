@@ -1,48 +1,23 @@
-// 测试数据
-var data = [{
-    userId: 00000,
-    goods: [
-        {
-            id: 1,
-            title: '飞克正品全自动机械手表男士时尚潮流防水曲弧面超薄休闲真皮腕表',
-            name: '飞克正品全自动机械手表',
-            img: '/temp-images/img2.jpeg',
-            value: {
-                id: 01,
-                name: '蓝色表盘',
-                price: 499
-            }
-        }
-    ],
-    addressData: [{ 
-            id: 101,
-            username: '赵前',
-            phone: 13425794121,
-            address: '广东省广州市越秀区东园路123号'
-        },
-        {
-            id: 102,
-            username: '孙艺',
-            phone: 13425794121,
-            address: '广东省广州市越秀区东园路123号'
-        },
-        {
-            id: 103,
-            username: '李二',
-            phone: 13425794121,
-            address: '广东省广州市越秀区东园路123号'
-        },
-        {
-            id: 104,
-            username: '周吴',
-            phone: 13425794121,
-            address: '广东省广州市越秀区东园路123号'
-        },
-    ]
-}];
+var goodsData = getJson($('#goods'));
+var addressData = getJson($('#useraddress'));
+var buyNum = getSearchWord('num');
+var goodsStyleId = getSearchWord('goodsstyle_id');
+var buyNumber = $('#buynumber');
+buyNumber.val(buyNum);
 
+
+
+var goodsId = $('#goods_id');
 var addressId = $('#address_id');
-var goodsValue = $('#goods_value');
+var goodsstyle_id = $('#goodsstyle_id');
+var date_id = $('#date_id');
+var time_id = $('#time_id');
+goodsId.val(goodsData.goods_id);
+goodsstyle_id.val(goodsStyleId);
+date_id.val(getSearchWord('date_id'));
+time_id.val(getSearchWord('time_id'));
+
+
 var addressInfo = $('.address-info');
 var addressInfoHtml = '';
 var addressList = $('.address-list');
@@ -52,20 +27,19 @@ var goodsDetailHtml = '';
 var price = $('.payment-bar .price');
 var priceHtml = '';
 
-var addressData = data[0].addressData;
 if (addressData) {
     addressData.forEach(function (e, k) {
         if (k == 0) {
-            addressId.val(e.id);
+            addressId.val(e.useraddress_id);
             addressInfoHtml = `
                 <div class="address-detail" id="haveaddress">
                     <i class="iconfont icon-iconfontdingwei"></i>
                     <div class="address">
                     <div class="top">
                         <span class="name">${e.username}</span>
-                        <span class="telnum">${e.phone}</span>
+                        <span class="telnum">${e.tel}</span>
                     </div>
-                    <div class="bottom">${e.address}</div>
+                    <div class="bottom">${e.area + e.adder}</div>
                     </div>
                     <i class="iconfont icon-right"></i>
                 </div>`;
@@ -76,9 +50,9 @@ if (addressData) {
                 <div class="address">
                 <div class="top">
                     <span class="name">${e.username}</span>
-                    <span class="telnum">${e.phone}</span>
+                    <span class="telnum">${e.tel}</span>
                 </div>
-                <div class="bottom">${e.address}</div>
+                <div class="bottom">${e.area + e.adder}</div>
                 </div>
             </li>
             `;
@@ -106,26 +80,38 @@ if (addressData) {
   </div>`
 }
 
-var goodsData = data[0].goods[0];
-goodsValue.val(goodsData.value.id);
+var goodsStyleName = '';
+var priceText = '';
+var goodsPrice = 0;
+for (let i of goodsData.sty) {
+    if (i.goodsstyle_id == goodsStyleId) {
+        goodsPrice = i.price;
+        goodsStyleName =  `
+        <p class="goodstype">${i.username}</p>
+        `;
+        priceText =  `
+        ￥${i.price}/件
+        `;
+        priceHtml = ` <span>实付款：</span>
+        <span id="total-price">￥${i.price * buyNum}</span>`
+    }
+}
 goodsDetailHtml = `
-    <img src=${goodsData.img}>
+    <img src=${goodsData.home_img}>
     <div>
     <div class="goodsinfo">
-        <p class="goodsname">${goodsData.name}</p>
-        <p class="goodstype">${goodsData.value.name}</p>
+        <p class="goodsname">${goodsData.username}</p>
+        ${goodsStyleName}
     </div>
 
     <p class="price">
-        ￥${goodsData.value.price}/件
+        ${priceText}
     </p>
 `;
-priceHtml = ` <span>实付款：</span>
-        <span>￥${goodsData.value.price}</span>`
-
 addressInfo.html(addressInfoHtml);
 addressList.html(addressListHtml);
 goodsDetail.html(goodsDetailHtml);
+price.html(priceHtml);
 
 var toAddressPage = $('#haveaddress');
 var addressPage = $('#address-page')
@@ -137,16 +123,16 @@ addressItem.on('click', function() {
     
     let index = $(this).index();
     let address = addressData[index];
-    addressId.val(address.id);
+    addressId.val(address.useraddress_id);
 
     addressHtml = `
         <i class="iconfont icon-iconfontdingwei"></i>
         <div class="address">
         <div class="top">
             <span class="name">${address.username}</span>
-            <span class="telnum">${address.phone}</span>
+            <span class="telnum">${address.tel}</span>
         </div>
-        <div class="bottom">${address.address}</div>
+        <div class="bottom">${address.area + address.adder}</div>
         </div>
         <i class="iconfont icon-right"></i>
     `;
@@ -158,27 +144,24 @@ addressItem.on('click', function() {
         addressPage.removeClass('active')
     });
     toAddressPage.html(addressHtml);
-})
-var form = $('#form');
-var formData = getForm(form);
-console.log(formData);
-
+});
 
 // 增加和减少购买数量
 var decreaseBtn = $('#decrease');
 var increaseBtn = $('#increase');
-var buyNumber = $('#buynumber');
-
+var totalPrice = $('#total-price');
 decreaseBtn.on('click', function () {
     let val = buyNumber.val() * 1;
     let num = val > 1 ? val - 1 : 1;
     buyNumber.val(num);
+    totalPrice.text('￥'+ num * goodsPrice);
     return false;
 })
 increaseBtn.on('click', function () {
     let val = buyNumber.val() * 1;
     let num = val < 5 ? val + 1 : 5;
     buyNumber.val(num);
+    totalPrice.text('￥'+ num * goodsPrice);
     return false;
 })
 
@@ -188,6 +171,7 @@ decreaseBtn.on('doubleclick', function (e) {
 increaseBtn.on('doubleclick', function (e) {
     e.preventDefault();
 });
+
 
 var state = {
     title: "title",
@@ -263,6 +247,8 @@ let orderStore = [];
 var storeData;
 
 $('#toPay').on('click', function (e) {
+    let form = getForm($('#form'));
+
     // 获取localstorage的order信息
     let nowTime = Math.floor(Date.now() /1000);
     storeData = JSON.parse(localStorage.getItem('order'));
@@ -274,12 +260,11 @@ $('#toPay').on('click', function (e) {
         if (a < nowTime) {
             localStorage.removeItem('order');
         }
-        
     }
     // 设置localstorage
     if (storeData == null || storeData.length < 3) {
         let orderInfo = {
-            goodsId: 12245,
+            goodsId: goodsData.goods_id,
             num,
             date: nowTime
         }
@@ -288,6 +273,13 @@ $('#toPay').on('click', function (e) {
         localStorage.setItem('order', JSON.stringify(orderStore));
         
         // 提交数据
+        _post({
+            url: '/home/order/addorder.html',
+            data: form,
+            success: function(msg) {
+                console.log(msg);
+            }
+        })
     }
     // 如果超过3条则不允许购买
     else if (storeData.length >= 3){
@@ -305,7 +297,7 @@ var time2 = 30000; //30秒
 var timer = setInterval(function () {
     singleConfirm('您的订单很快就失效了，请尽快支付');
     setTimeout(function () {
-        window.location.href = '../../index.html';
+        window.location.href = '/';
     }, time2);
     clearInterval(timer);
 }, time);

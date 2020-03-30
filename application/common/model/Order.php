@@ -42,7 +42,7 @@ class Order extends Common {
             if($goods['num'] > 0) {//判断库存是否
 
                 foreach($goods['sty'] as $k => $v) {
-                    if($v['goods_style_id'] = $v['goodsstyle_id']) {
+                    if($data['goodsstyle_id'] = $v['goodsstyle_id']) {
                         $price = $v['price'];
                         $goods_style = $v['username'];
                         $goods['sty'][$k]['available'] = $goods['sty'][$k]['available']-1;
@@ -90,6 +90,7 @@ class Order extends Common {
                             };
                             $msg = '添加成功';
                             $code = 1;
+                            
                             //是否要添加地址
                             if(!$bool) {
                                 Model('Useraddress')->editAdd($data);

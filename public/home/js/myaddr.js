@@ -4,8 +4,7 @@ noContent.hide();
 var addressList = $('.address-list');
 var addressListHtml = '';
 
-var addressData = decodeURIComponent($('#adder').html(), true);
-addressData = JSON.parse(addressData);
+var addressData = getJson($('#adder'));
 
 if (addressData) {
     noContent.hide();

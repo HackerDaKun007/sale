@@ -15,11 +15,14 @@
   <div class="wrapper">
     <main class="main">
       <form action="javascript:;" id="form">
-        <input type="hidden" name="address_id" value="" id="address_id" />
+        <input type="hidden" name="goods_id" value="" id="goods_id" />
+        <input type="hidden" name="useraddress_id" value="" id="address_id" />
+        <input type="hidden" name="date_id" value="" id="date" />
+        <input type="hidden" name="time_id" value="" id="time_id" />
         <section class="address-info">
         </section>
 
-        <input type="hidden" name="goods_value" value="" id="goods_value" />
+        <input type="hidden" name="goodsstyle_id" value="" id="goodsstyle_id" />
         <section class="order-detail">
           <div class="goods-detail">
           </div>
@@ -28,7 +31,7 @@
             <p class="title">购买数量 <span>（限购5件）</span></p>
             <div>
               <button id="decrease"><i class="iconfont icon-jian"></i></button>
-              <input type="text" readonly value="1" id="buynumber" name="buynum">
+              <input type="text" readonly value="1" id="buynumber" name="number">
               <button id="increase"><i class="iconfont icon-jia"></i></button>
             </div>
           </div>
@@ -40,7 +43,7 @@
 
         <section class="remark-area">
           <label for="remark">备注：</label>
-          <textarea name="remark" rows="3" placeholder="请输入内容"></textarea>
+          <textarea name="user_back" rows="3" placeholder="请输入内容"></textarea>
         </section>
       </form>
     </main>
@@ -59,7 +62,7 @@
       <div class="header-bar">
         <button type="button" class="iconfont icon-right address-back"></button>
         <span class="page-title">选择地址</span>
-        <a href="/home/mine/editaddress.html" class="add-btn">添加新地址</a>
+        <a href="/home/mine/addader.html" class="add-btn">添加新地址</a>
       </div>
     </div>
 

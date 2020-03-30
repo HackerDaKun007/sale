@@ -20,7 +20,7 @@ $(function () {
 					title = '距结束还剩'
 					goodsEnd.push(e.end_time)
 					scrollListHtml += `
-					<a class="item" href="./goods/goodsdetail.html?id=${e.goods_id}&date_id=${
+					<a class="item" href="/home/goods/goodsdetail.html?id=${e.goods_id}&date_id=${
             e.rushdate_id
           }&time_id=${e.rushtime_id}">
 						<div class="timer timer-n">
@@ -47,7 +47,7 @@ $(function () {
 						new Date(e.start_time * 1000).getDate() - new Date().getDate()
 
 					scrollListHtml += `
-					<a class="item" href="./goods/goodsdetail.html?id=${e.goods_id}&date_id=${e.rushdate_id}&time_id=${e.rushtime_id}">
+					<a class="item" href="/home/goods/goodsdetail.html?id=${e.goods_id}&date_id=${e.rushdate_id}&time_id=${e.rushtime_id}">
 						<div class="timer">
 							<div>${title}</div>
 							<span>${dayInfo}天</span>
@@ -113,7 +113,7 @@ $(function () {
 							) //换算成已售百分比
 
 							startListHtml += `
-			  <a class="list-item" href="./goods/goodsdetail.html?id=${
+			  <a class="list-item" href="/home/goods/goodsdetail.html?id=${
           i.goods_id
         }&date_id=${i.rushdate_id}&time_id=${i.rushtime_id}">
 			  <img src='_HOME_/temp-images/default.jpg' data-src=${i.home_img} alt="" />
@@ -148,7 +148,7 @@ $(function () {
 									((i.num_back - i.num) / i.num_back) * 100
 								) //换算成已售百分比
 								activeSaleHtml += `
-				  <a class="list-item" href="./goods/goodsdetail.html?id=${
+				  <a class="list-item" href="/home/goods/goodsdetail.html?id=${
             i.goods_id
           }&date_id=${i.rushdate_id}&time_id=${i.rushtime_id}">
 				  <img src='/temp-images/default.jpg' data-src=${i.home_img} alt="" />
@@ -248,7 +248,7 @@ $(function () {
 		goodsArr[num].map(function (i) {
 			soldPercent = Math.floor(((i.num_back - i.num) / i.num_back) * 100) //换算成已售百分比
 			saleListHtml += `
-          <a class="list-item" href="./goods/goodsdetail.html?id=${
+          <a class="list-item" href="/home/goods/goodsdetail.html?id=${
             i.goods_id
           }&date_id=${i.rushdate_id}&time_id=${i.rushtime_id}">
           <img src=${i.home_img} alt="" />

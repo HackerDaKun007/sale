@@ -76,10 +76,10 @@ class Order extends Common
         if(self::yzPost()) {
             $input = self::$reques->post();
             $validate = Validate('Order');
-            if(!$validate->scene('goods')->check($input)) {
+            if(!$validate->scene('add')->check($input)) {
                 $msg = $validate->getError();
             }
-            $goods = Model('Rushgoods')->cacheGoods($input['id'],$input['date_id'],$input['time_id']);
+            $goods = Model('Rushgoods')->cacheGoods($input['goods_id'],$input['rushdate_id'],$input['rushtime_id']);
             if($goods) {
                 if($goods['start_time'] <= self::$serverTimeEnd && $goods['end_time'] <= self::$serverTimeEnd) {
                     //判断收货地址
@@ -100,7 +100,6 @@ class Order extends Common
                         }else {
                             $msg = '请选择收货地址';
                         }
-
                     }
                     //判断地址数据
                     if(!$validate->scene('user')->check($data)) {
