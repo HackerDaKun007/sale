@@ -158,10 +158,15 @@ class User extends Common {
         $code = 0;
         $msg = '账号密码错误';
         if($find) {
-            if(encrypt($data['password'], $find['encrypt']) == $find['password']) {
-                $code = 1;
-                $msg = '登陆成功';
-                self::uploadCookie($find,$find['user_id']);
+            if($data['user_id'] == $find['user_id']) {
+                $msg = '您已登陆无需再次登陆';
+            }else {
+                if(encrypt($data['password'], $find['encrypt']) == $find['password']) {
+                    $code = 1;
+                    $msg = '登陆成功';
+                    $find = json_decode($find,true);
+                    self::uploadCookie($find,$find['user_id']);
+                }
             }
         }
         return self::dataJson($code,$msg,'','',true);

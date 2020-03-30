@@ -40,14 +40,23 @@ class Mine extends Common
         return view();
     }
 
+    /**
+     * 收货地址列表
+     */
     public function myaddress() {
 
         return view();
     }
 
+
+    /**
+     * 收藏
+     */
     public function mycollect() {
 
-        return view();
+        return view('',[
+            'data' => cache(self::$path['userFavorite']."_".self::$userId),
+        ]);
     }
 
 
