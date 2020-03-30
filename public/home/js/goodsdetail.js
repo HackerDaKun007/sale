@@ -1,137 +1,10 @@
 $(function () {
-	var goodsId = getGoodsId();
+	
+	var goods = getJson($('#goods'));
+	var comment = getJson($('#comment'));
+	var favorite = getJson($('#favorite'));
 
-	if (!goodsId) {
-		notFound();
-	}
-
-	var goods = [{
-			id: 1,
-			total: 2500,
-			sold: 654,
-			price: 499,
-			oldPrice: 899,
-			start_time: 1585220400,
-			end_time: 1585223999,
-			title: '飞克正品全自动机械手表男士时尚潮流防水曲弧面超薄休闲真皮腕表',
-			imgs: [
-				'../temp-images/img2.jpeg',
-				'../temp-images/img5.jpeg',
-				'../temp-images/img6.jpeg'
-			],
-			desc: '全新手表;手表镜面材质:矿物强化玻璃镜面;机芯产地:中国;品牌: 飞克; 型号:FM20 机芯类型:机械机芯-自动机械机芯;手表种类:男;风格:时尚潮流;表带材质:精钢;形状:圆形;显示方式:指针式;上市时间:2017年春夏;颜色分类:黑壳黑面黑带,黑壳黑面黑带(带日历),银壳白面黑带蝴蝶扣(带日历),黑壳黑面黑钢带(带日历),银壳白面银钢带(带日历),银壳蓝面银钢带(带日历),玫金壳白面玫金带(带日历),银壳钢带日历(蓝宝旗舰版),银壳白面黑带蝴蝶扣日历(蓝宝旗舰版);防水深度:30米生活防水;附加功能:日历,能量显示;表扣款式:针扣;表底类型:透底;表冠类型:旋入式;表盘厚度:11mm;表盘直径:42mm;品牌产地:国内;流行元素:精钢;表壳材质:精钢',
-			descPart: [{
-				title: 123,
-				content: 123
-			}],
-			value: [{
-					id: 1,
-					title: 'test value1',
-					img: '../temp-images/img2.jpeg',
-					stock: 200,
-					price: 499,
-					regular_price: 899,
-					available: 2000,
-					back_available: 2000,
-					sort: 1
-				},
-				{
-					id: 2,
-					title: 'test value2',
-					img: '../temp-images/img5.jpeg',
-					stock: 100,
-					price: 600,
-					regular_price: 899,
-					available: 2000,
-					back_available: 2000,
-					sort: 2
-				},
-			]
-		},
-		{
-			id: 2,
-			total: 1200,
-			sold: 320,
-			price: 89,
-			oldPrice: 389,
-			start_time: 1585220400,
-			end_time: 1585227599,
-			title: '欧佩二裂酵母润养修护套盒冬季补水六件套',
-			imgs: [
-				'../temp-images/img2_1.jpg',
-				'../temp-images/img2_2.jpg',
-				'../temp-images/img2_3.jpg',
-				'../temp-images/img2_4.jpg'
-			],
-			desc: '【官方正品 假一罚十】欧佩二裂酵母润养修护套盒补水六件套',
-			descPart: [{
-				title: 123,
-				content: 123
-			}],
-		},
-		{
-			id: 3,
-			total: 65000,
-			sold: 61002,
-			price: 39.9,
-			oldPrice: 338,
-			start_time: 1585306800,
-			end_time: 1585313999,
-			title: '膜法世家黑面膜补水保湿清洁收缩毛孔面膜保湿补水学生女官方正品',
-			imgs: [
-				'//t00img.yangkeduo.com/goods/images/2020-03-13/2c4aad94-c6f6-4af0-8971-418bec91cc2c.jpg',
-				'//t00img.yangkeduo.com/goods/images/2019-10-29/2a9c3e74-e043-408c-8cea-d5b8c52d0061.jpg',
-				'//t00img.yangkeduo.com/goods/images/2019-10-29/095d8673-6ebb-41ba-9aac-5ff10c394558.jpg',
-				'//t00img.yangkeduo.com/goods/images/2019-10-29/10babdb4-ce69-4b44-b83f-baebb9bc6ebc.jpg'
-			],
-			desc: '肌肤嫩不嫩,关键看水分。炭黑膜材搭配浓浓黑营养,清肌补水,轻松敷出焕采明亮的水嫩肌肤。',
-			descPart: [{
-				title: 123,
-				content: 123
-			}],
-		},
-		{
-			id: 4,
-			total: 880000,
-			sold: 668002,
-			price: 14.9,
-			oldPrice: 78,
-			start_time: 1585278960,
-			end_time: 1585281599,
-			title: '【买一送一】贝斯迪维生素e软胶囊200粒可搭祛痘印斑美白疤痕产品',
-			imgs: [
-				'//t00img.yangkeduo.com/goods/images/2019-07-30/2ece5488-0e5f-4a9e-b36c-f28cba9abdf9.png',
-				'//t00img.yangkeduo.com/goods/images/2019-07-30/e68801c8-c6e1-4afb-a72b-110813f8934b.png',
-				'//t00img.yangkeduo.com/goods/images/images/2019-09-25/34e5a151-64db-40a9-87a1-fd91c264c2ab.jpg?imageMogr2/quality/70'
-			],
-			desc: '买一送一同款,两瓶一共200粒。【限时优惠,卖完涨价】 蓝帽认证!支持防伪查询。',
-			descPart: [{
-				title: 123,
-				content: 123
-			}],
-		},
-		{
-			id: 5,
-			total: 7500,
-			sold: 138,
-			price: 58,
-			oldPrice: 168,
-			start_time: 1585216799,
-			end_time: 1585220399,
-			title: '百雀羚套装正品 补水保湿 精萃惊喜礼盒 洁面水乳霜4件套装护肤品',
-			imgs: [
-				'//t00img.yangkeduo.com/goods/images/2020-02-27/20f95311-1486-4818-8c6f-d8199fd1577f.jpg',
-				'//t00img.yangkeduo.com/t10img/images/2018-06-13/75c07b4a716c393989caaea8306c2bee.jpeg',
-				'//t00img.yangkeduo.com/goods/images/2018-11-10/337e6737d5c0fb85e5f6a322313faa2e.jpeg',
-				'//t00img.yangkeduo.com/t07img/images/2018-06-13/56bbe6f31d2595f55370d12dd35e918a.jpeg'
-			],
-			desc: '百雀羚精粹惊喜礼盒【柔肤水100ml+保湿乳液100ml+亮采洁面膏95g+润白滋养霜50g】产品功效: 萃取蚕丝蛋白内含18种氨基酸,有效补充肌肤水份和胶原蛋白,令肌肤白皙粉嫩、光滑透亮',
-			descPart: [{
-				title: 123,
-				content: 123
-			}],
-		}
-	]
+	var nowTime = serverTimeEnd; //服务器现在时间
 
 	var swiperWrapper = $('.swiper-wrapper');
 	var promotion = $('.promotion');
@@ -142,6 +15,10 @@ $(function () {
 	var payment = $('.payment');
 	var selectGoodsValue = $('.select-goodsvalue ul');
 	var selectGoodsInfo = $('.select-goodsvalue .goodsinfo');
+	var commentList = $('.comment-list .content');
+	var showComment = $('#show-comment');
+	var showCommentHtml = '';
+	var commentListHtml = '';
 	var swiperWrapperHtml = '';
 	var goodsDescHtml = '';
 	var goodsValueListHtml = '';
@@ -152,65 +29,80 @@ $(function () {
 	var selectGoodsInfoHtml = '';
 	var promotionHtml = '';
 	var goodsEndTime = 0;
-	var nowTime = Math.floor(new Date().getTime() / 1000); //服务器现在时间
-	goods.forEach(function (e) {
-		if (goodsId == e.id) {
-			let timeHtml = '';
-			let stock = e.total - e.sold // 获取库存
-			goodsEndTime = e.end_time;
-			for (let i of e.descPart) {
-				goodsValueListHtml += `
-             <li class="item">
-                <p class="item-name">${i.title}</p>
-                <p class="item-value">${i.content}</p>
-            </li>
-          `
-			}
-			e.imgs.forEach(function (i) {
-				swiperWrapperHtml += `
-                    <div class="swiper-slide"><img class="swiper-image" src=${i} alt=""></div>
-            `
-				goodsImagesHtml += `<img src='/temp-images/default.jpg' data-src=${i} alt="">`
-			})
 
-			if (e.start_time > nowTime && e.end_time > nowTime) {
-				timeHtml = `<span>即将开抢</span>`;
-				paymentHtml = `
-			<div class="payment-c disabled">
-				<span class="price">￥${e.price}</span>
-				${timeHtml}
-			</div>
-			`;
-			} else if (e.end_time < nowTime && e.start_time < nowTime) {
-				timeHtml = `<span>已结束</span>`;
-				paymentHtml = `
-			<div class="payment-c disabled">
-				<span class="price">￥${e.price}</span>
-				${timeHtml}
-			</div>
-			`;
-			} else if (e.start_time < nowTime && e.end_time > nowTime) {
-				timeHtml = `
-				<span class="hours">00</span> :
-				<span class="minutes">00</span> :
-				<span class="seconds">00</span>
-				`
-				paymentHtml = `
-				<div class="payment-c" id="pop-select">
-					<span class="price">￥${e.price}</span>
-					<span class="text"><i class="iconfont icon-clock_fill"></i>立即秒杀</span>
-				</div>
-				`
+	if (goods) {
+		let timeHtml = '';
+		let stock = 0;
+		goodsEndTime = goods.end_time;
+		goods.sty.forEach(function (e, k) {
+			stock += e.available; // 获取库存	
+
+			let active = '';
+			if (k == 0) {
+				active = 'active';
+				selectGoodsInfoHtml = `
+					<img src=${goods.home_img} alt="">
+					<div>
+						<p class="price">￥${e.price}</p>
+						<p class="stock">库存${e.available}件</p>
+						<p class="selected">
+							已选：
+							<span>${e.username}</span>
+						</p>
+					</div>
+					`;
 			}
-			promotionHtml = `
+			selectGoodsValueHtml += `
+				<li class=${active}>${e.username}</li>
+				`;
+		});
+
+		goods.images.forEach(function (e) {
+			swiperWrapperHtml += `
+				<div class="swiper-slide"><img class="swiper-image" src=${e.img}></div>
+				`;
+			goodsImagesHtml += `<img src='/home/temp-images/default.jpg' data-src=${e.img}>`
+		});
+
+		if (goods.start_time > nowTime && goods.end_time > nowTime) {
+			timeHtml = `<span>即将开抢</span>`;
+			paymentHtml = `
+					<div class="payment-c disabled">
+						<span class="price">￥${goods.sty[0].price}</span>
+						${timeHtml}
+					</div>
+					`;
+		} else if (goods.end_time < nowTime && goods.start_time < nowTime) {
+			timeHtml = `<span>已结束</span>`;
+			paymentHtml = `
+					<div class="payment-c disabled">
+						<span class="price">￥${goods.sty[0].price}</span>
+						${timeHtml}
+					</div>
+					`;
+		} else if (goods.start_time < nowTime && goods.end_time > nowTime) {
+			timeHtml = `
+					<span class="hours">00</span> :
+					<span class="minutes">00</span> :
+					<span class="seconds">00</span>
+					`
+			paymentHtml = `
+					<div class="payment-c" id="pop-select">
+						<span class="price">￥${goods.sty[0].price}</span>
+						<span class="text"><i class="iconfont icon-clock_fill"></i>立即秒杀</span>
+					</div>
+					`
+		}
+
+		promotionHtml = `
 				<div class="price-detail">
-				<div class="top">
-					<p class="price">￥<span>${e.price}</span></p>
-					<p class="old-price">￥${e.oldPrice}</p>
-				</div>
-				<div class="bottom">
-					仅剩${stock}件
-				</div>
+					<div class="top">
+						<p class="price">￥<span>${goods.sty[0].price}</span></p>
+						<p class="old-price">￥${goods.sty[0].regular_price}</p>
+					</div>
+					<div class="bottom">
+						仅剩${goods.sty[0].available}件
+					</div>
 				</div>
 				<div class="promotion-name">
 					<div class="item-top"><i class="iconfont icon-clock_fill"></i>限时秒杀</div>
@@ -218,53 +110,87 @@ $(function () {
 						${timeHtml}
 					</div>
 				</div>
+				`;
+
+		goodsDescHtml = `
+				<p class="desc"><i class="iconfont icon-huo" style="color: orangered"></i>${goods.username} </p>
+				 <div class="tips">
+					 <span class="tip">货到付款</span>
+					 <span class="tip">全国包邮</span>
+				 </div>
+				 `;
+
+		for (let i of goods.parameter) {
+			goodsValueListHtml += `
+					<li class="item">
+						<p class="item-name">${i.title}</p>
+						<p class="item-value">${i.content}</p>
+					</li>
+					`;
+		}
+		goodsTextHtml = `${goods.details}`;
+	
+		goodsValueList.append(goodsValueListHtml);
+		swiperWrapper.append(swiperWrapperHtml);
+		promotion.append(promotionHtml);
+		goodsDesc.append(goodsDescHtml);
+		goodsText.append(goodsTextHtml);
+		goodsImages.append(goodsImagesHtml);
+		payment.append(paymentHtml);
+		selectGoodsValue.append(selectGoodsValueHtml);
+		selectGoodsInfo.html(selectGoodsInfoHtml);
+	}
+
+	if (comment) {
+		comment.forEach(function(e,k) {
+			let html = '';
+			for (let i=1; i<=6; i++) {
+				if (e['img'+i] != '') {
+					html += `
+					<div class="img-item"><img src=${e['img'+i]}></div>
+					`;
+				}
+			}
+			commentListHtml += `
+			<div class="content-item">
+				<div class="head">
+					<div class="avatar">
+						<img src=${imageUrl + e.home_img}>
+						<span class="name">${e.username}</span>
+					</div>
+					<div class="date">${e.create_time}</div>
+				</div>
+				<div class="comment">${e.content}</div>
+				<div class="comment-imgs">
+					${html}
+				</div>
+			</div>
 			`;
 			
-			goodsDescHtml = `
-           		<p class="desc"><i class="iconfont icon-huo" style="color: orangered"></i>${e.title} </p>
-                    <div class="tips">
-                        <span class="tip">预售</span>
-                        <span class="tip">全国包邮</span>
-                    </div>
-        	`;
-
-			goodsTextHtml = `${e.desc}`;
-			
-
-			if (e.value) {
-				e.value.map(function (i, k) {
-					let active = '';
-					if (k == 0) {
-						active = 'active';
-						selectGoodsInfoHtml = `
-            <img src=${i.img} alt="">
-            <div>
-                <p class="price">￥${i.price}</p>
-                <p class="stock">库存${i.stock}件</p>
-                <p class="selected">
-                    已选：
-                    <span>${i.title}</span>
-                </p>
-            </div>
-            `
-					}
-					selectGoodsValueHtml += `
-          <li class=${active}>${i.title}</li>
-          `;
-				});
-
+			if (k == 0) {
+				showCommentHtml = `
+				<div class="head">
+					<div class="title">商品评价（${comment.length}）</div>
+					<div class="to-comment-list">查看更多<i class="iconfont icon-right"></i></div>
+				</div>
+				<div class="content">
+					<div class="content-item">
+						<div class="avatar">
+							<img src=${imageUrl + e.home_img}>
+							<span class="name">${e.username}</span>
+						</div>
+						<div class="comment">${e.content}</div>
+					</div>
+				</div>
+				`;
 			}
-		}
-	})
-	goodsValueList.append(goodsValueListHtml)
-	swiperWrapper.append(swiperWrapperHtml)
-	promotion.append(promotionHtml)
-	goodsDesc.append(goodsDescHtml)
-	goodsText.append(goodsTextHtml)
-	goodsImages.append(goodsImagesHtml)
-	payment.append(paymentHtml)
-	selectGoodsValue.append(selectGoodsValueHtml)
-	selectGoodsInfo.html(selectGoodsInfoHtml)
+			
+		});
+
+		commentList.append(commentListHtml);
+		showComment.append(showCommentHtml);
+	}
+
 
 	var toCommentList = $('.to-comment-list')
 	var main = $('.main')
@@ -359,29 +285,37 @@ $(function () {
 	});
 
 	//收藏
-	var collectID = 1
-
+	var collect = favorite;
 	function isCollect(val) {
-		if (collectID == 1) {
-			collectID = 0
-			val.removeClass('icon-cc-heart-o')
-			val.addClass('icon-heart3')
+		if (collect) {
+			collect = false;
+			val.removeClass('icon-cc-heart-o');
+			val.addClass('icon-heart3');
 		} else {
-			collectID = 1
-			val.addClass('icon-cc-heart-o')
-			val.removeClass('icon-heart3')
+			collect = true;
+			val.addClass('icon-cc-heart-o');
+			val.removeClass('icon-heart3');
 		}
 	}
-	isCollect(isCollectBtn)
+	isCollect(isCollectBtn);
+
 	isCollectBtn.on('click', function () {
-		let $this = $(this)
-		isCollect($this)
-	})
+		let $this = $(this);
+		isCollect($this);
+		if (collect != favorite) {
+			_post({
+				url: '/home/goods/favorite',
+				data: {favorite: favorite},
+				success: function(msg) {
+					console.log(msg);
+				}
+			})
+		}
+	});
 
 	// 弹出选择栏
 	var popSelectBtn = $('#pop-select');
-	console.log(popSelectBtn);
-	
+
 	var selectEl = $('.select-goodsvalue');
 	var selectCloseBtn = $('#select-close');
 
@@ -434,27 +368,36 @@ $(function () {
 
 	var selectValues = $('.select-value ul li');
 
+	var selectValueId = goods.sty[0].goodsstyle_id;
+	var url = `/home/order/order.html${location.search}`;
+	var submitBtn = $('.submit-btn');
+	var toOrderUrl = url + '&goodsstyle_id=' + selectValueId + '&num=' + buyNumber.val();
+	submitBtn.attr('href', toOrderUrl);
+
+	
 	selectValues.on('click', function () {
 		let $this = $(this);
 		let index = $this.index();
-		let i = goods[0].value[index];
+		let i = goods.sty[index];
 		selectGoodsInfoHtml = '';
 		selectValues.removeClass('active');
 		$this.addClass('active');
-
+		selectValueId = i.goodsstyle_id;
 		selectGoodsInfoHtml = `
-      <img src=${i.img} alt="">
-      <div>
-          <p class="price">￥${i.price}</p>
-          <p class="stock">库存${i.stock}件</p>
-          <p class="selected">
-              已选：
-              <span>${i.title}</span>
-          </p>
-      </div>
-    `;
-		selectGoodsInfo.html(selectGoodsInfoHtml)
-	})
+		<img src=${i.home_img} alt="">
+		<div>
+			<p class="price">￥${i.price}</p>
+			<p class="stock">库存${i.available}件</p>
+			<p class="selected">
+				已选：
+				<span>${i.username}</span>
+			</p>
+		</div>
+		`;
+		selectGoodsInfo.html(selectGoodsInfoHtml);
+		toOrderUrl = url + '&goodsstyle_id=' + selectValueId + '&num=' + buyNumber.val();
+		submitBtn.attr('href', toOrderUrl);
+	});
 
 	// 隐藏底部弹框
 	function hideService(el, originBottom) {
@@ -473,22 +416,15 @@ $(function () {
 		}
 	}
 
-	// 获取当前URL的参数
-	function getGoodsId() {
-		let searchWords = window.location.search // 获取URL中的”？“后的字符串
-		let theSearch = searchWords.split('=')
-		return theSearch[1]
-	}
 
 	// 倒计时
 	var timerEl = $('.timer');
 	var num = 0;
-	countDown(num, nowTime, goodsEndTime, timerEl);	
+	countDown(num, nowTime, goodsEndTime, timerEl);
 
 	setInterval(function () {
 		num++;
 		countDown(num, nowTime, goodsEndTime, timerEl);
 	}, 1000);
-
 
 })

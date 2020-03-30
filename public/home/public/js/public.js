@@ -34,7 +34,7 @@ var popInfoHtml = '';
 var maskHtml = '<div class="mask"></div>'
 var wxDetail = {
   wxID: vxId,
-  qrcode: imageaUrl+vxImg
+  qrcode: imageUrl+vxImg
 }
 
 wxPopHtml = `<div class="public-pop-wx">
@@ -115,23 +115,4 @@ function lazyload() {
   }
 };
 
-// 获取form内容
-var getForm = function(val) {
-  var params = $(val).serializeArray();
-  // params = decodeURIComponent(params, true);
-  return params;
-}
-
-// 获取cookie
-function getCookie(name) {
-  let strCookie =document.cookie;
-  let arrCookie = strCookie.split(';');
-  for (let i of arrCookie) {
-    let arr = i.split('=');
-    if (arr[0].trim() == name) {
-      return  decodeURIComponent(arr[1], true);
-    }
-  }
-  return '';
-}
 

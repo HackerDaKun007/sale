@@ -1,4 +1,4 @@
-var imageaUrl = '/Upload/';
+var imageUrl = '/Upload/';
 
 var serverTimeEnd = serverTimeEnd;  //服务器时间
 var dateTime = dateTime;            //今天日期开始时间
@@ -237,4 +237,25 @@ var _post = function (load) {
 function getForm(val) {
   let params = $(val).serializeArray();
   return params;
+}
+
+// 获取cookie
+function getCookie(name) {
+  let strCookie =document.cookie;
+  let arrCookie = strCookie.split(';');
+  for (let i of arrCookie) {
+    let arr = i.split('=');
+    if (arr[0].trim() == name) {
+      return  decodeURIComponent(arr[1], true);
+    }
+  }
+  return '';
+}
+
+
+// 获取JSON
+function getJson(val) {
+  let data = decodeURIComponent(val.html(), true);
+  data = JSON.parse(data);
+  return data;
 }
