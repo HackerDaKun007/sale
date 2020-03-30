@@ -76,7 +76,7 @@ class User extends Common {
         cookie(self::$path['userTel'],$data['tel']);//用户手机号码
         cookie(self::$path['userImg'],self::$path['userAvatar'].$data['img']);//用户头像
         cookie(self::$path['initialPass'],$data['initial_pass']);//初始密码
-        cookie(self::$path['useraddressId'],$data['useraddressId']);//初始密码
+        cookie(self::$path['useraddressId'],$data['useraddressId']);//收货地址ID
         cookie(self::$path['userId'],self::respass($id)); //用户ID
     }
 
@@ -138,7 +138,8 @@ class User extends Common {
                         $msg = '修改成功';
                         $code = 1;
                         $find = self::where('user_id','=',$data['user_id'])->find();
-                        self::uploadCookie($find,$data['user_id']);
+//                        self::uploadCookie($find,$data['user_id']);
+                        cookie(self::$path['initialPass'],'');
                         self::commit();
                     }
                 }catch (Exception $e) {
