@@ -13,9 +13,12 @@
 namespace app\home\controller;
 class Order extends Common
 {
+    //收藏
     public function myorder() {
 
-        return view();
+        return view('',[
+            'data' => cache(self::$path['userFavorite']."_".self::$userId),
+        ]);
     }
 
 
