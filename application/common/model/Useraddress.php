@@ -42,7 +42,7 @@ class Useraddress extends Common {
     //写入缓存
     public static function addCache($bool=false,$id='') {
         $data = cache(self::$path['UserAdder'].$id);
-        if($data) {
+        if($data || $bool) {
             $data = self::where('user_id','=',$id)->order('useraddress_id desc')->select()->toArray();
             cache(self::$path['UserAdder'].$id,$data);
         }

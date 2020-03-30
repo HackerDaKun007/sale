@@ -136,7 +136,7 @@ class Mine extends Common
      * 收货地址列表
      */
     public function myaddress() {
-      
+        
         return view('',[
             'adder' => Model('Useraddress')->addCache(false,self::$userId),
         ]);

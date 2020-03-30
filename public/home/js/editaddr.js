@@ -1,7 +1,4 @@
-var username = $('#username');
-var telnum = $('#telnum');
-var region = $('#city-picker');
-var address = $('#address');
+var backBtn = $('.public-back');
 var addressForm = $('.address-form');
 
 addressForm.find('.confirm-btn').bind('click', function () {
@@ -24,26 +21,16 @@ addressForm.find('.confirm-btn').bind('click', function () {
             url: '',
             data: form,
             success: function(msg) {
-                console.log(msg);
-                
+                if (msg.code == 1) {
+                    $('input').val('');          
+                }     
             }
         })
     }
 });    
-   
-    // let refer = document.referrer;
-    // let splitArr = refer.split('/');
-    // alert(splitArr);
-    // $('.back-btn').on('touchstart', function() {
-    //   // if (splitArr.indexOf('order') != -1) {
-    //   //   alert(123)
-        
-    //   //   location.assign(refer);
-    //   //   location.reload();
-    //   // }
-    //   window.history.back();
-    //   return false;
-      
-    // })
-    // console.log(refer);
-    
+
+backBtn.bind('click', function() {
+    let refer = document.referrer;
+    location.replace(refer);
+    return false;
+})
