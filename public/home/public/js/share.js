@@ -196,16 +196,25 @@ var _post = function (load) {
       if (typeof msg == 'object') {
         if (msg.code == 1) {
           alertInfo(msg.msg);
-          load.success(msg);
+          if(load.success != '' || load.success != null) {
+            load.success(msg);
+          }
         }
         if (msg.code == 0) {
           alertInfo(msg.msg);
+          if(load.success != '' || load.success != null) {
+            load.success(msg);
+          }
         }
       } else {
         if (msg != '' && msg != null) {
-          load.success(msg);
+          if(load.success != '' || load.success != null) {
+            load.success(msg);
+          }
         } else {
-          load.success('null');
+          if(load.success != '' || load.success != null) {
+            load.success('');
+          }
         }
       }
     },

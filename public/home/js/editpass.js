@@ -1,43 +1,49 @@
-var oldPassword = $('#oldpassword');
-var password = $('#password');
-var password2 = $('#password2');
 var editForm = $('.edit-form');
-var verify = $('#verify');
 var verifyImg = $('.verify-img');
 
-verify.on('input', function() {
-    let value = $(this).val();
-    if (value.length > 4) {
-        value = value.slice(0,4);
-        $(this).val(value);
-    }
-})
 
 editForm.find('.confirm-btn').bind('click', function () {
-
-    if (oldPassword.val().length < 6) {
+    let form = getForm(editForm);
+    if (form[0].value.length < 6) {
         alertInfo('请输入原先的密码');
-        oldPassword.focus();
 
-    } else if (password.val().length < 6) {
+    } else if (form[1].value.length < 6) {
         alertInfo('请输入新密码');
-        password.focus();
-    } else if (password2.val() != password.val()) {
+
+    } else if (form[2].value != form[1].value) {
         alertInfo('两次密码不相同');
-        password2.focus();
 
-    } else if (verify.val().length != 4) {
+    } else if (form[3].value.length != 4) {
         alertInfo('验证码不正确');
-        verify.focus();
-    }
 
-    return false;
+    }  else {
+        _post({
+            url: '/home/manage/editpasswod.html',
+            data: form,
+            success: function(msg) {
+                if (msg.code == 1) {
+                    $('input').val('');
+                } else {
+                    getYZM();
+                }
+            }
+        })
+        
+    }
 });
 
-var imgUrl = '../../temp-images/yz.jpg';
-verifyImg.attr('src', imgUrl);
+// verifyImg.attr('src', imgUrl);
 // 点击验证码图片并附加随机数
 verifyImg.on('click', function () {
-    let code = Math.random() * 1000;
-    $(this).attr('src', imgUrl + '?id=' + code);
+    getYZM();
 });
+
+function getYZM() {
+    console.log(111);
+    
+    let imgUrl = '/home/manage/yzm.html';
+    let code = Math.random() * 1000;
+    verifyImg.attr('src', imgUrl + '?id=' + code);
+    console.log(verifyImg);
+    
+}
