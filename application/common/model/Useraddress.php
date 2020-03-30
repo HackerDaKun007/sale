@@ -49,7 +49,7 @@ class Useraddress extends Common {
         if($data) {
             $data[count($data)] = $val;
         }else {
-            $data[0] = $data;
+            $data[0] = $val;
         }
         cache(self::$path['UserAdder']."$val[user_id]",$data);
     }
