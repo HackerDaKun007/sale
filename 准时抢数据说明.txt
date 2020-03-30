@@ -294,3 +294,13 @@ SEO介绍       seointroduction
 网站logo      logo
 ipc备案       ipc
 ipc跳转地址    ipc_url
+
+/** 流量日期  **/
+表名:   sa_flowdate
+id      flowdate_id
+日期:    date
+pv      次数
+uv       次数
+
+
+/** uv **/

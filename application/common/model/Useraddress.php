@@ -108,16 +108,7 @@ class Useraddress extends Common {
         self::startTrans();
         try {
             if(self::where($where)->delete()) {
-                $useradder = cache(self::$path['UserAdder']."_".$data['user_id']);
-                if($useradder) {
-                    foreach ($useradder as $k => $v) {
-                        if($v['useraddress_id'] == $data['useraddress_id']) {
-                            array_splice($useradder,$k,1);
-                            break;
-                        }
-                    }
-                    cache(self::$path['UserAdder']."_".$data['user_id'],$useradder);
-                }
+                self::addCache(true,$data['user_id']);
                 $code = 1;
                 $msg = '删除成功';
                 self::commit();
