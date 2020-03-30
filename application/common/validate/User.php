@@ -33,11 +33,13 @@ class User extends Validate {
         'password' => '密码错误',
         'ropassword' => '确定密码错误',
         'user_id' => 'ID异常',
+        'yzm' => '验证码错误',
     ];
 
     protected $scene = [
         'passw' => ['yzm','orpassword','password','ropassword','user_id'],
         'password' => ['password','ropassword','user_id'],
+        'login' => ['username','password','yzm'],
         'tel' => ['tel'],
         'sex' => ['sex'],
         'del' => ['user_id'],
