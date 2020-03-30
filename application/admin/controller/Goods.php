@@ -78,7 +78,7 @@ class Goods extends Common {
         $data = input('post.');
         if(self::yzPostAdd()) {
             $validate = validate(self::$UserName);
-            $data['paymentArray'] = self::$path['goodsPayment'];
+            $data['paymentArray'] = array_keys(self::$path['goodsPayment']);
             if(!$validate->scene('add')->check($data)) {
                 $msg = $validate->getError();
             }else {
@@ -97,7 +97,7 @@ class Goods extends Common {
         $data = input('post.');
         if(self::yzPostAdd()) {
             $validate = validate(self::$UserName);
-            $data['paymentArray'] = self::$path['goodsPayment'];
+            $data['paymentArray'] = array_keys(self::$path['goodsPayment']);
             if(!empty($data['home_img'])) {
                 $yz = $validate->scene('edit')->check($data);
             }else {
