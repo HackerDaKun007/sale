@@ -10,8 +10,12 @@ buyNumber.val(buyNum);
 var goodsId = $('#goods_id');
 var addressId = $('#address_id');
 var goodsstyle_id = $('#goodsstyle_id');
+var date_id = $('#date_id');
+var time_id = $('#time_id');
 goodsId.val(goodsData.goods_id);
 goodsstyle_id.val(goodsStyleId);
+date_id.val(getSearchWord('date_id'));
+time_id.val(getSearchWord('time_id'));
 
 
 var addressInfo = $('.address-info');
@@ -293,7 +297,7 @@ var time2 = 30000; //30秒
 var timer = setInterval(function () {
     singleConfirm('您的订单很快就失效了，请尽快支付');
     setTimeout(function () {
-        window.location.href = '../../index.html';
+        window.location.href = '/';
     }, time2);
     clearInterval(timer);
 }, time);
