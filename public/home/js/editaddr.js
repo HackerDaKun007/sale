@@ -1,6 +1,7 @@
 var backBtn = $('.public-back');
 var addressForm = $('.address-form');
 var dataEl = $('#data');
+var delBtn = $('.del-btn');
 
 if (dataEl.length > 0) {
     var data = decodeURIComponent($('#data').html(), true);
@@ -13,12 +14,12 @@ if (dataEl.length > 0) {
 }
 
 // 阻止双击事件
-addressForm.find('.confirm-btn').bind('doubleclick', function(e) {
+addressForm.find('.submit-btn').bind('doubleclick', function(e) {
     e.preventDeafult();
 });
 
 // 验证并提交修改和新增地址数据
-addressForm.find('.confirm-btn').bind('click', function () {
+addressForm.find('.submit-btn').bind('click', function () {
     let form = getForm(addressForm);
     
     if (form[0].value.length < 1) {
@@ -48,10 +49,33 @@ addressForm.find('.confirm-btn').bind('click', function () {
     }
 });    
 
+// 删除地址
+delBtn.bind('click', function() {
+    if (data) {
+        let value = addressForm.find('#addrid').val();
+        popConfirm({
+            info: '确定要删除地址吗？',
+            success: function() {
+                _post({
+                    url: '/home/mine/deladder.html',
+                    data: {'useraddress_id': value},
+                    success: function(msg) {
+                        toBackFun();
+                    }
+                });
+            }
+        })
+    }
+})
+
 // 返回上一页并更新页面
 backBtn.bind('click', function() {
+    toBackFun();
+});
+
+function toBackFun() {
     let refer = document.referrer;
     location.replace(refer);
     return false;
-});
+}
 
