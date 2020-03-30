@@ -17,7 +17,7 @@ editForm.find('.confirm-btn').bind('click', function () {
         alertInfo('验证码不正确');
 
     }  else {
-        if (initPass != '' && initPass != null) {
+        if (initPass != '' && initPass != null && initPass != 0) {
             if (initPass != form[0].value) {
                 alertInfo('原先密码不正确');
                 return false;
