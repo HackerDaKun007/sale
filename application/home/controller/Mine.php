@@ -98,7 +98,7 @@ class Mine extends Common
                 }
             }
         }
-       if($bool) {
+       if($bool && $data != '') {
            return view('',[
                'data' => $data,
            ]);

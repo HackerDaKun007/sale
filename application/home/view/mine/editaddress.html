@@ -24,13 +24,14 @@
   </div>
   <div class="wrapper">
     <form action="#" class="address-form">
+      <input type="hidden" name="useraddress_id" id="addrid">
       <div class="form-item">
         <label for="username">收货人</label>
         <input type="text" id="username" name="username" placeholder="收货人姓名" />
       </div>
       <div class="form-item">
         <label for="telnum">手机号码</label>
-        <input type="text" id="telnum" name="tel" placeholder="手机号码" />
+        <input type="text" id="tel" name="tel" placeholder="手机号码" />
       </div>
       <div class="form-item">
         <label for="region">所在地区</label>
@@ -48,7 +49,7 @@
 
 </html>
 
-<script type="application/json" id="data">{:josn_encode($data)}</script>
+<script type="application/json" id="data">{:json_encode($data)}</script>
 <script src="__HOME__/public/js/public.js"></script>
 <script src="__HOME__/public/lib/weui-citypicker/addrData.js"></script>
 <script src="__HOME__/public/lib/weui-citypicker/weui.min.js"></script>
@@ -59,7 +60,6 @@
     var _this = this;
     weui.picker(addrData, {
       onChange: function (result) {
-        $(_this).val(result[0].label + result[1].label + result[2].label);
       },
       onConfirm: function (result) {
         $(_this).val(result[0].label + result[1].label + result[2].label);

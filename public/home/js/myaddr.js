@@ -22,7 +22,7 @@ if (addressData) {
                         </p>
                     </div>
                 </div>
-                <a href="/home/mine/editaddress.html?useraddress_id=${e.useraddress_id}" class="edit">编辑</a>
+                <a href="/home/mine/editaddress.html?id=${e.useraddress_id}" class="edit">编辑</a>
             </li>
         `;
     })
