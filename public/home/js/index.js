@@ -1,24 +1,25 @@
-$(function() {
-  var nowTime = serverTimeEnd //服务器现在时间
-  var endTime = dateTimeEnd // 服务器今天结束时间
+$(function () {
+	var nowTime = serverTimeEnd //服务器现在时间
+	var endTime = dateTimeEnd // 服务器今天结束时间
 
-  // 插入数据
-  var scrollList = $('.scroll-list')
-  function getNewGoods() {
-    let scrollListHtml = ''
-    let goodsEnd = []
-    if (recogoods) {
-      let newGoodsArr = JSON.parse(JSON.stringify(recogoods))
-      newGoodsArr.sort(function(a, b) {
-        return a.end_time - b.end_time
-      })
-      newGoodsArr.forEach(function(e) {
-        let dayInfo = 0
-        let title = ''
-        if (e.start_time < endTime && e.end_time > nowTime) {
-          title = '距结束还剩'
-          goodsEnd.push(e.end_time)
-          scrollListHtml += `
+	// 插入数据
+	var scrollList = $('.scroll-list')
+
+	function getNewGoods() {
+		let scrollListHtml = ''
+		let goodsEnd = []
+		if (recogoods) {
+			let newGoodsArr = JSON.parse(JSON.stringify(recogoods))
+			newGoodsArr.sort(function (a, b) {
+				return a.end_time - b.end_time
+			})
+			newGoodsArr.forEach(function (e) {
+				let dayInfo = 0
+				let title = ''
+				if (e.start_time < endTime && e.end_time > nowTime) {
+					title = '距结束还剩'
+					goodsEnd.push(e.end_time)
+					scrollListHtml += `
 					<a class="item" href="./goods/goodsdetail.html?id=${e.goods_id}&date_id=${
             e.rushdate_id
           }&time_id=${e.rushtime_id}">
@@ -40,12 +41,12 @@ $(function() {
 						</div>
 					</a>
 					`
-        } else if (e.end_time > nowTime && e.start_time > endTime) {
-          title = '距活动开始还有'
-          dayInfo =
-            new Date(e.start_time * 1000).getDate() - new Date().getDate()
+				} else if (e.end_time > nowTime && e.start_time > endTime) {
+					title = '距活动开始还有'
+					dayInfo =
+						new Date(e.start_time * 1000).getDate() - new Date().getDate()
 
-          scrollListHtml += `
+					scrollListHtml += `
 					<a class="item" href="./goods/goodsdetail.html?id=${e.goods_id}&date_id=${e.rushdate_id}&time_id=${e.rushtime_id}">
 						<div class="timer">
 							<div>${title}</div>
@@ -63,62 +64,61 @@ $(function() {
 						</div>
 					</a>
 					`
-        }
-      })
-      scrollList.append(scrollListHtml)
-    }
-    return {
-      goodsEnd
-    }
-  }
-  let goodsFun = getNewGoods()
-  let goodsEnd = goodsFun.goodsEnd
+				}
+			})
+			scrollList.append(scrollListHtml)
+		}
+		return {
+			goodsEnd
+		}
+	}
+	let goodsFun = getNewGoods()
+	let goodsEnd = goodsFun.goodsEnd
 
-  // 判断在当前小时内的数据并插入HTML中
-  var categoryTimesList = $('.category .list')
-  var notstart = $('.sale.notstart')
-  var start = $('.sale.start')
+	// 判断在当前小时内的数据并插入HTML中
+	var categoryTimesList = $('.category .list')
+	var notstart = $('.sale.notstart')
+	var start = $('.sale.start')
 
-  function getArray(array, time) {
-    let activeStr = 0
-    let activeEnd = 0
-    let categoryTimeHtml = ''
-    let startListHtml = ''
-    let startHtml = ''
-    let notstartHtml = ''
-    let activeSaleHtml = ''
-    let goodsArr = []
-    let key = 0
+	function getArray(array, time) {
+		let activeStr = 0
+		let activeEnd = 0
+		let categoryTimeHtml = ''
+		let startListHtml = ''
+		let startHtml = ''
+		let notstartHtml = ''
+		let activeSaleHtml = ''
+		let goodsArr = []
+		let key = 0
 
-    if (
-      new Date(array.date * 1000).getDate() ==
-        new Date(nowTime * 1000).getDate() &&
-      array.date < nowTime
-    ) {
-      let newArr = JSON.parse(JSON.stringify(array.rushtime))
-      newArr.sort(function(a, b) {
-        return a.end_time - b.end_time
-      })
-      if (newArr.length > 0) {
-        newArr.forEach(function(e, k) {
-          let bool = ''
-          if (e.start_time < time && e.end_time > time) {
-            startHtml = `<div class="sale-list"></div>`
-            activeStr = e.start_time
-            activeEnd = e.end_time
-            e.goods.map(function(i) {
-              soldPercent = Math.floor(
-                ((i.num_back - i.num) / i.num_back) * 100
-              ) //换算成已售百分比
-              console.log(soldPercent, i.num_back, i.num);
-              
-              startListHtml += `
+		if (
+			new Date(array.date * 1000).getDate() ==
+			new Date(nowTime * 1000).getDate() &&
+			array.date < nowTime
+		) {
+			let newArr = JSON.parse(JSON.stringify(array.rushtime))
+			newArr.sort(function (a, b) {
+				return a.end_time - b.end_time
+			})
+			if (newArr.length > 0) {
+				newArr.forEach(function (e, k) {
+					let bool = ''
+					if (e.start_time < time && e.end_time > time) {
+						startHtml = `<div class="sale-list"></div>`
+						activeStr = e.start_time
+						activeEnd = e.end_time
+						e.goods.map(function (i) {
+							soldPercent = Math.floor(
+								((i.num_back - i.num) / i.num_back) * 100
+							) //换算成已售百分比
+
+							startListHtml += `
 			  <a class="list-item" href="./goods/goodsdetail.html?id=${
           i.goods_id
         }&date_id=${i.rushdate_id}&time_id=${i.rushtime_id}">
-			  <img src='/temp-images/default.jpg' data-src=${i.home_img} alt="" />
+			  <img src='_HOME_/temp-images/default.jpg' data-src=${i.home_img} alt="" />
 			  <div class="detail">
-				  <div class="sale-top">F
+				  <div class="sale-top">
 					  <div class="name">${i.username}</div>
 					  <div class="sale-progress">
 						  <span class="progress-bar" style="--progressWidth:${
@@ -137,21 +137,23 @@ $(function() {
 			  </div>
 		  </a> 
 			  `
-            })
-            key = k
-          }
-          if (e.end_time > time && activeEnd < e.end_time) {
-            if (k == key + 1) {
-              bool = 'active'
-              e.goods.map(function(i) {
-                soldPercent = Math.floor((i.sold / i.total) * 100) //换算成已售百分比
-                activeSaleHtml += `
+						})
+						key = k
+					}
+					if (e.end_time > time && activeEnd < e.end_time) {
+						if (k == key + 1) {
+							bool = 'active'
+							e.goods.map(function (i) {
+								soldPercent = soldPercent = Math.floor(
+									((i.num_back - i.num) / i.num_back) * 100
+								) //换算成已售百分比
+								activeSaleHtml += `
 				  <a class="list-item" href="./goods/goodsdetail.html?id=${
             i.goods_id
           }&date_id=${i.rushdate_id}&time_id=${i.rushtime_id}">
 				  <img src='/temp-images/default.jpg' data-src=${i.home_img} alt="" />
 			  <div class="detail">
-				  <div class="sale-top">F
+				  <div class="sale-top">
 					  <div class="name">${i.username}</div>
 					  <div class="sale-progress">
 						  <span class="progress-bar" style="--progressWidth:${
@@ -170,89 +172,89 @@ $(function() {
 				  </div>
 			  </a> 
 				  `
-              })
-            }
-            categoryTimeHtml += `<li class="item ${bool}">${e.username}</li>`
-            notstartHtml += `<div class="sale-list ${bool}"></div>`
-            goodsArr.push(e.goods)
-          }
-        })
+							})
+						}
+						categoryTimeHtml += `<li class="item ${bool}">${e.username}</li>`
+						notstartHtml += `<div class="sale-list ${bool}"></div>`
+						goodsArr.push(e.goods)
+					}
+				})
 
-        if (goodsArr.length < 1) {
-          notstartHtml = `<div class="nocontent">
+				if (goodsArr.length < 1) {
+					notstartHtml = `<div class="nocontent">
 				<p>活动尚未开始</p>
 				</div>`
-        }
-        if (activeEnd == 0) {
-          startHtml = `<div class="nocontent">
+				}
+				if (activeEnd == 0) {
+					startHtml = `<div class="nocontent">
 				<p>活动尚未开始</p>
 				</div>`
-        }
-      }
-      categoryTimesList.html(categoryTimeHtml)
-      notstart.html(notstartHtml)
-      start.html(startHtml)
+				}
+			}
+			categoryTimesList.html(categoryTimeHtml)
+			notstart.html(notstartHtml)
+			start.html(startHtml)
 
-      let startList = $('.sale.start .sale-list')
-      startList.append(startListHtml)
+			let startList = $('.sale.start .sale-list')
+			startList.append(startListHtml)
 
-      let activeSale = $('.notstart.sale .sale-list.active')
-      activeSale.append(activeSaleHtml)
-    }
+			let activeSale = $('.notstart.sale .sale-list.active')
+			activeSale.append(activeSaleHtml)
+		}
 
-    return {
-      activeStr: activeStr,
-      activeEnd: activeEnd,
-      goodsArr: goodsArr
-    }
-  }
-  var jus = getArray(rushgoods, nowTime)
-  var activeStr = jus.activeStr
-  var activeEnd = jus.activeEnd
-  var goodsArr = jus.goodsArr
+		return {
+			activeStr: activeStr,
+			activeEnd: activeEnd,
+			goodsArr: goodsArr
+		}
+	}
+	var jus = getArray(rushgoods, nowTime)
+	var activeStr = jus.activeStr
+	var activeEnd = jus.activeEnd
+	var goodsArr = jus.goodsArr
 
-  // 当timeList的长度大于6个以上才显示
-  var totalBtn = $('.total')
-  var listLength = categoryTimesList.eq(0).find('.item').length
+	// 当timeList的长度大于6个以上才显示
+	var totalBtn = $('.total')
+	var listLength = categoryTimesList.eq(0).find('.item').length
 
-  if (listLength <= 6) {
-    totalBtn.hide()
-  } else {
-    totalBtn.show()
-  }
+	if (listLength <= 6) {
+		totalBtn.hide()
+	} else {
+		totalBtn.show()
+	}
 
-  // category时间item点击事件
-  var notstartLists = $('.notstart .sale-list')
-  categoryTimesList.find('.item').on('click', function() {
-    let saleListHtml = ''
-    let $this = $(this)
-    let num = $this.index()
-    let er = 0
+	// category时间item点击事件
+	var notstartLists = $('.notstart .sale-list')
+	categoryTimesList.find('.item').on('click', function () {
+		let saleListHtml = ''
+		let $this = $(this)
+		let num = $this.index()
+		let er = 0
 
-    if ($this.parent().is('#top-list')) {
-      er = 1
-    }
-    categoryTimesList.find('.item').removeClass('active')
-    notstartLists.removeClass('active')
-    $this.addClass('active')
-    notstartLists.eq(num).addClass('active')
+		if ($this.parent().is('#top-list')) {
+			er = 1
+		}
+		categoryTimesList.find('.item').removeClass('active')
+		notstartLists.removeClass('active')
+		$this.addClass('active')
+		notstartLists.eq(num).addClass('active')
 
-    categoryTimesList
-      .eq(er)
-      .find('.item')
-      .eq(num)
-      .addClass('active')
+		categoryTimesList
+			.eq(er)
+			.find('.item')
+			.eq(num)
+			.addClass('active')
 
-    goodsArr[num].map(function(i) {
-      soldPercent = Math.floor(((i.num_back - i.num) / i.num_back) * 100) //换算成已售百分比
-      saleListHtml += `
+		goodsArr[num].map(function (i) {
+			soldPercent = Math.floor(((i.num_back - i.num) / i.num_back) * 100) //换算成已售百分比
+			saleListHtml += `
           <a class="list-item" href="./goods/goodsdetail.html?id=${
             i.goods_id
           }&date_id=${i.rushdate_id}&time_id=${i.rushtime_id}">
           <img src=${i.home_img} alt="" />
           <div class="detail">
               <div class="sale-top">
-                  <div class="name">${i.title}</div>
+                  <div class="name">${i.username}</div>
                   <div class="sale-progress">
                       <span class="progress-bar" style="--progressWidth:${
                         soldPercent <= 5 ? 5 : soldPercent
@@ -271,109 +273,109 @@ $(function() {
       </a> 
           `
 
-      notstartLists.eq(num).html(saleListHtml)
-    })
-  })
+			notstartLists.eq(num).html(saleListHtml)
+		})
+	})
 
-  var topTimer = $('.top .timer')
-  var recomTimer = scrollList.eq(0).find('.timer-n')
+	var topTimer = $('.top .timer')
+	var recomTimer = scrollList.eq(0).find('.timer-n')
 
-  var num = 0
-  var numb = nowTime + num
-  countDown(num, nowTime, activeEnd, topTimer)
+	var num = 0
+	var numb = nowTime + num
+	countDown(num, nowTime, activeEnd, topTimer)
 
-  setInterval(function() {
-    num++
-    numb = nowTime + num
-    reload(numb)
-    countDown(num, nowTime, activeEnd, topTimer)
-  }, 1000)
+	setInterval(function () {
+		num++
+		numb = nowTime + num
+		reload(numb)
+		countDown(num, nowTime, activeEnd, topTimer)
+	}, 1000)
 
-  goodsEnd.forEach(function(e, k) {
-    recogoods.forEach(function(sube) {
-      if (sube.end_time == e) {
-        let nTimer = recomTimer.eq(k)
-        countDown(num, nowTime, e, nTimer)
-        setInterval(function() {
-          countDown(num, nowTime, e, nTimer)
-        }, 1000)
-      }
-    })
-  })
+	goodsEnd.forEach(function (e, k) {
+		recogoods.forEach(function (sube) {
+			if (sube.end_time == e) {
+				let nTimer = recomTimer.eq(k)
+				countDown(num, nowTime, e, nTimer)
+				setInterval(function () {
+					countDown(num, nowTime, e, nTimer)
+				}, 1000)
+			}
+		})
+	})
 
-  function reload(num) {
-    //如果当前时间大于今日结束时间，强制刷新页面
-    if (endTime < num) {
-      window.location.reload(true)
-      return false
-    }
-    // 即将开始栏目的到点触发
-    else if (activeEnd < num && activeStr < num) {
-      let jus = getArray(rushgoods, num)
-      if (jus.activeStr != 0 && jus.activeEnd != 0) {
-        activeStr = jus.activeStr
-        activeEnd = jus.activeEnd
-      }
-    }
-  }
+	function reload(num) {
+		//如果当前时间大于今日结束时间，强制刷新页面
+		if (endTime < num) {
+			window.location.reload(true)
+			return false
+		}
+		// 即将开始栏目的到点触发
+		else if (activeEnd < num && activeStr < num) {
+			let jus = getArray(rushgoods, num)
+			if (jus.activeStr != 0 && jus.activeEnd != 0) {
+				activeStr = jus.activeStr
+				activeEnd = jus.activeEnd
+			}
+		}
+	}
 
-  // 初始化变量
-  var navItem = $('.nav-item')
-  var category = $('.category')
-  var saleList = $('.sale')
-  //
-  navItem.on('click', function() {
-    let $this = $(this)
-    navItem.removeClass('active')
-    saleList.removeClass('active')
+	// 初始化变量
+	var navItem = $('.nav-item')
+	var category = $('.category')
+	var saleList = $('.sale')
+	//
+	navItem.on('click', function () {
+		let $this = $(this)
+		navItem.removeClass('active')
+		saleList.removeClass('active')
 
-    if ($this.is('.notstart')) {
-      $('.notstart').addClass('active')
-      category.addClass('active')
-    } else {
-      category.removeClass('active')
-      category.removeClass('poptop')
-      $('.start').addClass('active')
-    }
-  })
+		if ($this.is('.notstart')) {
+			$('.notstart').addClass('active')
+			category.addClass('active')
+		} else {
+			category.removeClass('active')
+			category.removeClass('poptop')
+			$('.start').addClass('active')
+		}
+	})
 
-  $('.total').on('click', function() {
-    if (category.is('.poptop')) {
-      category.removeClass('poptop')
-    } else {
-      category.addClass('poptop')
-    }
-  })
+	$('.total').on('click', function () {
+		if (category.is('.poptop')) {
+			category.removeClass('poptop')
+		} else {
+			category.addClass('poptop')
+		}
+	})
 
-  // 滚动到scrollTopNav时固定住
-  var scrollFixed = $('.scroll-fixed')
-  var scrollTopNav = $('.scroll-top-nav')
-  var scrollToTopBtn = $('.scroll-to-top-btn')
-  $(document).on('scroll', function() {
-    if (window.scrollY > scrollTopNav[0].offsetTop) {
-      scrollTopNav.addClass('hide')
-      scrollFixed.addClass('active')
-      scrollToTopBtn.addClass('active')
-    } else {
-      scrollTopNav.removeClass('hide')
-      scrollFixed.removeClass('active')
-      scrollToTopBtn.removeClass('active')
-    }
-  })
+	// 滚动到scrollTopNav时固定住
+	var scrollFixed = $('.scroll-fixed')
+	var scrollTopNav = $('.scroll-top-nav')
+	var scrollToTopBtn = $('.scroll-to-top-btn')
+	$(document).on('scroll', function () {
+		if (window.scrollY > scrollTopNav[0].offsetTop) {
+			scrollTopNav.addClass('hide')
+			scrollFixed.addClass('active')
+			scrollToTopBtn.addClass('active')
+		} else {
+			scrollTopNav.removeClass('hide')
+			scrollFixed.removeClass('active')
+			scrollToTopBtn.removeClass('active')
+		}
+	})
 
-  // 滚动到顶部
-  scrollToTopBtn.on('click', function() {
-    if (
-      typeof window.getComputedStyle(document.body).scrollBehavior ==
-      'undefined'
-    ) {
-      scrollSmoothTo(0)
-    } else {
-      window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: 'smooth'
-      })
-    }
-  })
+	// 滚动到顶部
+	scrollToTopBtn.on('click', function () {
+		if (
+			typeof window.getComputedStyle(document.body).scrollBehavior ==
+			'undefined'
+		) {
+			scrollSmoothTo(0)
+		} else {
+			window.scrollTo({
+				top: 0,
+				left: 0,
+				behavior: 'smooth'
+			})
+		}
+	})
 })

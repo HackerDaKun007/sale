@@ -1,20 +1,15 @@
 var imageaUrl = '/Upload/';
 
-// function appendFooter(el){
-//     let windowHeight = window.innerHeight;
-//     let elHeight = el.height();
+var serverTimeEnd = serverTimeEnd;  //服务器时间
+var dateTime = dateTime;            //今天日期开始时间
+var dateTimeEnd = dateTimeEnd;      //今天结束时间
+var KeyPassword = KeyPassword;      //加密协议http
+var vxUser = vxUser;                //微信名
+var vxId = vxId;                    //微信号
+var vxImg = vxImg;                  //微信图片
 
-//     if (windowHeight < elHeight+windowHeight) {
-//         var footerHtml = `
-//         <footer class="footer">
-//             <p>已到底了~~</p>
-//         </footer>
-//         `;
-//         $('.wrapper').append(footerHtml);       
-//     }
 
-// }
-
+$('#ServerTime').remove();
 // 提醒弹窗
 function alertInfo(val) {
   let timer;
@@ -186,6 +181,9 @@ var _post = function (load) {
     type: 'post',
     dataType: 'json',
     cache: false,
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader("KEY", KeyPassword);
+  },
     headers: load.header,
     url: load.url,
     data: load.data,
