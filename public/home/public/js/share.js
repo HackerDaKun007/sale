@@ -193,17 +193,17 @@ var _post = function (load) {
     async: true,
     timeout: 10000,
     success: function (msg) {
-      if (typeof JSON.parse(msg) == 'object') {
-        let data = JSON.parse(msg);
-        if (data.code == 1) {
-          load.success(data);
+      if (typeof msg == 'object') {
+        if (msg.code == 1) {
+          alertInfo(msg.msg);
+          load.success(msg);
         }
-        if (data.code == 0) {
-          alertInfo(data.msg);
+        if (msg.code == 0) {
+          alertInfo(msg.msg);
         }
       } else {
-        if (data != '' && data != null) {
-          load.success(data);
+        if (msg != '' && msg != null) {
+          load.success(msg);
         } else {
           load.success('null');
         }
@@ -222,4 +222,10 @@ var _post = function (load) {
       }
     }
   })
+}
+
+//获取form数据
+function form(val) {
+  let params = $(val).serializeArray();
+  return params;
 }

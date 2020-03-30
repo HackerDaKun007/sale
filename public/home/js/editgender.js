@@ -38,7 +38,6 @@ confirmBtn.on('click', function() {
         url:url+'editsex.html',
         data:{sex:id},
         success: function(msg) {
-          console.log(msg);
         }
     });
   }
