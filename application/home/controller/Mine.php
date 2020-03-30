@@ -11,6 +11,8 @@
 // | 前台首页
 // +----------------------------------------------------------------------
 namespace app\home\controller;
+use think\Validate;
+
 class Mine extends Common
 {
 
@@ -30,9 +32,81 @@ class Mine extends Common
         ]);
     }
 
-    public function editaddress() {
-
+    //添加地址
+    public function addader() {
+        //提交添加地址
+        if(self::yzPost()) {
+            $code = 0;
+            $input = self::$reques->post();
+            $validate = Validate('Useraddress');
+            if(!$validate->scene('add')->check($input)) {
+                $msg = $validate->getError();
+            }else {
+                $input['user_id'] = self::$userId;
+                $model = Model('Useraddress');
+                $data = $model->editAdd($input,false);
+                $msg = $data['msg'];
+                $code = $data['code'];
+            }
+            echo self::dataJson($code,$msg);
+            exit;
+        }
         return view();
+    }
+
+    //修改地址
+    public function editaddress() {
+        //修改添加地址
+        if(self::yzPost()) {
+            $code = 0;
+            $msg = '修改失败';
+            $input = self::$reques->post();
+            $validate = Validate('Useraddress');
+            if(!$validate->scene('edit')->check($input)) {
+                $msg = $validate->getError();
+            }else {
+                $useradder = cache(self::$path['UserAdder']."_".self::$userId);
+                if($useradder) {
+                    $bool = false;
+                    foreach($useradder as $v) {
+                        if($v['user_id'] == self::$userId && $v['useraddress_id'] ==  $input['useraddress_id']) {
+                            $bool = true;
+                            break;
+                        }
+                    }
+                    if($bool) {
+                        $model = Model('Useraddress');
+                        $data = $model->editAdd($input,true);
+                        $msg = $data['msg'];
+                        $code = $data['code'];
+                    }
+                }
+
+            }
+            echo self::dataJson($code,$msg);
+            exit;
+        }
+        return view();
+    }
+
+    //删除收货地址
+    public function deladder() {
+        $code = 0;
+        $msg = '删除失败';
+        if(self::yzPost()){
+            $input = self::$reques->post();
+            $validate = Validate('Useraddress');
+            if(!$validate->scene('del')->check($input)) {
+                $msg = $validate->getError();
+            }else {
+                $input['user_id'] = self::$userId;
+                $model = Model('Useraddress');
+                $data = $model->del($input);
+                $msg = $data['msg'];
+                $code = $data['code'];
+            }
+        }
+        echo self::dataJson($code,$msg);
     }
 
     public function mine() {
@@ -45,7 +119,9 @@ class Mine extends Common
      */
     public function myaddress() {
 
-        return view();
+        return view('',[
+            'adder' => cache(self::$path['UserAdder']."_".self::$userId),
+        ]);
     }
 
 

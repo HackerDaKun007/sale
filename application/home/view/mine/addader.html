@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="format-detection" content="telephone=no,date=no,address=no,email=no,url=no" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    {include file="public/header"}
+
+    <link rel="stylesheet" href="__HOME__/public/lib/weui-citypicker/weui.min.css">
+
+    <link rel="stylesheet" href="__HOME__/css/editaddress.css">
+    <title>编辑收货地址</title>
+</head>
+
+<body>
+<div class="header">
+    <div class="header-bar">
+        <button type="button" class="iconfont icon-right public-back"></button>
+        <span class="page-title">添加收货地址</span>
+    </div>
+</div>
+<div class="wrapper">
+    <form action="#" class="address-form">
+        <div class="form-item">
+            <label for="username">收货人</label>
+            <input type="text" id="username" placeholder="收货人姓名" />
+        </div>
+        <div class="form-item">
+            <label for="telnum">手机号码</label>
+            <input type="text" id="telnum" placeholder="手机号码" />
+        </div>
+        <div class="form-item">
+            <label for="region">所在地区</label>
+            <input type="text" id="city-picker" readonly name="region" placeholder="所在地区" />
+        </div>
+        <div class="form-item">
+            <label for="address">详细地址</label>
+            <input type="text" id="address" placeholder="详细地址" />
+        </div>
+        <button type="button" class="confirm-btn">保存</button>
+
+    </form>
+</div>
+</body>
+
+</html>
+<script src="__HOME__/public/js/public.js"></script>
+<script src="__HOME__/public/lib/weui-citypicker/addrData.js"></script>
+<script src="__HOME__/public/lib/weui-citypicker/weui.min.js"></script>
+<script src="__HOME__/js/editaddr.js"></script>
+<script>
+    // 地址选择器
+    $('#city-picker').on('click', function () {
+        var _this = this;
+        weui.picker(addrData, {
+            onChange: function (result) {
+                $(_this).val(result[0].label + result[1].label + result[2].label);
+            },
+            onConfirm: function (result) {
+                $(_this).val(result[0].label + result[1].label + result[2].label);
+            }
+        });
+    });
+</script>

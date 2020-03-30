@@ -102,6 +102,38 @@ class Useraddress extends Common {
         ],'',true);
     }
 
+    //删除
+    public function del($data) {
+        $code = 0;
+        $msg = '删除失败';
+        $where = [
+            ['user_id','=',$data['user_id']],
+            ['useraddress_id','=',$data['useraddress_id']],
+        ];
+        self::startTrans();
+        try {
+            if(self::where($where)->delete()) {
+                $useradder = cache(self::$path['UserAdder']."_".$data['user_id']);
+                if($useradder) {
+                    foreach ($useradder as $k => $v) {
+                        if($v['useraddress_id'] == $data['useraddress_id']) {
+                            array_splice($useradder,$k,1);
+                            break;
+                        }
+                    }
+                    cache(self::$path['UserAdder']."_".$data['user_id'],$useradder);
+                }
+                $code = 1;
+                $msg = '删除成功';
+                self::commit();
+            }
+        }catch (Exception $e) {
+            $msg = '服务器异常';
+            self::rollback();
+        }
+        return self::dataJson($code,$msg,'','',true);
+    }
+
 }
 
 ?>
