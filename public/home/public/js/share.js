@@ -173,11 +173,15 @@ function selectText(textbox, startIndex, stopIndex) {
   }
 }
 
+var ajax ='';
 
+//提交post数据
 var _post = function (load) {
   jQuery.support.cors = true;
-
-  $.ajax({
+  if(ajax != '') {
+    ajax.abort();
+  }
+  ajax = $.ajax({
     type: 'post',
     dataType: 'json',
     cache: false,

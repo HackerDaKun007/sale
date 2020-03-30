@@ -23,9 +23,26 @@ checked.on('click', function() {
     .prop('checked', true);
 });
 
+var url = '/home/manage/';
+
 confirmBtn.on('click', function() {
-  var a = checked.is(':checked');
-  console.log(a);
+  let id = '';
+  checked.find('input').each(function() {
+    let $this = $(this);
+    if($this.prop('checked')) {
+      id = $this.val();
+    }
+  });
+  if(id != genderId && id <= 2 && id >= 1) {
+    _post({
+        url:url+'editsex.html',
+        data:{sex:id},
+        success: function(msg) {
+          console.log(msg);
+        }
+    });
+  }
+  
 })
 
 
