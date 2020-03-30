@@ -172,6 +172,18 @@ class User extends Common {
         return self::dataJson(1, 'success', ['data'=>$select['data'], 'count'=>$count], '', true);
     }
 
+    //公共修改
+    public function publicedit($data,$id,$allow) {
+        if(self::isUpdate(true)->allowField($allow)->save($data,$id)) {
+            $code = 1;
+            $msg = '修改成功';
+        }else {
+            $code = 0;
+            $msg =  '修改失败';
+        };
+        return self::dataJson($code,$msg,'','',true);
+    }
+
 }
 
 ?>
