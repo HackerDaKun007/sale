@@ -135,8 +135,6 @@ class Mine extends Common
      * 收货地址列表
      */
     public function myaddress() {
-
-        var_dump(cache(self::$path['UserAdder']."_".self::$userId));
         return view('',[
             'adder' => cache(self::$path['UserAdder'].self::$userId),
         ]);
