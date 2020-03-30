@@ -1,6 +1,6 @@
 var editForm = $('.edit-form');
 var verifyImg = $('.verify-img');
-
+var initPass = getCookie('initialPass');
 
 editForm.find('.confirm-btn').bind('click', function () {
     let form = getForm(editForm);
@@ -17,6 +17,12 @@ editForm.find('.confirm-btn').bind('click', function () {
         alertInfo('验证码不正确');
 
     }  else {
+        if (initPass != '' && initPass != null) {
+            if (initPass != form[0].value) {
+                alertInfo('原先密码不正确');
+                return false;
+            }
+        }
         _post({
             url: '/home/manage/editpasswod.html',
             data: form,

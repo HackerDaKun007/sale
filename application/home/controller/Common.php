@@ -43,6 +43,7 @@ class Common extends Controller
         //404页面
         self::$server404 = dirname(getcwd()).'/thinkphp/tpl/home_404.html';
 
+
         //用户信息
         self::userInfo();
 

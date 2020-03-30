@@ -123,6 +123,7 @@ class User extends Common {
         $msg = '原先密码错误';
         $code = 0;
         if($find) {
+           
             //判断密码原先密码是否正确
             if($find['password'] == encrypt($data['password'], $find['encrypt'])) {
                 $allow = ['password','encrypt','initialyes','initial_pass'];
