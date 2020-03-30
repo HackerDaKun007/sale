@@ -163,6 +163,7 @@ class User extends Common {
                 if(encrypt($data['password'], $find['encrypt']) == $find['password']) {
                     $code = 1;
                     $msg = '登陆成功';
+                    $find = json_decode($find,true);
                     self::uploadCookie($find,$find['user_id']);
                 }
             }
