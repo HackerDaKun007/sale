@@ -68,7 +68,7 @@ class Manage extends Common
                 $model = Model('User');
                 $data = $model->publicedit($input,['user_id'=>self::$userId],'tel');
                 if($data['code'] == 1) {
-                    cookie(self::$path['userSex'],$input['tel']);
+                    cookie(self::$path['tel'],$input['tel']);
                 }
                 $code = $data['code'];
                 $msg = $data['msg'];
@@ -78,5 +78,12 @@ class Manage extends Common
     }
 
     /** 修改密码 */
-//    public function editpasswod
+    public function editpasswod() {
+        $code = 0;
+        $msg = 'error';
+        if(self::yzPost()) {
+
+        }
+        echo self::dataJson($code,$msg);
+    }
 }
