@@ -56,7 +56,7 @@ class Mine extends Common
 
     //修改地址
     public function editaddress() {
-        $useradder = cache(self::$path['UserAdder']."_".self::$userId);
+        $useradder = cache(self::$path['UserAdder'].self::$userId);
         $input = self::$reques->param();
         //修改添加地址
         if(self::yzPost()) {
@@ -137,7 +137,7 @@ class Mine extends Common
     public function myaddress() {
 
         return view('',[
-            'adder' => cache(self::$path['UserAdder']."_".self::$userId),
+            'adder' => cache(self::$path['UserAdder'].self::$userId),
         ]);
     }
 

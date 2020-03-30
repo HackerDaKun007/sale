@@ -72,13 +72,13 @@ class Useraddress extends Common {
     public static function userUpdate($id) {
         $data = [];
         $data = self::where('user_id','=',$id)->field('user_id,username,tel,area,adder,useraddress_id')->order('useraddress_id desc')->select()->toArray();
-        cache(self::$path['UserAdder']."_$id",$data);
+        cache(self::$path['UserAdder']."$id",$data);
         return $data;
     }
 
     //读取缓存
     public static function userCache($id) {
-        $UserAdder = cache(self::$path['UserAdder']."_$id");
+        $UserAdder = cache(self::$path['UserAdder']."$id");
         return $UserAdder;
     }
 
