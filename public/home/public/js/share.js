@@ -8,7 +8,6 @@ var vxUser = vxUser;                //微信名
 var vxId = vxId;                    //微信号
 var vxImg = vxImg;                  //微信图片
 
-
 $('#ServerTime').remove();
 // 提醒弹窗
 function alertInfo(val) {
@@ -186,7 +185,7 @@ var _post = function (load) {
     dataType: 'json',
     cache: false,
     beforeSend: function(xhr) {
-      xhr.setRequestHeader("KEY", KeyPassword);
+      xhr.setRequestHeader("key", KeyPassword);
   },
     headers: load.header,
     url: load.url,
