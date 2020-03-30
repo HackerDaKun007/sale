@@ -46,8 +46,10 @@ class Mine extends Common
     }
 
     public function mycollect() {
-
-        return view();
+        
+        return view('',[
+            'data' => cache(self::$path['userFavorite']."_".self::$userId),
+        ]);
     }
 
 
