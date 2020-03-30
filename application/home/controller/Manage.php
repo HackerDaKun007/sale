@@ -62,7 +62,7 @@ class Manage extends Common
         if(self::yzPost()) {
             $input = self::$reques->post();
             $validate = Validate('User');
-            if(!$validate->scene('sex')->check($input)) {
+            if(!$validate->scene('tel')->check($input)) {
                 $msg = $validate->getError();
             }else {
                 $model = Model('User');
@@ -76,4 +76,7 @@ class Manage extends Common
         }
         echo self::dataJson($code,$msg);
     }
+
+    /** 修改密码 */
+//    public function editpasswod
 }
