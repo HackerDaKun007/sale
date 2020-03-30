@@ -137,7 +137,7 @@ class Mine extends Common
      */
     public function myaddress() {
         return view('',[
-            'adder' => cache(self::$path['UserAdder'].self::$userId),
+            'adder' => Model('Useraddress')->addCache(true,self::$userId),
         ]);
     }
 
