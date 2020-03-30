@@ -68,7 +68,7 @@ class Manage extends Common
                 $model = Model('User');
                 $data = $model->publicedit($input,['user_id'=>self::$userId],'tel');
                 if($data['code'] == 1) {
-                    cookie(self::$path['tel'],$input['tel']);
+                    cookie(self::$path['userTel'],$input['tel']);
                 }
                 $code = $data['code'];
                 $msg = $data['msg'];
@@ -82,7 +82,13 @@ class Manage extends Common
         $code = 0;
         $msg = 'error';
         if(self::yzPost()) {
+            $input = self::$reques->post();
+            $validate = Validate('User');
+            if(!$validate->scene('passw')->check($input)) {
+                $msg = $validate->getError();
+            }else {
 
+            }
         }
         echo self::dataJson($code,$msg);
     }
