@@ -5,7 +5,8 @@ var defaultnum = $('#defaultnum');
 var userTel = getCookie('userTel');
 
 if (userTel != 0) {
-    defaultnum.val(userTel);
+    let val = userTel.slice(0, 3) + userTel.slice(7, userTel.length-1);
+    defaultnum.val(val);
     defaultnum.parent('.form-item').show();
 } else {
     defaultnum.parent('.form-item').hide();
