@@ -124,7 +124,7 @@ class User extends Common {
         $code = 0;
         if($find) {
             //判断密码原先密码是否正确
-            if($find['password'] == encrypt($data['password'], $find['encrypt'])) {
+            if($find['password'] == encrypt($data['orpassword'], $find['encrypt'])) {
                 $allow = ['password','encrypt','initialyes','initial_pass'];
                 //修改密码
                 $random = random();
