@@ -11,6 +11,7 @@
 // | 前台首页
 // +----------------------------------------------------------------------
 namespace app\home\controller;
+use think\captcha\Captcha;
 class Manage extends Common
 {
     public function bindmobile() {
@@ -87,9 +88,31 @@ class Manage extends Common
             if(!$validate->scene('passw')->check($input)) {
                 $msg = $validate->getError();
             }else {
-
+                $input['user_id'] = self::$userId;
+                $model = Model('User');
+                $data = $model->userPassw($input);
+                $code = $data['code'];
+                $msg = $data['msg'];
             }
         }
         echo self::dataJson($code,$msg);
+    }
+
+    /**
+     * 生成验证码
+     */
+    public function yzm() {
+        $config =    [
+            // 验证码字体大小
+            'fontSize'    =>    30,
+            // 验证码位数
+            'length'      =>    4,
+            'fontttf'     =>   '5.ttf',
+            // 关闭验证码杂点
+            //'useNoise'    =>    false,
+            //'codeSet'     =>    '0123456789'
+        ];
+        $captcha = new Captcha($config);
+        return $captcha->entry();
     }
 }
