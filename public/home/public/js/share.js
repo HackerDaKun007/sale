@@ -225,7 +225,7 @@ var _post = function (load) {
 }
 
 //获取form数据
-function form(val) {
+function getForm(val) {
   let params = $(val).serializeArray();
   return params;
 }
