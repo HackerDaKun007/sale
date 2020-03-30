@@ -251,8 +251,11 @@ trait App {
     /*
      * 加密IP地址
      */
-    protected static function passIp() {
-        return sprintf('%u',ip2long(self::getIp()));
+    protected static function passIp($ip='') {
+        if($ip=='') {
+            $ip = self::getIp();
+        }
+        return sprintf('%u',ip2long($ip));
     }
 
 }

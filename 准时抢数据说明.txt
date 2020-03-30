@@ -299,8 +299,24 @@ ipc跳转地址    ipc_url
 表名:   sa_flowdate
 id      flowdate_id
 日期:    date
-pv      次数
-uv       次数
+pv次数   pv
+uv次数   uv
 
+
+/** pv **/
+表名:   sa_pv
+id           pv_id
+日期ID        flowdate_id
+URL地址       url
+IP地址        ip
+IP地区        ipadder
+次数          num
+添加时间       addtime
 
 /** uv **/
+表名:   sa_uv
+id           uv_id
+日期ID        flowdate_id
+IP地址        ip
+IP地区        ipadder
+添加时间       addtime
