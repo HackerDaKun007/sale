@@ -7,7 +7,7 @@ var addressForm = $('.address-form');
 addressForm.find('.confirm-btn').bind('click', function () {
     let form = getForm(addressForm);
     
-    if (form[0].value.length < 2) {
+    if (form[0].value.length < 1) {
         alertInfo('请输入收货人姓名');
 
     } else if (form[1].value.length != 11 && typeof +form[1].value != 'number') {
