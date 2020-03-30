@@ -37,10 +37,12 @@ class Manage extends Common
     public function editsex() {
         $code = 0;
         $msg = 'error';
+//        var_dump(self::$reques);
+//        exit;
         if(self::yzPost()) {
             $input = self::$reques->post();
             $validate = Validate('User');
-            if($validate->scene('sex')->check($input)) {
+            if(!$validate->scene('sex')->check($input)) {
                 $msg = $validate->getError();
             }else {
                 $model = Model('User');
