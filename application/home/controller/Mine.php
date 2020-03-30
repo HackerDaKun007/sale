@@ -136,6 +136,7 @@ class Mine extends Common
      */
     public function myaddress() {
 
+        var_dump(cache(self::$path['UserAdder']."_".self::$userId));
         return view('',[
             'adder' => cache(self::$path['UserAdder']."_".self::$userId),
         ]);
