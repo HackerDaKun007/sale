@@ -26,14 +26,10 @@ class Useraddress extends Common {
         self::startTrans();
         try {
             if(self::isUpdate($bool)->allowField($allow)->save($data,$id)) {
-                $data['useraddress_id'] = $bool?$data['useraddress_id']:$this->id;
+//                $data['useraddress_id'] = $bool?$data['useraddress_id']:$this->id;
                 $msg = $bool?'修改成功':'添加成功';
                 $code = 1;
-                if($bool) { //修改缓存
-                    self::editCache($data);
-                }else {//添加缓存
-                    self::addCache($data);
-                }
+                self::addCache(true,$data['user_id']);
                 self::commit();
             }
         }catch(Exception $e) {
@@ -44,14 +40,13 @@ class Useraddress extends Common {
     }
 
     //写入缓存
-    public static function addCache($val) {
-        $data = cache(self::$path['UserAdder']."$val[user_id]");
+    public static function addCache($bool=false,$id='') {
+        $data = cache(self::$path['UserAdder'].$id);
         if($data) {
-            $data[count($data)] = $val;
-        }else {
-            $data[0] = $val;
+            $data = self::where('user_id','=',$id)->order('useraddress_id desc')->select()->toArray();
+            cache(self::$path['UserAdder'].$id,$data);
         }
-        cache(self::$path['UserAdder']."$val[user_id]",$data);
+        return $data;
     }
 
     //修改缓存

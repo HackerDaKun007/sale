@@ -75,6 +75,7 @@ class Mine extends Common
                         }
                     }
                     if($bool) {
+                        $input['user_id'] = self::$userId;
                         $model = Model('Useraddress');
                         $data = $model->editAdd($input,true);
                         $msg = $data['msg'];
