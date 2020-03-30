@@ -139,7 +139,7 @@ class User extends Common {
                         $code = 1;
                         $find = self::where('user_id','=',$data['user_id'])->find();
 //                        self::uploadCookie($find,$data['user_id']);
-                        cookie(self::$path['initialPass'],'');
+                        cookie(self::$path['initialPass'],null);
                         self::commit();
                     }
                 }catch (Exception $e) {
