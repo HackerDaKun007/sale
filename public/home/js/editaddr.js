@@ -1,6 +1,8 @@
 var backBtn = $('.public-back');
 var addressForm = $('.address-form');
-
+addressForm.find('.confirm-btn').bind('doubleclick', function(e) {
+    e.preventDeafult();
+});
 addressForm.find('.confirm-btn').bind('click', function () {
     let form = getForm(addressForm);
     

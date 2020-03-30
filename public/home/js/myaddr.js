@@ -6,7 +6,7 @@ var addressListHtml = '';
 
 var addressData = decodeURIComponent($('#adder').html(), true);
 addressData = JSON.parse(addressData);
-alert(addressData);
+
 if (addressData) {
     noContent.hide();
     addressData.forEach(function (e) {

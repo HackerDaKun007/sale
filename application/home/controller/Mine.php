@@ -89,7 +89,7 @@ class Mine extends Common
         }
         $bool = false;
         $data = '';
-        if($useradder) {
+        if($useradder && !empty($input['id']) && is_numeric($input['id'])) {
             foreach ($useradder as $v) {
                 if($v['useraddress_id'] == $input['id']) {
                     $data = $v;
