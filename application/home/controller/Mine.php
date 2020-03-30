@@ -62,6 +62,7 @@ class Mine extends Common
         if(self::yzPost()) {
             $code = 0;
             $msg = '修改失败';
+            $input = self::$reques->post();
             $validate = Validate('Useraddress');
             if(!$validate->scene('edit')->check($input)) {
                 $msg = $validate->getError();

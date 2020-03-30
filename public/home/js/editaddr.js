@@ -1,17 +1,16 @@
 var backBtn = $('.public-back');
 var addressForm = $('.address-form');
+var dataEl = $('#data');
 
-var data = decodeURIComponent($('#data').html(), true);
-data = JSON.parse(data);
-
-if (data) {
+if (dataEl.length > 0) {
+    var data = decodeURIComponent($('#data').html(), true);
+    data = JSON.parse(data);
     addressForm.find('#username').val(data.username);
     addressForm.find('#tel').val(data.tel);
     addressForm.find('#city-picker').val(data.area);
     addressForm.find('#address').val(data.adder);
     addressForm.find('#addrid').val(data.useraddress_id);
 }
-console.log(data);
 
 // 阻止双击事件
 addressForm.find('.confirm-btn').bind('doubleclick', function(e) {
@@ -40,10 +39,10 @@ addressForm.find('.confirm-btn').bind('click', function () {
             data: form,
             success: function(msg) {
                 if (msg.code == 1) {
-                    $('input').val('');     
+                    if (!data) {
+                        $('input').val(''); 
+                    }
                 }     
-                console.log(msg);
-                
             }
         })
     }
