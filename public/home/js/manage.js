@@ -8,7 +8,7 @@ var memberUser = getCookie('memberUser');
 var userImg = getCookie('userImg');
 var initialPass = getCookie('initialPass');
 
-if (initialPass != null && initialPass != '') {
+if (initialPass != null && initialPass != '' && initialPass != 0) {
   initPassEl
     .eq(0)
     .find('.pass')

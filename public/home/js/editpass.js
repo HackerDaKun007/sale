@@ -29,9 +29,8 @@ editForm.find('.confirm-btn').bind('click', function () {
             success: function(msg) {
                 if (msg.code == 1) {
                     $('input').val('');
-                } else {
-                    getYZM();
-                }
+                } 
+                getYZM();
             }
         })
         
