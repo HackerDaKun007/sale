@@ -21,6 +21,7 @@ class User extends Validate {
         'orpassword' => 'require|length:1,32',
         'password' => 'require|length:1,32',
         'ropassword' => 'require|confirm:password',
+        'yzm' => 'require|length:4|captcha',
         'user_id' => 'require|number|length:1,11',
     ];
 
@@ -35,7 +36,7 @@ class User extends Validate {
     ];
 
     protected $scene = [
-        'passw' => ['orpassword','password','ropassword','user_id'],
+        'passw' => ['yzm','orpassword','password','ropassword','user_id'],
         'password' => ['password','ropassword','user_id'],
         'tel' => ['tel'],
         'sex' => ['sex'],
