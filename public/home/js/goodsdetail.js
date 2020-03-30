@@ -350,13 +350,17 @@ $(function () {
 		let val = buyNumber.val() * 1
 		let num = val > 1 ? val - 1 : 1
 		buyNumber.val(num)
-		return false
+		toOrderUrl = url + '&goodsstyle_id=' + selectValueId + '&num=' + buyNumber.val();
+		submitBtn.attr('href', toOrderUrl);
+		return false;
 	})
 	increaseBtn.on('click', function () {
 		let val = buyNumber.val() * 1
 		let num = val < 5 ? val + 1 : 5
 		buyNumber.val(num)
-		return false
+		toOrderUrl = url + '&goodsstyle_id=' + selectValueId + '&num=' + buyNumber.val();
+		submitBtn.attr('href', toOrderUrl);
+		return false;
 	})
 
 	decreaseBtn.on('doubleclick', function (e) {

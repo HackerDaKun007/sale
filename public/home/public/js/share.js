@@ -252,6 +252,19 @@ function getCookie(name) {
   return '';
 }
 
+// 获取URL关键词
+function getSearchWord(name) {
+  let search = location.search.split('?');
+  let arrSearch = search[1].split('&');
+  for (let i of arrSearch) {
+    let arr = i.split('=');
+    if (arr[0] == name) {
+      return arr[1];
+    }
+  }
+  return '';
+}
+
 
 // 获取JSON
 function getJson(val) {
