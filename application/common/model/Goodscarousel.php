@@ -43,7 +43,8 @@ class Goodscarousel extends Common {
         $msg = '修改失败';
         $code = 0;
         $find = '';
-        if(!empty($data['img'])) {
+        if(!empty($data['home_img'])) {
+            $data['img'] = $data['home_img'];
             $find = self::where('goodscarousel_id','=',$data['goodscarousel_id'])->field('img')->find();
         }
 

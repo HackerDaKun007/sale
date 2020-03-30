@@ -44,6 +44,9 @@ class Common extends Controller
         self::$server404 = dirname(getcwd()).'/thinkphp/tpl/home_404.html';
 
 
+        //更新
+        Model('Flowdate')->add(self::$reques->server()['REQUEST_URI']);
+
         //用户信息
         self::userInfo();
 

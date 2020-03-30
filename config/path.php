@@ -142,6 +142,11 @@ return [
 
     //提交数据加密
     'dataPassword' => 'dakun007@qq.com,gzlmgvip',
+
+    //日期流量
+    'dateFlow' => 'dateFlow',
+    'pv' => 'pv',
+    'uv' => 'uv',
 ];
 
 ?>
