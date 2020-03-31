@@ -66,15 +66,15 @@ if (addressData) {
       </div>
       <div class="form-item">
         <label for="telnum">手机号码：</label>
-        <input type="text" id="telnum" name="telnum" placeholder="请输入手机号码" />
+        <input type="text" id="telnum" name="tel" placeholder="请输入手机号码" />
       </div>
       <div class="form-item">
         <label for="region">所在地区：</label>
-        <input type="text" id="city-picker" name="region" readonly placeholder="点击选择所在地区" />
+        <input type="text" id="city-picker" name="area" readonly placeholder="点击选择所在地区" />
       </div>
       <div class="form-item">
         <label for="address">详细地址：</label>
-        <input type="text" id="address" name="address" placeholder="请输入详细地址" />
+        <input type="text" id="address" name="adder" placeholder="请输入详细地址" />
       </div>
     </form>
   </div>`
@@ -86,10 +86,10 @@ var goodsPrice = 0;
 for (let i of goodsData.sty) {
     if (i.goodsstyle_id == goodsStyleId) {
         goodsPrice = i.price;
-        goodsStyleName =  `
+        goodsStyleName = `
         <p class="goodstype">${i.username}</p>
         `;
-        priceText =  `
+        priceText = `
         ￥${i.price}/件
         `;
         priceHtml = ` <span>实付款：</span>
@@ -97,7 +97,7 @@ for (let i of goodsData.sty) {
     }
 }
 goodsDetailHtml = `
-    <img src=${goodsData.home_img}>
+    <img src=${imageUrl + goodsData.home_img}>
     <div>
     <div class="goodsinfo">
         <p class="goodsname">${goodsData.username}</p>
@@ -119,8 +119,8 @@ var main = $('.main');
 var pageHeader = $('.public-header');
 
 var addressItem = $('.address-item');
-addressItem.on('click', function() {
-    
+addressItem.on('click', function () {
+
     let index = $(this).index();
     let address = addressData[index];
     addressId.val(address.useraddress_id);
@@ -154,14 +154,14 @@ decreaseBtn.on('click', function () {
     let val = buyNumber.val() * 1;
     let num = val > 1 ? val - 1 : 1;
     buyNumber.val(num);
-    totalPrice.text('￥'+ num * goodsPrice);
+    totalPrice.text('￥' + num * goodsPrice);
     return false;
 })
 increaseBtn.on('click', function () {
     let val = buyNumber.val() * 1;
     let num = val < 5 ? val + 1 : 5;
     buyNumber.val(num);
-    totalPrice.text('￥'+ num * goodsPrice);
+    totalPrice.text('￥' + num * goodsPrice);
     return false;
 })
 
@@ -250,46 +250,57 @@ $('#toPay').on('click', function (e) {
     let form = getForm($('#form'));
 
     // 获取localstorage的order信息
-    let nowTime = Math.floor(Date.now() /1000);
+    let nowTime = Math.floor(Date.now() / 1000);
     storeData = JSON.parse(localStorage.getItem('order'));
-
-    // 判断order里的时间戳是否过期，如果超过24小时就删除这个localstorage
-    if (storeData) {
-        let a = storeData[storeData.length-1].date;
-        a += 86400;
-        if (a < nowTime) {
-            localStorage.removeItem('order');
-        }
-    }
-    // 设置localstorage
-    if (storeData == null || storeData.length < 3) {
-        let orderInfo = {
-            goodsId: goodsData.goods_id,
-            num,
-            date: nowTime
-        }
-        orderStore.push(orderInfo);
-        num++;
-        localStorage.setItem('order', JSON.stringify(orderStore));
-        
-        // 提交数据
-        _post({
-            url: '/home/order/addorder.html',
-            data: form,
-            success: function(msg) {
-                console.log(msg);
+    let bool = false;
+    if(storeData != null && storeData != '') {
+         // 判断order里的时间戳是否过期，如果超过24小时就删除这个localstorage
+        if (storeData) {
+            let a = storeData[storeData.length - 1].date;
+            a += 86400;
+            if (a < nowTime) {
+                localStorage.removeItem('order');
             }
-        })
+        }
+        // 如果超过3条则不允许购买
+        else if (storeData.length >= 3 ) {
+            alertInfo('已超过购买限制');
+            setTimeout(function () {
+                location.replace('/');
+            }, 1000)
+        }else {
+            bool = true;
+        }
+    }else {
+        bool = true;
     }
-    // 如果超过3条则不允许购买
-    else if (storeData.length >= 3){
-        alertInfo('已超过购买限制');
-        setTimeout(function(){
-            location.replace('/');
-        },1000)
-    }
-})
+    if(bool) {
+        // 提交数据
+    _post({
+        url: '/home/order/addorder.html',
+        data: form,
+        success: function (msg) {
+            if (msg.code == 1) {
 
+                // 设置localstorage
+                if (storeData == null || storeData.length < 3) {
+                    let orderInfo = {
+                        goodsId: goodsData.goods_id,
+                        num,
+                        date: nowTime
+                    }
+                    orderStore.push(orderInfo);
+                    num++;
+                    localStorage.setItem('order', JSON.stringify(orderStore));
+
+                }
+            }
+        }
+    })
+    }
+
+    
+})
 
 // 用户在页面停留5分钟后跳出提示框
 var time = 300000; //5分钟
@@ -301,5 +312,3 @@ var timer = setInterval(function () {
     }, time2);
     clearInterval(timer);
 }, time);
-
-

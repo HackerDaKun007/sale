@@ -3,7 +3,8 @@ $(function () {
 	var goods = getJson($('#goods'));
 	var comment = getJson($('#comment'));
 	var favorite = getJson($('#favorite'));
-
+	console.log(comment);
+	
 	var nowTime = serverTimeEnd; //服务器现在时间
 
 	var swiperWrapper = $('.swiper-wrapper');
@@ -388,7 +389,7 @@ $(function () {
 		$this.addClass('active');
 		selectValueId = i.goodsstyle_id;
 		selectGoodsInfoHtml = `
-		<img src=${imageUrl + i.home_img} alt="">
+		<img src=${imageUrl + goods.home_img} alt="">
 		<div>
 			<p class="price">￥${i.price}</p>
 			<p class="stock">库存${i.available}件</p>
