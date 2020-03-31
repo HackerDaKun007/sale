@@ -69,7 +69,8 @@ delBtn.bind('click', function() {
 })
 
 // 返回上一页并更新页面
-backBtn.bind('click', function() {
+backBtn.bind('click', function(e) {
+    // e.preventDeafult();
     toBackFun();
 });
 
