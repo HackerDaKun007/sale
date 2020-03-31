@@ -10,6 +10,7 @@ $(function () {
 	var swiperWrapper = $('.swiper-wrapper');
 	var promotion = $('.promotion');
 	var goodsDesc = $('.goods-desc');
+	var goodsValue = $('.goods-value');
 	var goodsValueList = $('.goods-value .value-list');
 	var goodsText = $('.goods-text');
 	var goodsImages = $('.goods-images .images');
@@ -122,14 +123,21 @@ $(function () {
 				 `;
 		
 		if (goods.parameter) {
-			for (let i of goods.parameter) {
-				goodsValueListHtml += `
-						<li class="item">
-							<p class="item-name">${i.title}</p>
-							<p class="item-value">${i.content}</p>
-						</li>
-						`;
+			if (goods.parameter.length > 0) {
+				goodsValue.show();
+				for (let i of goods.parameter) {
+					goodsValueListHtml += `
+							<li class="item">
+								<p class="item-name">${i.title}</p>
+								<p class="item-value">${i.content}</p>
+							</li>
+							`;
+				}
+			} else {
+				goodsValue.hide();
 			}
+		} else {
+			goodsValue.hide();
 		}
 		goodsTextHtml = `${goods.details}`;
 	
