@@ -33,9 +33,13 @@
             <div class="log"><img src="{$web.logo}" alt=""></div>
             <div class="swiper-container">
                 <div class="swiper-wrapper">
-                    <div class="swiper-slide"><img class="swiper-image" src="__HOME__/temp-images/banner2.jpg" alt=""></div>
-                    <div class="swiper-slide"><img class="swiper-image" src="__HOME__/temp-images/banner3.jpg" alt=""></div>
-                    <div class="swiper-slide"><img class="swiper-image" src="__HOME__/temp-images/banner4.jpg" alt=""></div>
+                    {if $carousel}
+                        {foreach $carousel as $v}
+                            <div class="swiper-slide">
+                                <a style="display: block;" href="{$v.url}"><img class="swiper-image" src="__UPL__/{$v.img}" alt="{$v.username}"></a>
+                            </div>
+                        {/foreach}
+                    {/if}
                 </div>
                 <!-- Add Pagination -->
                 <div class="swiper-pagination"></div>

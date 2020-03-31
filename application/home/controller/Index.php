@@ -19,6 +19,7 @@ class Index extends Common
         return view('',[
             'recogoods' => Model('Recogoods')->cacheDate(self::$dateTime), //获取今天推荐信息
             'rushgoods' => Model('Rushgoods')->cacheSelect(self::$dateTime), //获取今天抢购商品信息
+            'carousel' => Model('Carousel')->cacheSelect(false), //轮播图
         ]);
     }
 }
