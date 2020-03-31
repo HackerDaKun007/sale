@@ -38,10 +38,12 @@ class Uv extends Common {
             }
         }else {
             $bool = false;
-            foreach($path as $k => $v) {
-                if($v['ip'] == self::passIp($ip['ip'])) {
-                    $bool = true;
-                    break;
+            if($path && is_array($path)) {
+                foreach($path as $k => $v) {
+                    if($v['ip'] == self::passIp($ip['ip'])) {
+                        $bool = true;
+                        break;
+                    }
                 }
             }
             if(!$bool) {

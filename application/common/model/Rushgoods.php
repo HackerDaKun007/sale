@@ -167,7 +167,7 @@ class Rushgoods extends Common {
         }if(!empty($get['goods_id'])) {
             $goId = "g.goods_id = $get[goods_id]";
         }
-        $data = self::where($where)->where($goUser)->where($goId)->where('g.shelves','=',1)->field('a.*,b.date,c.start_time,c.end_time,g.username')->join('goods g','g.goods_id=a.goods_id')->alias('a')->join('rushdate b', 'b.rushdate_id = a.rushdate_id')->join('rushtime c','c.rushtime_id = a.rushtime_id')->order('a.rushgoods_id asc')->paginate($get['limit'],true,['page'=>$get['page']])->toArray();
+        $data = self::where($where)->where($goUser)->where($goId)->where('g.shelves','=',1)->field('a.*,b.date,c.start_time,c.end_time,g.username')->join('goods g','g.goods_id=a.goods_id')->alias('a')->join('rushdate b', 'b.rushdate_id = a.rushdate_id')->join('rushtime c','c.rushtime_id = a.rushtime_id')->order('b.date desc')->paginate($get['limit'],true,['page'=>$get['page']])->toArray();
         $count = self::where($where)->alias('a')->where($goId)->where('g.shelves','=',1)->join('goods g','g.goods_id=a.goods_id')->alias('a')->join('rushdate b', 'b.rushdate_id = a.rushdate_id')->join('rushtime c','c.rushtime_id = a.rushtime_id')->count();
         return self::dataJson(1,'', [
             'data' => $data['data'],

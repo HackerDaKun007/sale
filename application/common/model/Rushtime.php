@@ -89,7 +89,7 @@ class Rushtime extends Common {
      * 展示数据
      */
     public function show($get,$where=[]) {
-        $data = self::where($where)->alias('a')->field('a.*,b.date')->join('rushdate b','b.rushdate_id = a.rushdate_id')->order('a.start_time asc')->paginate($get['limit'],true,['page'=>$get['page']])->toArray();
+        $data = self::where($where)->alias('a')->field('a.*,b.date')->join('rushdate b','b.rushdate_id = a.rushdate_id')->order('b.date desc')->paginate($get['limit'],true,['page'=>$get['page']])->toArray();
 
         $count = self::where($where)->alias('a')->count();
         return self::dataJson(1,'', [
