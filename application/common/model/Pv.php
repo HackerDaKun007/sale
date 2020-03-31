@@ -41,13 +41,15 @@ class Pv extends Common {
             $key = '';
             $id = '';
             $num = 0;
-            foreach($path as $k => $v) {
-                if($v['ip'] == self::passIp($ip['ip']) && $v['url'] == $url) {
-                    $bool = true;
-                    $key = $k;
-                    $id = $v['pv_id'];
-                    $num = $v['num']+1;
-                    break;
+            if($path && is_array($path)) {
+                foreach($path as $k => $v) {
+                    if($v['ip'] == self::passIp($ip['ip']) && $v['url'] == $url) {
+                        $bool = true;
+                        $key = $k;
+                        $id = $v['pv_id'];
+                        $num = $v['num']+1;
+                        break;
+                    }
                 }
             }
             if($bool) {  //true
