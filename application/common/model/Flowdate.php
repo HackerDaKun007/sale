@@ -18,7 +18,7 @@ class Flowdate extends Common {
         $date = strtotime(date('Ymd')); //今天日期
         $dateFlow = cache(self::$path['dateFlow']."_$date");
         $timedate = time();
-        $time = (3600*24)*1;
+        $time = self::$path['time1'];
         if(!$dateFlow) {
             $data = self::where('date','=',$date)->find();
             if(!$data) { //查询没有数据

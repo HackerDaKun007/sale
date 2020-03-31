@@ -69,7 +69,7 @@ class Recogoods extends Common {
                     return $user;
                 })->toArray();
                 if($data) {
-                    cache(self::$path['recoGoods']."_$v[date]",$data,$time+2592000);
+                    cache(self::$path['recoGoods']."_$v[date]",$data,2592000);
                 }
             }else {
                 cache(self::$path['recoGoods']."_$v[date]",null);

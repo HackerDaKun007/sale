@@ -76,40 +76,41 @@ class Order extends Common
         if(self::yzPost()) {
             $input = self::$reques->post();
             $validate = Validate('Order');
-            if(!$validate->scene('add')->check($input)) {
+            if(!$validate->scene('goods')->check($input)) {
                 $msg = $validate->getError();
-            }
-            $goods = Model('Rushgoods')->cacheGoods($input['goods_id'],$input['rushdate_id'],$input['rushtime_id']);
-            if($goods) {
-                if($goods['start_time'] <= self::$serverTimeEnd && $goods['end_time'] <= self::$serverTimeEnd) {
-                    //判断收货地址
-                    $address = Model('Useraddress')->userCache(self::$userId);
-                    $bool = false;
-                    if($address) { //如果地址存在，判断提交过来的地址ID
-                        if(!empty($input['adder_id'])) {
-                            foreach($address as $v) {
-                                if($v['useraddress_id'] == $input['adder_id']) {
-                                    $bool = true;
-                                    $data['username'] = $v['username'];
-                                    $data['tel'] = $v['tel'];
-                                    $data['area'] = $v['area'];
-                                    $data['adder'] = $v['adder'];
-                                    break;
+            }else {
+                $goods = Model('Rushgoods')->cacheGoods($input['goods_id'],$input['rushdate_id'],$input['rushtime_id']);
+                if($goods) {
+                    if($goods['start_time'] <= self::$serverTimeEnd && $goods['end_time'] <= self::$serverTimeEnd) {
+                        //判断收货地址
+                        $address = Model('Useraddress')->userCache(self::$userId);
+                        $bool = false;
+                        if($address) { //如果地址存在，判断提交过来的地址ID
+                            if(!empty($input['adder_id'])) {
+                                foreach($address as $v) {
+                                    if($v['useraddress_id'] == $input['adder_id']) {
+                                        $bool = true;
+                                        $data['username'] = $v['username'];
+                                        $data['tel'] = $v['tel'];
+                                        $data['area'] = $v['area'];
+                                        $data['adder'] = $v['adder'];
+                                        break;
+                                    }
                                 }
+                            }else {
+                                $msg = '请选择收货地址';
                             }
-                        }else {
-                            $msg = '请选择收货地址';
                         }
-                    }
-                    //判断地址数据
-                    if(!$validate->scene('user')->check($data)) {
-                        $msg = $validate->getError();
-                    }else {
-                        $data['user_id'] = self::$userId;
-                        $model = Model('Order')->add($data,$goods,$bool);
-                        $msg = $model['msg'];
-                        $code = $model['code'];
-                        $url = '/home/order/orderconfirm.html?id='.self::respass($model['data']);
+                        //判断地址数据
+                        if(!$validate->scene('user')->check($data)) {
+                            $msg = $validate->getError();
+                        }else {
+                            $data['user_id'] = self::$userId;
+                            $model = Model('Order')->add($data,$goods,$bool);
+                            $msg = $model['msg'];
+                            $code = $model['code'];
+                            $url = '/home/order/orderconfirm.html?id='.self::respass($model['data']);
+                        }
                     }
                 }
             }

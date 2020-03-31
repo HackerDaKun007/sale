@@ -35,17 +35,22 @@ class Common extends Controller
 
         self::$path = $config::get('path.');
 
-
         self::$serverTimeEnd = strtotime(date('Y-m-d H:i:s'));//获取服务器时间
         self::$dateTime = strtotime(date('Y-m-d'));//获取今天日期开始时间
         self::$dateTimeEnd = (self::$dateTime+60*60*24)-1;//获取今天结束时间
 
         //404页面
         self::$server404 = dirname(getcwd()).'/thinkphp/tpl/home_404.html';
+        $url = self::$reques->server()['REQUEST_URI'];
 
+        //判断url地址长度
+        if(strlen($url) > 80) {
+            require(self::$server404);
+            exit;
+        }
 
-        //更新
-        Model('Flowdate')->add(self::$reques->server()['REQUEST_URI']);
+        //网络UV/pv信息
+        Model('Flowdate')->add($url);
 
         //用户信息
         self::userInfo();

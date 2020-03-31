@@ -24,8 +24,8 @@ class Order extends Validate {
 
         //产品信息
         'goods_id' => 'require|length:1,11|number',//产品ID
-        'date_id' => 'require|length:1,11|number',//日期ID
-        'time_id' => 'require|length:1,11|number',//时间ID
+        'rushdate_id' => 'require|length:1,11|number',//日期ID
+        'rushtime_id' => 'require|length:1,11|number',//时间ID
 
         //用户备注信息
         'user_back' => 'length:1,150',
@@ -39,14 +39,14 @@ class Order extends Validate {
         'adder' => '请输入详情地址',
 
         'goods_id' => '数据异常',
-        'date_id' => '数据异常',
-        'time_id' => '数据异常',
+        'rushdate_id' => '数据异常',
+        'rushtime_id' => '数据异常',
         'user_back' => '备注信息不能大于150字',
     ];
 
     protected $scene = [
         'user' => ['username','tel','area','adder','user_back'],
-        'goods' => ['goods_id','date_id','time_id'],
+        'goods' => ['goods_id','rushdate_id','rushtime_id'],
     ];
 
 }
