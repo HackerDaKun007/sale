@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-03-31 10:53:33
+-- 生成日期： 2020-03-31 12:22:55
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.8
 
@@ -222,7 +222,8 @@ CREATE TABLE `sa_favorite` (
   `price` decimal(11,2) NOT NULL,
   `orprice` decimal(11,2) NOT NULL,
   `img` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `add_time` int(11) NOT NULL
+  `add_time` int(11) NOT NULL,
+  `cancel` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -244,7 +245,7 @@ CREATE TABLE `sa_flowdate` (
 
 INSERT INTO `sa_flowdate` (`flowdate_id`, `date`, `pv`, `uv`) VALUES
 (7, 1585497600, 10, 2),
-(8, 1585584000, 251, 1);
+(8, 1585584000, 256, 1);
 
 -- --------------------------------------------------------
 
@@ -509,9 +510,9 @@ INSERT INTO `sa_pv` (`pv_id`, `flowdate_id`, `url`, `ip`, `ipadder`, `num`, `add
 (9, 7, '/', '3232235704', '局域网 对方和您在同一内部网', 5, 1585566998),
 (10, 7, '/home/mine/mine.html?i123&123', '2130706433', '本地局网地址', 4, 1585567006),
 (11, 7, '/', '2130706433', '本地局网地址', 1, 1585569410),
-(12, 8, '/', '2130706433', '本地局网地址', 33, 1585586594),
-(13, 8, '/home/mine/mine.html', '2130706433', '本地局网地址', 5, 1585586597),
-(14, 8, '/home/order/myorder.html', '2130706433', '本地局网地址', 3, 1585586598),
+(12, 8, '/', '2130706433', '本地局网地址', 34, 1585586594),
+(13, 8, '/home/mine/mine.html', '2130706433', '本地局网地址', 7, 1585586597),
+(14, 8, '/home/order/myorder.html', '2130706433', '本地局网地址', 4, 1585586598),
 (15, 8, '/home/mine/aboutus.html', '2130706433', '本地局网地址', 1, 1585586603),
 (16, 8, '/home/manage/manage.html', '2130706433', '本地局网地址', 2, 1585586612),
 (17, 8, '/home/goods/goodsdetail.html?id=9&date_id=6&time_id=15', '2130706433', '本地局网地址', 1, 1585586763),
@@ -557,7 +558,8 @@ INSERT INTO `sa_pv` (`pv_id`, `flowdate_id`, `url`, `ip`, `ipadder`, `num`, `add
 (57, 8, '/home/order/order.html?id=9&date_id=6&time_id=17&goodsstyle_id=1&num=1', '2130706433', '本地局网地址', 1, 1585636278),
 (58, 8, '/home/order/orderconfirm.html?id=%3Du2pq%3DiDqxIAg', '2130706433', '本地局网地址', 1, 1585636349),
 (59, 8, '/home/order/orderconfirm.html?id=PV447TXE0C1BF', '2130706433', '本地局网地址', 1, 1585636497),
-(60, 8, '/home/order/orderdetail.html?id=PV447TXE0C1BF', '2130706433', '本地局网地址', 1, 1585636499);
+(60, 8, '/home/order/orderdetail.html?id=PV447TXE0C1BF', '2130706433', '本地局网地址', 1, 1585636499),
+(61, 8, '/home/mine/mycollect.html', '2130706433', '本地局网地址', 1, 1585649480);
 
 -- --------------------------------------------------------
 
@@ -1176,7 +1178,7 @@ ALTER TABLE `sa_power`
 -- 使用表AUTO_INCREMENT `sa_pv`
 --
 ALTER TABLE `sa_pv`
-  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- 使用表AUTO_INCREMENT `sa_rarameter`
