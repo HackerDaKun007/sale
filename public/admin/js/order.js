@@ -4,7 +4,7 @@ layui.use(['form', 'layer', 'table'], function() {
         table = layui.table;
 
     //提交地址
-    var public_url = $.Public.url + 'useraddress/';
+    var public_url = $.Public.url + 'order/';
 
     var tableIns = table.render({
         elem: '#content'

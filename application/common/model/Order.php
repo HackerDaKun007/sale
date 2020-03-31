@@ -238,6 +238,7 @@ class Order extends Common {
                     break;
                 }
             }
+//            $user['ip'] =
             return $user;
         })->toArray();
         $count = self::where($where)->count();

@@ -27,8 +27,240 @@
             <table class="layui-hide" id="content" lay-filter="content"></table>
         </div>
 
+        <script type="text/html" id="barDemo">
+            <a href="javascript:;" class="layui-btn layui-btn-xs modify" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+        </script>
+
     </div>
 
 </div>
 
-<script src="__ADMIN__/js/order.js"></script>
+<script type="javascript/json" id="goodsStatus">{:json_encode($goodsStatus)}</script>
+<!--<script src="__ADMIN__/js/order.js"></script>-->
+
+<script>
+
+    layui.use(['form', 'layer', 'table'], function() {
+        var layer = layui.layer,
+            form = layui.form,
+            table = layui.table;
+
+        //提交地址
+        var public_url = $.Public.url + 'order/';
+
+        var tableIns = table.render({
+            elem: '#content'
+            ,where:{request:200}
+            , url: public_url + 'index.html'
+            , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            , cols: [[
+                {field: 'order_id', width: 100, title: 'ID', sort: true}
+                , {field: 'goods_user', width: '', title: '产品名称'}
+                , {field: 'goods_style', width:130, title: '产品款式'}
+                , {field: 'number', width: 120, title: '数量'}
+                , {field: 'zoprice', width: 120, title: '金额'}
+                , {field: 'status', width: 150, title: '订单状态'}
+                , {field: 'create_time', width: 170, title: '添加时间'}
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 100}
+            ]]
+            , limit: 10
+            , page: true
+        });
+
+        //搜索
+        form.on('submit(search)',function(data){
+            var field = data.field;
+            field.request = 200;
+            tableIns.reload({
+                where:field,
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false;
+        });
+
+        var controller  = $('#goodsStatus').html();
+        if(controller != null && controller != '') {
+            controller = JSON.parse(controller);
+        }
+
+        function PowerW1_html(id='') {
+            var PowerW1_html = '';
+            for(let key  in controller){
+                PowerW1_html += '<option '+$.Public.selected(key,id)+'  value="'+key+'">'+controller[key]+'</option>';;
+            }
+            return PowerW1_html;
+        }
+        table.on('tool(content)',function(obj) {
+            let data = obj.data;
+            if (obj.event == 'edit') { //修改产品
+                let add_url = public_url + 'edit.html';
+                $.Public.yzPost({
+                    type: 'post',
+                    url: add_url,
+                    data: '',
+                    success: function () {
+                        layer.open({
+                            title: '修改订单'
+                            , type: 1
+                            // ,zIndex: 100
+                            , area: ['1000px', '600px']
+                            , closeBtn: 1
+                            , shade: 0.3
+                            , id: 'LA_layer'
+                            , moveType: 1
+                            , zIndex: 50
+                            , content: '<div class="public-padding-10">' +
+                                '<form class="layui-form layui-form-pane" action="'+add_url+'">' +
+                                '   <input name="order_id" type="hidden" value="1" />' +
+                                '   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">\n' +
+                                '       <legend>用户信息</legend>\n' +
+                                '   </fieldset>' +
+                                '  <div class="layui-form-item">\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">姓名</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" name="username" value="'+data.username+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">手机号</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" name="tel" value="'+data.tel+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">所在地区</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" name="area" value="'+data.area+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">详情地址</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" name="adder" value="'+data.adder+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">订单状态</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '      <select name="order_status">'+PowerW1_html(data.order_status)+'</select>' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">用户备注</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" name="user_back" value="'+data.user_back+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '  </div>' +
+                                '   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">\n' +
+                                '       <legend>产品信息</legend>\n' +
+                                '   </fieldset>' +
+                                '  <div class="layui-form-item">\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">产品ID</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" disabled value="'+data.goods_id+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">产品名称</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" disabled value="'+data.goods_user+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">款式</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" disabled  value="'+data.goods_style+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">数量</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" disabled value="'+data.number+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">产品金额</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" disabled value="'+data.price+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">邮费</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" disabled value="'+data.freight+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">总金额</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" disabled value="'+data.zoprice+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '  </div>' +
+                                '   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">\n' +
+                                '       <legend>系统信息</legend>\n' +
+                                '   </fieldset>' +
+                                '  <div class="layui-form-item">\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">订单号</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" disabled value="'+data.order_number+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">ip</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" disabled value="'+data.ip+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">ip地址</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" disabled  value="'+data.ipadder+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">用户ID</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" disabled value="'+data.number+'" autocomplete="off" class="layui-input">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '  </div>' +
+                                '</form>' +
+                                '</div>'
+                        })
+                        form.render('select');
+                    }
+                })
+            }
+        })
+
+        //监听提交
+        form.on('submit(submit)', function(data){
+            var action = data.form.action;
+            var field = data.field;
+            field.home_img = Img; //图片
+            $.Public.post({
+                type:'post',
+                url: action,
+                data: field,
+                success: function() {
+                    ImgUser = '';
+                    Img = '';
+                    if(typeof field.string == 'string') {
+                        layer.closeAll();
+                        $.Public.locationHref();
+                    }
+                },
+            });
+            return false;
+        });
+
+    })
+
+</script>

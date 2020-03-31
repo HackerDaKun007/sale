@@ -11,7 +11,7 @@
 // | 订单信息 控制器
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
-use app\common\model\Useraddress as modelUseraddress;
+use app\common\model\Order as modelOrder;
 use app\common\validate\Page;
 class Order extends Common {
     /**
@@ -20,7 +20,6 @@ class Order extends Common {
     public function index() {
         $input = self::$reques->get();
         if(self::yzGetShow($input)) {
-
             $success = '';
             $data='';
             $count=0;
@@ -28,7 +27,7 @@ class Order extends Common {
             if(!$page->check($input)) {
                 $success = $page->getError();
             }else {
-                $model = new modelUseraddress();
+                $model = new modelOrder();
                 $where = [];
                 if(!empty($input['user_id'])) {
                     $where[] = ['a.user_id','eq',$input['user_id']];
@@ -40,7 +39,19 @@ class Order extends Common {
             echo self::layuiJson($data,$count,'',$success);
             exit;
         }
-        return view();
+        return view('', [
+            'goodsStatus' => self::$path['goodsStatus'],
+        ]);
+    }
+
+    public function edit() {
+        $msg = 'error';
+        $code = 0;
+        if(self::yzPostAdd()) {
+            $input = self::$reques->post();
+
+        }
+        echo self::dataJson($code, $msg);
     }
 }
 ?>
