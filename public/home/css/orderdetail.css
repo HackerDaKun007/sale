@@ -27,18 +27,18 @@
     color: #d6d6d6;
 }
 
-/* client-detial */
-.client-detial {
+/* client-detail */
+.client-detail {
     background-color: #fff;
     padding: 10px;
     display: flex;
     align-items: center;
 }
-.client-detial .detail {
+.client-detail .detail {
     padding: 5px 15px;
     color: #333;
 }
-.client-detial .detail .address{
+.client-detail .detail .address{
     padding-top: 3px;
     font-size: 0.8rem;
     color: #888;
@@ -164,7 +164,7 @@
     display: flex;
     justify-content: flex-end;
     border-top: 1px solid #eee;
-    z-index: 20;
+    z-index: 10;
 }
 .service-btns button,
 .service-btns a {

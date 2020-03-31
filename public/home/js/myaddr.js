@@ -5,6 +5,8 @@ var addressList = $('.address-list');
 var addressListHtml = '';
 
 var addressData = getJson($('#adder'));
+console.log(addressData);
+
 
 if (addressData) {
     noContent.hide();

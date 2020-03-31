@@ -67,10 +67,12 @@
         var _this = this;
         weui.picker(addrData, {
             onChange: function (result) {
-                $(_this).val(result[0].label + result[1].label + result[2].label);
+               _this.val(result[0].label + result[1].label + result[2].label);
             },
             onConfirm: function (result) {
-                $(_this).val(result[0].label + result[1].label + result[2].label);
+                _this.val(result[0].label + result[1].label + result[2].label);
+                console.log(result);
+                
             }
         });
     });

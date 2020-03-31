@@ -1,12 +1,12 @@
 var imageUrl = '/Upload/';
 
-var serverTimeEnd = serverTimeEnd;  //服务器时间
-var dateTime = dateTime;            //今天日期开始时间
-var dateTimeEnd = dateTimeEnd;      //今天结束时间
-var KeyPassword = KeyPassword;      //加密协议http
-var vxUser = vxUser;                //微信名
-var vxId = vxId;                    //微信号
-var vxImg = vxImg;                  //微信图片
+var serverTimeEnd = serverTimeEnd; //服务器时间
+var dateTime = dateTime; //今天日期开始时间
+var dateTimeEnd = dateTimeEnd; //今天结束时间
+var KeyPassword = KeyPassword; //加密协议http
+var vxUser = vxUser; //微信名
+var vxId = vxId; //微信号
+var vxImg = vxImg; //微信图片
 
 $('#ServerTime').remove();
 // 提醒弹窗
@@ -172,21 +172,21 @@ function selectText(textbox, startIndex, stopIndex) {
   }
 }
 
-var ajax ='';
+var ajax = '';
 
 //提交post数据
 var _post = function (load) {
   jQuery.support.cors = true;
-  if(ajax != '') {
+  if (ajax != '') {
     ajax.abort();
   }
   ajax = $.ajax({
     type: 'post',
     dataType: 'json',
     cache: false,
-    beforeSend: function(xhr) {
+    beforeSend: function (xhr) {
       xhr.setRequestHeader("key", KeyPassword);
-  },
+    },
     headers: load.header,
     url: load.url,
     data: load.data,
@@ -196,23 +196,23 @@ var _post = function (load) {
       if (typeof msg == 'object') {
         if (msg.code == 1) {
           alertInfo(msg.msg);
-          if(load.success != '' || load.success != null) {
+          if (load.success != '' || load.success != null) {
             load.success(msg);
           }
         }
         if (msg.code == 0) {
           alertInfo(msg.msg);
-          if(load.success != '' || load.success != null) {
+          if (load.success != '' || load.success != null) {
             load.success(msg);
           }
         }
       } else {
         if (msg != '' && msg != null) {
-          if(load.success != '' || load.success != null) {
+          if (load.success != '' || load.success != null) {
             load.success(msg);
           }
         } else {
-          if(load.success != '' || load.success != null) {
+          if (load.success != '' || load.success != null) {
             load.success('');
           }
         }
@@ -224,7 +224,7 @@ var _post = function (load) {
         load.error();
       }
     },
-    complete: function(XMLHttpRequest, status) {
+    complete: function (XMLHttpRequest, status) {
       if (status == 'timeout') {
         ajaxTimeoutTest.abort();
         alertInfo('服务器请求超时，请稍后再操作！')
@@ -241,12 +241,12 @@ function getForm(val) {
 
 // 获取cookie
 function getCookie(name) {
-  let strCookie =document.cookie;
+  let strCookie = document.cookie;
   let arrCookie = strCookie.split(';');
   for (let i of arrCookie) {
     let arr = i.split('=');
     if (arr[0].trim() == name) {
-      return  decodeURIComponent(arr[1], true);
+      return decodeURIComponent(arr[1], true);
     }
   }
   return '';
@@ -275,12 +275,55 @@ function getJson(val) {
 
 
 // 订单状态
-$order_status = [
-  {code:1, value:'待发货'},
-  {code:2, value:'待收货'},
-  {code:3, value:'确定收货'},
-  {code:4, value:'取消'},
-  {code:5, value:'待确定'},
-  {code:6, value:'退货'},
-  {code:7, value:'售后服务'}
-]
+var order_status = [{
+    code: 1,
+    value: '待发货'
+  },
+  {
+    code: 2,
+    value: '待收货'
+  },
+  {
+    code: 3,
+    value: '确定收货'
+  },
+  {
+    code: 4,
+    value: '取消'
+  },
+  {
+    code: 5,
+    value: '待确定'
+  },
+  {
+    code: 6,
+    value: '退货'
+  },
+  {
+    code: 7,
+    value: '售后服务'
+  }
+];
+
+// 转换时间日期格式
+
+Date.prototype.format = function (fmt) {
+  var o = {
+    "M+": this.getMonth() + 1, //月份 
+    "d+": this.getDate(), //日 
+    "h+": this.getHours(), //小时 
+    "m+": this.getMinutes(), //分 
+    "s+": this.getSeconds(), //秒 
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+    "S": this.getMilliseconds() //毫秒 
+  };
+  if (/(y+)/.test(fmt)) {
+    fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  }
+  for (var k in o) {
+    if (new RegExp("(" + k + ")").test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    }
+  }
+  return fmt;
+}
