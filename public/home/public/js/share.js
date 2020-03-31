@@ -172,6 +172,10 @@ function selectText(textbox, startIndex, stopIndex) {
   }
 }
 
+// 加载动画
+
+
+
 var ajax = '';
 
 //提交post数据
