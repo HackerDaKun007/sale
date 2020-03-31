@@ -11,6 +11,8 @@
 // | 流量日期
 // +----------------------------------------------------------------------
 namespace app\common\model;
+use think\Exception;
+
 class Flowdate extends Common {
 
     public function add($url) {
@@ -18,34 +20,42 @@ class Flowdate extends Common {
         $dateFlow = cache(self::$path['dateFlow']."_$date");
         $timedate = time();
         $time = self::$path['time1'];
-        if(!$dateFlow) {
-            $data = self::where('date','=',$date)->find();
-            if(!$data) { //查询没有数据
-                $data = [
-                    'date' => $date,
-                    'pv' => 1,
-                    'uv' => 1,
-                ];
-                //添加数据
-                self::isUpdate(false)->save($data);
-                $data['flowdate_id'] = $this->id;
+        self::startTrans();
+        try {
+            if(!$dateFlow) {
+                $data = self::where('date','=',$date)->find();
+                if(!$data) { //查询没有数据
+                    $data = [
+                        'date' => $date,
+                        'pv' => 1,
+                        'uv' => 1,
+                    ];
+                    //添加数据
+                    self::isUpdate(false)->save($data);
+                    $data['flowdate_id'] = $this->id;
+                }else {
+                    $data = json_decode($data,true);
+                }
+                cache(self::$path['dateFlow']."_$date",$data,$time);
+                Model('Pv')->add($data,false,$url,$timedate);
+                Model('Uv')->add($data,false,$timedate);
+                self::commit();
             }else {
-                $data = json_decode($data,true);
-            }
-            cache(self::$path['dateFlow']."_$date",$data,$time);
-            Model('Pv')->add($data,false,$url,$timedate);
-            Model('Uv')->add($data,false,$timedate);
-        }else {
-            $dateFlow['pv'] += 1;
+                $dateFlow['pv'] += 1;
 //            $dateFlow['uv'] += 1;
-            $data['pv'] = $dateFlow['pv'];
+                $data['pv'] = $dateFlow['pv'];
 //            $data['uv'] = $dateFlow['uv'];
-            if(self::isUpdate(true)->save($data,['flowdate_id'=>$dateFlow['flowdate_id']])) {
-                cache(self::$path['dateFlow']."_$date",$dateFlow,$time);
-                Model('Pv')->add($dateFlow,true,$url,$timedate);
-            };
-            Model('Uv')->add($dateFlow,true,$timedate);
+                if(self::isUpdate(true)->save($data,['flowdate_id'=>$dateFlow['flowdate_id']])) {
+                    cache(self::$path['dateFlow']."_$date",$dateFlow,$time);
+                    Model('Pv')->add($dateFlow,true,$url,$timedate);
+                };
+                Model('Uv')->add($dateFlow,true,$timedate);
+                self::commit();
+            }
+        }catch (Exception $e) {
+            self::rollback();
         }
+
     }
 
 
