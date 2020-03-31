@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-03-31 03:40:49
+-- 生成日期： 2020-03-31 13:12:43
 -- 服务器版本： 5.7.26
--- PHP 版本： 7.3.8
+-- PHP 版本： 7.3.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -242,7 +242,7 @@ CREATE TABLE `sa_flowdate` (
 
 INSERT INTO `sa_flowdate` (`flowdate_id`, `date`, `pv`, `uv`) VALUES
 (7, 1585497600, 10, 2),
-(8, 1585584000, 181, 1);
+(8, 1585584000, 461, 1);
 
 -- --------------------------------------------------------
 
@@ -337,7 +337,7 @@ CREATE TABLE `sa_order` (
   `area` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `adder` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `goods_id` int(11) NOT NULL,
-  `goods_user` int(11) NOT NULL,
+  `goods_user` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
   `price` decimal(11,2) NOT NULL,
   `goods_style` varchar(250) COLLATE utf8_unicode_ci NOT NULL,
   `number` int(11) NOT NULL,
@@ -350,9 +350,24 @@ CREATE TABLE `sa_order` (
   `os_back` varchar(250) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ip` varchar(150) COLLATE utf8_unicode_ci DEFAULT NULL,
   `ipadder` varchar(150) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `time` int(11) NOT NULL,
   `create_time` int(11) NOT NULL,
   `update_time` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- 转存表中的数据 `sa_order`
+--
+
+INSERT INTO `sa_order` (`order_id`, `user_id`, `payment`, `username`, `tel`, `area`, `adder`, `goods_id`, `goods_user`, `price`, `goods_style`, `number`, `freight`, `order_status`, `express`, `express_number`, `order_number`, `user_back`, `os_back`, `ip`, `ipadder`, `time`, `create_time`, `update_time`) VALUES
+(18, 12, 1, '123123', '13760740438', '河南省许昌市襄城县', '123123', 8, '123', '3000.00', '1号测试剂', 1, '0.00', 1, '尚未有快递公司', '无', '26752979', '', NULL, '2130706433', '本地局网地址', 1585584000, 1585625165, 1585625165),
+(19, 12, 1, '123123', '13760740438', '河南省许昌市襄城县', '123123', 8, '123', '3000.00', '1号测试剂', 1, '0.00', 1, '尚未有快递公司', '无', '81157142', '', NULL, '2130706433', '本地局网地址', 1585584000, 1585625688, 1585625688),
+(20, 12, 1, '123123', '13760740438', '河南省许昌市襄城县', '123123', 8, '123', '3000.00', '1号测试剂', 1, '0.00', 1, '尚未有快递公司', '无', '49371462', '', NULL, '2130706433', '本地局网地址', 1585584000, 1585625831, 1585625831),
+(21, 12, 1, '123123', '13760740438', '河南省许昌市襄城县', '123123', 8, '123', '3000.00', '1号测试剂', 1, '0.00', 1, '尚未有快递公司', '无', '43581049', '', NULL, '2130706433', '本地局网地址', 1585584000, 1585625930, 1585625930),
+(22, 12, 1, '123123', '13760740438', '河南省许昌市襄城县', '123123', 8, '123', '3000.00', '1号测试剂', 1, '0.00', 1, '尚未有快递公司', '无', '88757161', '', NULL, '2130706433', '本地局网地址', 1585584000, 1585626291, 1585626291),
+(23, 12, 1, '123123', '13760740438', '河南省许昌市襄城县', '123123', 9, 'dasd', '100.00', '红款', 1, '0.00', 1, '尚未有快递公司', '无', '84626783', '', NULL, '2130706433', '本地局网地址', 1585584000, 1585626570, 1585626570),
+(24, 12, 1, '123123', '13760740438', '河南省许昌市襄城县', '123123', 9, 'dasd', '100.00', '红款', 1, '0.00', 1, '尚未有快递公司', '无', '83719168', '', NULL, '2130706433', '本地局网地址', 1585584000, 1585627064, 1585627064),
+(25, 12, 1, '123123', '13760740438', '河南省许昌市襄城县', '123123', 9, 'dasd', '100.00', '红款', 1, '0.00', 1, '尚未有快递公司', '无', '25354902', '', NULL, '2130706433', '本地局网地址', 1585584000, 1585627134, 1585627134);
 
 -- --------------------------------------------------------
 
@@ -510,7 +525,36 @@ INSERT INTO `sa_pv` (`pv_id`, `flowdate_id`, `url`, `ip`, `ipadder`, `num`, `add
 (22, 8, '/home/order/order.html?id=9&date_id=6&time_id=15&goodsstyle_id=3&num=2', '2130706433', '本地局网地址', 72, 1585586775),
 (23, 8, '/home/order/20200323/df72e1a4067436d089bd51f5ac58e750.jpg', '2130706433', '本地局网地址', 70, 1585586775),
 (24, 8, '/home/order/addorder.html', '2130706433', '本地局网地址', 3, 1585586795),
-(25, 8, '/home/order/order.html?id=9&date_id=6&time_id=15&goodsstyle_id=3&num=2fsdfsdfdfdsfdsfdfsfs', '2130706433', '本地局网地址', 2, 1585587008);
+(25, 8, '/home/order/order.html?id=9&date_id=6&time_id=15&goodsstyle_id=3&num=2fsdfsdfdfdsfdsfdfsfs', '2130706433', '本地局网地址', 2, 1585587008),
+(26, 8, '/', '2130706433', '本地局网地址', 35, 1585619135),
+(27, 8, '/home/goods/goodsdetail.html?id=9&date_id=6&time_id=15', '2130706433', '本地局网地址', 9, 1585619251),
+(28, 8, '/home/goods/20200324/11cc2651958f8480ae37d2c66ef797e9.jpg', '2130706433', '本地局网地址', 3, 1585619251),
+(29, 8, '/home/goods/20200323/df72e1a4067436d089bd51f5ac58e750.jpg', '2130706433', '本地局网地址', 2, 1585619252),
+(30, 8, '/home/goods/20200329/d37d980564da04ba9f55949db2b320ef.jpg', '2130706433', '本地局网地址', 4, 1585619252),
+(31, 8, '/home/order/order.html?id=9&date_id=6&time_id=15&goodsstyle_id=1&num=1', '2130706433', '本地局网地址', 3, 1585619315),
+(32, 8, '/home/order/20200323/df72e1a4067436d089bd51f5ac58e750.jpg', '2130706433', '本地局网地址', 3, 1585619315),
+(33, 8, '/home/order/addorder.html', '2130706433', '本地局网地址', 107, 1585619317),
+(34, 8, '/home/goods/goodsdetail.html?id=8&date_id=6&time_id=14', '2130706433', '本地局网地址', 10, 1585620160),
+(35, 8, '/home/order/order.html?id=8&date_id=6&time_id=14&goodsstyle_id=5&num=3', '2130706433', '本地局网地址', 3, 1585620203),
+(36, 8, '/home/order/20200323/805adbe5e417ebe41da520d1cba0dc1a.jpg', '2130706433', '本地局网地址', 1, 1585620204),
+(37, 8, '/home/goods/goodsdetail.html?id=9&date_id=6&time_id=14', '2130706433', '本地局网地址', 3, 1585620508),
+(38, 8, '/home/order/order.html?id=9&date_id=6&time_id=14&goodsstyle_id=2&num=1', '2130706433', '本地局网地址', 1, 1585620535),
+(39, 8, '/home/order/order.html?id=8&date_id=6&time_id=14&goodsstyle_id=4&num=1', '2130706433', '本地局网地址', 13, 1585620869),
+(40, 8, '/home/order/order.html?id=9&date_id=6&time_id=14&goodsstyle_id=1&num=1', '2130706433', '本地局网地址', 1, 1585622638),
+(41, 8, '/home/mine/mine.html', '2130706433', '本地局网地址', 2, 1585623566),
+(42, 8, '/home/mine/myaddress.html', '2130706433', '本地局网地址', 7, 1585623569),
+(43, 8, '/home/mine/editaddress.html?id=6', '2130706433', '本地局网地址', 3, 1585623570),
+(44, 8, '/home/mine/addader.html', '2130706433', '本地局网地址', 1, 1585623574),
+(45, 8, '/home/mine/editaddress.html?id=5', '2130706433', '本地局网地址', 1, 1585623592),
+(46, 8, '/home/goods/goodsdetail.html?id=8&date_id=6&time_id=13', '2130706433', '本地局网地址', 7, 1585623864),
+(47, 8, '/home/order/order.html?id=8&date_id=6&time_id=13&goodsstyle_id=4&num=1', '2130706433', '本地局网地址', 17, 1585623867),
+(48, 8, '/home/goods/goodsdetail.html?id=9&date_id=6&time_id=13', '2130706433', '本地局网地址', 2, 1585626566),
+(49, 8, '/home/order/order.html?id=9&date_id=6&time_id=13&goodsstyle_id=1&num=1', '2130706433', '本地局网地址', 2, 1585626568),
+(50, 8, '/home/order/orderconfirm.html?id=G28NdIf%3D139H6', '2130706433', '本地局网地址', 10, 1585626598),
+(51, 8, '/home/order/orderconfirm.html?id=FEpyiy5abDga1', '2130706433', '本地局网地址', 1, 1585627064),
+(52, 8, '/home/order/orderdetail.html?id=FEpyiy5abDga1', '2130706433', '本地局网地址', 1, 1585627088),
+(53, 8, '/home/order/orderconfirm.html?id=ueBnVunhbcjoe', '2130706433', '本地局网地址', 1, 1585627134),
+(54, 8, '/home/order/orderdetail.html?id=ueBnVunhbcjoe', '2130706433', '本地局网地址', 28, 1585627135);
 
 -- --------------------------------------------------------
 
@@ -555,9 +599,9 @@ CREATE TABLE `sa_recogoods` (
 --
 
 INSERT INTO `sa_recogoods` (`recogoods_id`, `rushgoods_id`, `rushdate_id`, `title`, `sort`, `create_time`, `update_time`) VALUES
-(2, 2, 4, '123', 10, 1585108847, 1585108847),
-(3, 4, 4, '1231', 10, 1585109930, 1585109930),
-(4, 5, 5, 'test', 5, 1585478053, 1585480312);
+(2, 2, 6, '123', 4, 1585108847, 1585620155),
+(3, 4, 6, '1231', 4, 1585109930, 1585620147),
+(4, 5, 6, 'test', 5, 1585478053, 1585620143);
 
 -- --------------------------------------------------------
 
@@ -605,7 +649,7 @@ INSERT INTO `sa_rushdate` (`rushdate_id`, `date`, `create_time`, `update_time`) 
 (3, 1584720000, 1584935756, 1584935756),
 (4, 1585065600, 1584935771, 1584935771),
 (5, 1585411200, 1585478041, 1585478041),
-(6, 1585584000, 1585586673, 1585586673);
+(6, 1585584000, 1585586673, 1585619185);
 
 -- --------------------------------------------------------
 
@@ -633,10 +677,10 @@ CREATE TABLE `sa_rushgoods` (
 
 INSERT INTO `sa_rushgoods` (`rushgoods_id`, `price_val`, `orprice_val`, `rushdate_id`, `rushtime_id`, `goods_id`, `create_time`, `update_time`, `num`, `num_back`, `style_id`) VALUES
 (2, '100.00/300.00', '200.00/600.00', 4, 11, 8, 1585021685, 1585021685, '2000/2000', '2000/2000', ''),
-(4, '3000.00/300.00', '50000.00/5000.00', 4, 13, 8, 1585108079, 1585108079, '2000/2000', '2000/2000', '4/5'),
-(5, '100.00/300.00/300.00', '300.00/500.00/500.00', 5, 14, 9, 1585480220, 1585480220, '2000/2000/2000', '2000/2000/2000', '1/2/3'),
-(6, '3000.00/300.00', '50000.00/5000.00', 5, 14, 8, 1585480255, 1585480255, '2000/2000', '2000/2000', '4/5'),
-(7, '100.00/300.00/300.00', '300.00/500.00/500.00', 6, 15, 9, 1585586711, 1585586711, '2000/2000/2000', '2000/2000/2000', '1/2/3');
+(4, '3000.00/300.00', '50000.00/5000.00', 6, 13, 8, 1585108079, 1585626291, '1995/2000', '2000/2000', '4/5'),
+(5, '100.00/300.00/300.00', '300.00/500.00/500.00', 6, 13, 9, 1585480220, 1585627134, '1997/2000/2000', '2000/2000/2000', '9'),
+(6, '3000.00/300.00', '50000.00/5000.00', 6, 14, 8, 1585480255, 1585623444, '1998/2000', '2000/2000', '8'),
+(7, '100.00/300.00/300.00', '300.00/500.00/500.00', 6, 14, 9, 1585586711, 1585622835, '1998/2000/2000', '2000/2000/2000', '9');
 
 -- --------------------------------------------------------
 
@@ -663,9 +707,9 @@ INSERT INTO `sa_rushtime` (`rushtime_id`, `rushdate_id`, `username`, `start_time
 (10, 4, '02', 1585072800, 1585076399, 1584953481, 1585021631),
 (11, 4, '03', 1585076400, 1585079999, 1584953509, 1584953509),
 (12, 4, '04', 1585080000, 1585083599, 1584953565, 1584953565),
-(13, 4, '1', 1585108800, 1585141199, 1585021481, 1585021481),
-(14, 5, '19', 1585479600, 1585483199, 1585480199, 1585480199),
-(15, 6, '00', 1585586691, 1585587599, 1585586696, 1585586734);
+(13, 6, '11:00', 1585623600, 1585627199, 1585021481, 1585620131),
+(14, 6, '10:00', 1585620000, 1585623599, 1585480199, 1585619221),
+(15, 6, '09:00', 1585616400, 1585619999, 1585586696, 1585619199);
 
 -- --------------------------------------------------------
 
@@ -726,7 +770,9 @@ INSERT INTO `sa_user` (`user_id`, `username`, `member_user`, `sex`, `tel`, `img`
 (8, '准会员_di38961', '准zle280341hv', 1, '0', '1.png', 1585485194, 1585485194, 'aa91b650edbc0a9e4de8ffeaa2b07ff8', 'gSRWLOpD', 'fw0u6_z', NULL, 2, 2),
 (9, '准会员_lo52156', '准xnd512638pu', 2, '0', '4.png', 1585485197, 1585536382, '3fa75bf11cd5e90fe700d6947200341b', 'iu1Z3yh6', 'ynw1h0c3', NULL, 2, 2),
 (10, '准会员_ar02237', '准bhu742160cn', 1, '0', '4.png', 1585540328, 1585540328, '924121727e31b1d94a99159a44a97639', 'Be6ZkQJi', 'j3_bl9', NULL, 2, 2),
-(11, '准会员_qu09137', '准nqd321680kv', 1, '0', '4.png', 1585565892, 1585565892, 'fe15ebd58f23886394ddb5dadc2a1d15', '7JAH3tcp', 'stu26fmb', 0, 2, 2);
+(11, '准会员_qu09137', '准nqd321680kv', 1, '0', '4.png', 1585565892, 1585565892, 'fe15ebd58f23886394ddb5dadc2a1d15', '7JAH3tcp', 'stu26fmb', 0, 2, 2),
+(12, '准会员_wp49758', '准tbs901268dx', 1, '0', '3.png', 1585619135, 1585619135, '94db584c616ad5150315358aa7d79ad3', 'hrTPmdfc', '5vftb3', 0, 2, 2),
+(13, '准会员_zp18305', '准uil869257ps', 2, '0', '2.png', 1585626675, 1585626675, '44f5df63ea6d2f3c0341c55a57352370', 'CjB5fnYX', 'auw_rp', 0, 2, 2);
 
 -- --------------------------------------------------------
 
@@ -744,6 +790,18 @@ CREATE TABLE `sa_useraddress` (
   `create_time` int(11) NOT NULL,
   `update_time` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- 转存表中的数据 `sa_useraddress`
+--
+
+INSERT INTO `sa_useraddress` (`useraddress_id`, `user_id`, `username`, `tel`, `area`, `adder`, `create_time`, `update_time`) VALUES
+(1, 12, '123123', '13760740438', '河南省许昌市襄城县', '123123', 1585622746, 1585622746),
+(2, 12, '123123', '13760740438', '河南省许昌市襄城县', '123123', 1585622768, 1585622768),
+(3, 12, '123123', '13760740438', '河南省许昌市襄城县', '123123', 1585622785, 1585622785),
+(4, 12, '123123', '13760740438', '河南省许昌市襄城县', '123123', 1585622820, 1585622820),
+(5, 12, '123123', '13760740438', '河南省许昌市襄城县', '123123', 1585622833, 1585622833),
+(6, 12, '123123', '13760740438', '河南省许昌市襄城县', '123123', 1585622835, 1585622835);
 
 -- --------------------------------------------------------
 
@@ -772,7 +830,9 @@ INSERT INTO `sa_userlogin` (`userlogin_id`, `user_id`, `ip`, `ip_adder`, `login_
 (6, 8, '2130706433', '本地局网地址', 1585485194),
 (7, 9, '2130706433', '本地局网地址', 1585485197),
 (8, 10, '2130706433', '本地局网地址', 1585540328),
-(9, 11, '3232235704', '局域网 对方和您在同一内部网', 1585565892);
+(9, 11, '3232235704', '局域网 对方和您在同一内部网', 1585565892),
+(10, 12, '2130706433', '本地局网地址', 1585619135),
+(11, 13, '2130706433', '本地局网地址', 1585626675);
 
 -- --------------------------------------------------------
 
@@ -795,7 +855,8 @@ CREATE TABLE `sa_uv` (
 INSERT INTO `sa_uv` (`uv_id`, `flowdate_id`, `ip`, `ipadder`, `addtime`) VALUES
 (5, 7, '3232235704', '局域网 对方和您在同一内部网', 1585566998),
 (6, 7, '2130706433', '本地局网地址', 1585567006),
-(7, 8, '2130706433', '本地局网地址', 1585586594);
+(7, 8, '2130706433', '本地局网地址', 1585586594),
+(8, 8, '2130706433', '本地局网地址', 1585619135);
 
 -- --------------------------------------------------------
 
@@ -1095,7 +1156,7 @@ ALTER TABLE `sa_goodsstyle`
 -- 使用表AUTO_INCREMENT `sa_order`
 --
 ALTER TABLE `sa_order`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- 使用表AUTO_INCREMENT `sa_power`
@@ -1107,7 +1168,7 @@ ALTER TABLE `sa_power`
 -- 使用表AUTO_INCREMENT `sa_pv`
 --
 ALTER TABLE `sa_pv`
-  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- 使用表AUTO_INCREMENT `sa_rarameter`
@@ -1155,25 +1216,25 @@ ALTER TABLE `sa_service`
 -- 使用表AUTO_INCREMENT `sa_user`
 --
 ALTER TABLE `sa_user`
-  MODIFY `user_id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `user_id` int(32) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- 使用表AUTO_INCREMENT `sa_useraddress`
 --
 ALTER TABLE `sa_useraddress`
-  MODIFY `useraddress_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `useraddress_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- 使用表AUTO_INCREMENT `sa_userlogin`
 --
 ALTER TABLE `sa_userlogin`
-  MODIFY `userlogin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `userlogin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- 使用表AUTO_INCREMENT `sa_uv`
 --
 ALTER TABLE `sa_uv`
-  MODIFY `uv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `uv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- 使用表AUTO_INCREMENT `sa_vx`
