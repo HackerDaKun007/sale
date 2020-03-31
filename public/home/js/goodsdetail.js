@@ -121,7 +121,7 @@ $(function () {
 				 </div>
 				 `;
 		
-		if (goods.parameter.length > 0 || goods.parameter) {
+		if (goods.parameter) {
 			for (let i of goods.parameter) {
 				goodsValueListHtml += `
 						<li class="item">

@@ -4,8 +4,7 @@ var dataEl = $('#data');
 var delBtn = $('.del-btn');
 
 if (dataEl.length > 0) {
-    var data = decodeURIComponent($('#data').html(), true);
-    data = JSON.parse(data);
+    var data = getJson(dataEl);
     addressForm.find('#username').val(data.username);
     addressForm.find('#tel').val(data.tel);
     addressForm.find('#city-picker').val(data.area);

@@ -15,50 +15,54 @@
 </head>
 
 <body>
-  <div class="header">
-    <div class="header-bar">
-      <button type="button" class="iconfont icon-right public-back"></button>
-      <span class="page-title">编辑收货地址</span>
-      <button type="button" class="del-btn">删除</button>
-    </div>
-  </div>
   <div class="wrapper">
-    <form action="#" class="address-form">
-      <input type="hidden" name="useraddress_id" id="addrid">
-      <div class="form-item">
-        <label for="username">收货人</label>
-        <input type="text" id="username" name="username" placeholder="收货人姓名" />
+    <div class="header">
+      <div class="header-bar">
+        <button type="button" class="iconfont icon-right public-back"></button>
+        <span class="page-title">编辑收货地址</span>
+        <button type="button" class="del-btn">删除</button>
       </div>
-      <div class="form-item">
-        <label for="telnum">手机号码</label>
-        <input type="text" id="tel" name="tel" placeholder="手机号码" />
-      </div>
-      <div class="form-item">
-        <label for="region">所在地区</label>
-        <input type="text" id="city-picker" readonly name="area" placeholder="所在地区" />
-      </div>
-      <div class="form-item">
-        <label for="address">详细地址</label>
-        <input type="text" id="address" name="adder" placeholder="详细地址" />
-      </div>
-
-      <div class="form-item default">
-        <p>设为默认地址</p>
-        <div>
-          <input type="checkbox" name="is_default" id="is_default">
-        <label for="is_default"></label>
+    </div>
+    <main>
+      <form action="#" class="address-form">
+        <input type="hidden" name="useraddress_id" id="addrid">
+        <div class="form-item">
+          <label for="username">收货人</label>
+          <input type="text" id="username" name="username" placeholder="收货人姓名" />
         </div>
-      </div>
+        <div class="form-item">
+          <label for="telnum">手机号码</label>
+          <input type="text" id="tel" name="tel" placeholder="手机号码" />
+        </div>
+        <div class="form-item">
+          <label for="region">所在地区</label>
+          <input type="text" id="city-picker" readonly name="area" placeholder="所在地区" />
+        </div>
+        <div class="form-item">
+          <label for="address">详细地址</label>
+          <input type="text" id="address" name="adder" placeholder="详细地址" />
+        </div>
 
-      <button type="button" class="submit-btn">保存</button>
+        <div class="form-item default">
+          <p>设为默认地址</p>
+          <div>
+            <input type="checkbox" name="is_default" id="is_default">
+            <label for="is_default"></label>
+          </div>
+        </div>
 
-    </form>
+        <button type="button" class="submit-btn">保存</button>
+
+      </form>
+    </main>
   </div>
 </body>
 
 </html>
 
-<script type="application/json" id="data">{:json_encode($data)}</script>
+<script type="application/json" id="data">
+  {:json_encode($data)}
+</script>
 <script src="__HOME__/public/js/public.js"></script>
 <script src="__HOME__/public/lib/weui-citypicker/addrData.js"></script>
 <script src="__HOME__/public/lib/weui-citypicker/weui.min.js"></script>
@@ -68,8 +72,7 @@
   $('#city-picker').on('click', function () {
     var _this = this;
     weui.picker(addrData, {
-      onChange: function (result) {
-      },
+      onChange: function (result) {},
       onConfirm: function (result) {
         $(_this).val(result[0].label + result[1].label + result[2].label);
       }
