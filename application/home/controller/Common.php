@@ -102,7 +102,9 @@ class Common extends Controller
             cookie(self::$path['userImg'],null);//用户头像
             cookie(self::$path['initialPass'],null);//初始密码
             cookie(self::$path['userId'],null); //用户ID
-            Model('User')->add(true);
+            if(Model('User')->add(true)){
+                self::userInfo();
+            };
         }
     }
 

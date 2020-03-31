@@ -42,7 +42,7 @@ class User extends Common {
             'username' => $username,
             'initial_pass' => $initial,
             'sex' => rand(1,2),
-            'useraddress_id' => '',
+            'useraddress_id' => 0,
             'tel' => 0,
         ];
         $code = 0;
