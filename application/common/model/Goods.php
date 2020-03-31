@@ -181,7 +181,7 @@ class Goods extends Common {
                     if($style) {
                         Model('goodsstyle')->where($where)->delete();
                     }
-                    @unlink(self::$path['upload'].'/'.$find['home_img']);
+//                    @unlink(self::$path['upload'].'/'.$find['home_img']);
                     self::cacheSelect(true, $id);
                     $msg = '删除成功';
                     $code = 1;

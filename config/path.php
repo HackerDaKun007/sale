@@ -119,10 +119,11 @@ return [
     'UserAdder' => 'UserAdder',
     'eachUserAdder' => 'eachUserAdder',
 
-    //**订单缓存
+    //单个订单缓存
     'Userorder' => 'Userorder',
 
-
+    //用户缓存
+    'UserOrderId' => 'UserOrderId',
     /**
      * 微信客服缓存
      */

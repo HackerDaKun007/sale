@@ -29,6 +29,7 @@ class Order extends Validate {
 
         //用户备注信息
         'user_back' => 'length:1,150',
+        'number' => 'require|between:1,5|length:1,11',
 
     ];
 
@@ -37,6 +38,8 @@ class Order extends Validate {
         'tel' => '请输入收货人手机号码',
         'area' => '请选择收货地区',
         'adder' => '请输入详情地址',
+        'number.require' => '数量不能为空',
+        'number.between' => '数量不能大于5',
 
         'goods_id' => '数据异常',
         'rushdate_id' => '数据异常',
