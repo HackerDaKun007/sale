@@ -12,49 +12,54 @@
 // +----------------------------------------------------------------------
 namespace app\common\model;
 use think\Exception;
-
 class Order extends Common {
     protected $timeUpdate = true;
     /**
      * 添加
      */
     public function add($data,$goods,$bool) {
-        $allow = ['ip','ipadder','user_id','payment','username','tel','area','adder','goods_id','goods_user','price','freight','order_status','express','express_number','order_number','user_back'];
+        $allow = ['ip','ipadder','user_id','payment','username','tel','area','adder','goods_id','goods_user','price','freight','order_status','express','express_number','order_number','user_back','goods_style','number','time'];
         $timeR = strtotime(date('Ymd'));
         $times = strtotime(date('His'));
         $time = strtotime(date('YmdHis'));
         //判断当前用户是否重复提交多次订单
         $dataId = '';
         $code = 0;
+        $num = 0;
+       
         $msg = '提交订单失败';
 
             $where = [
-                ['time','=',$timeR],
-                ['user_id','=',$data['user_id']]
+                ['time','eq',$timeR],
+                ['user_id','eq',$data['user_id']],
+                ['goods_id','eq',$data['goods_id']]
             ];
             $user = self::where($where)->count();
-            if($user > 5) {
+            
+            if($user >= 5) {
                 $msg = '同一天重复购买的商品不能超过5次';
             }else {
             //获取款式ID和名称
             $price = 0;
             $goods_style = '';
-            if($goods['num'] > 0) {//判断库存是否
-                $number = [];
-                foreach($goods['sty'] as $k => $v) {
-                    if($data['goodsstyle_id'] == $v['goodsstyle_id']) {
-                        $price = $v['price'];
-                        $goods_style = $v['username'];
-                        $goods['sty'][$k]['available'] = $goods['sty'][$k]['available']-1;
-                        $number[] = $goods['sty'][$k]['available']-1;
-                    }else {
-                        $number[] = $goods['sty'][$k]['available'];
-                    }
+            $number = [];
+            $styleNum = 0;
+            foreach($goods['sty'] as $k => $v) {
+                if($data['goodsstyle_id'] == $v['goodsstyle_id']) {
+                    $price = $v['price'];
+                    $goods_style = $v['username'];
+                    $goods['sty'][$k]['available'] = $goods['sty'][$k]['available']-1;
+                    $number[] = $goods['sty'][$k]['available'];
+                    $styleNum = $goods['sty'][$k]['available'];
+                }else {
+                    $number[] = $goods['sty'][$k]['available'];
                 }
-                $goods['num'] = $goods['num']-1;
-                $sty = implode('/',$goods['sty']);
+            }
+            
+            if($styleNum > 0) {
+                // $sty = implode('/',$goods['sty']);
                 if($price != 0) {
-                    $ip = self::getIp();
+                    $ip = self::Ipaddr();
                     $num = substr(str_shuffle('12345678909876543214315678912345987'),0,8);
                     $arr = [
                         'user_id' => $data['user_id'],
@@ -84,23 +89,39 @@ class Order extends Common {
                             $arr['order_id'] = $this->id;
                             $dataId = $this->id;
                             $arr['create_time'] = time();
-                            $rushgoods = [
-                                'num' =>$sty
-                            ];
-                            if(Model('Rushgoods')->save($rushgoods,['rushgoods_id',$goods['rushgoods_id']])){
-                                cache(self::$path['goodsTig']."_$data[goods_id]_$data[rushdate_id]_$data[rushtime_id]",$goods,2592000);
-                                self::addCache($arr);
-                            };
-                            $msg = '添加成功';
+                            $msg = '提交成功';
                             $code = 1;
-                            
                             //是否要添加地址
                             if(!$bool) {
                                 Model('Useraddress')->editAdd($data);
                             }
-
                             //更新数据库
-                            Model('Rushgoods')->isUpdate(true)->save(['num'=>implode('/',$number)],['rushgoods_id'=>$goods['rushgoods_id']]);
+                            // var_dump(Model('Rushgoods')->isUpdate(true)->save(['num'=>implode('/',$number)],['rushgoods_id'=>$goods['rushgoods_id']]));
+                            if(Model('Rushgoods')->isUpdate(true)->save(['num'=>implode('/',$number)],['rushgoods_id'=>$goods['rushgoods_id']])) {
+                                //更新独立订单缓存
+                                cache(self::$path['goodsTig']."_$data[goods_id]"."_$data[rushdate_id]"."_$data[rushtime_id]",$goods,self::$path['time30']);
+                                //更新首页推荐
+                                $recoGoods = cache(self::$path['recoGoods']."_$timeR");
+                                foreach ($recoGoods as $k => $v) {
+                                     if($v['rushgoods_id'] == $goods['rushgoods_id']) {
+                                         $recoGoods[$k]['num'] = $recoGoods[$k]['num']-1;
+                                         break;
+                                     }
+                                }
+                                cache(self::$path['recoGoods']."_$timeR",$recoGoods,self::$path['time30']);
+                                //更新首页抢购商品缓存
+                                Model('Rushgoods')->updateCache($timeR);
+                                $options = [
+                                    // 缓存类型为File
+                                   'type'   => 'File', 
+                                    // 缓存有效期为永久有效
+                                   'expire' => 0,
+                                    // 指定缓存目录
+                                   'path'   => dirname(getcwd()).'/runtime/cache/', 
+                               ];
+                               cache($options);
+                                cache(self::$path['Userorder']."_$num",$arr);
+                            };
                             self::commit();
                         }
                     }catch (Exception $e) {
@@ -113,8 +134,9 @@ class Order extends Common {
             }else {
                 $msg = '很抱歉，当前库存不足！';
             }
+               
         }
-        return self::dataJson($code,$msg,$dataId,'',true);
+        return self::dataJson($code,$msg,$num,'',true);
     }
 
     //添加缓存

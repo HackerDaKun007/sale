@@ -261,9 +261,10 @@ $('#toPay').on('click', function (e) {
             if (a < nowTime) {
                 localStorage.removeItem('order');
             }
+            bool = true;
         }
         // 如果超过3条则不允许购买
-        else if (storeData.length >= 3 ) {
+        else if (storeData.length >= 5 ) {
             alertInfo('已超过购买限制');
             setTimeout(function () {
                 location.replace('/');
@@ -274,6 +275,8 @@ $('#toPay').on('click', function (e) {
     }else {
         bool = true;
     }
+    console.log(bool);
+    
     if(bool) {
         // 提交数据
     _post({
@@ -294,6 +297,7 @@ $('#toPay').on('click', function (e) {
                     localStorage.setItem('order', JSON.stringify(orderStore));
 
                 }
+                location.replace(msg.url);
             }
         }
     })

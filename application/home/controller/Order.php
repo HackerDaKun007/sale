@@ -44,18 +44,15 @@ class Order extends Common
         if(!empty($input['id'])) {
             $id = self::repassJie($input['id']);
             if(is_numeric($id)) {
-                $data = cache(self::$path['Userorder']."_".self::$userId);
+                $data = cache(self::$path['Userorder']."_".$id );
                 if($data) {
-                    foreach($data as $v) {
-                        if($id == $v['order_id']) {
-                            return view('',[
-                                'time' => date('Y-m-d H:i:s',$data['create_time']),
-                                'number' => $data['order_number'],
-                                'id' => $input['id'],
-                            ]);
-                            exit;
-                            break;
-                        }
+                    if($data['user_id'] == self::$userId) {
+                        return view('',[
+                            'time' => date('Y-m-d H:i:s',$data['create_time']),
+                            'number' => $data['order_number'],
+                            'id' => $input['id'],
+                        ]);
+                        exit;
                     }
                 }
             }
@@ -65,7 +62,27 @@ class Order extends Common
 
     public function orderdetail() {
 
-        return view();
+        $input = self::$reques->get();
+        if(!empty($input['id'])) {
+            $id = self::repassJie($input['id']);
+            if(is_numeric($id)) {
+                $data = cache(self::$path['Userorder']."_".$id );
+                if($data) {
+                    if($data['user_id'] == self::$userId) {
+                        unset($data['user_id']);
+                        unset($data['goods_id']);
+                        unset($data['ip']);
+                        unset($data['ipadder']);
+                        unset($data['order_id']);
+                        return view('',[
+                            'data' => $data,
+                        ]);
+                        exit;
+                    }
+                }
+            }
+        }
+       require(self::$server404);
     }
 
     //订单提交接口
@@ -78,21 +95,19 @@ class Order extends Common
             $validate = Validate('Order');
 
             if(!$validate->scene('goods')->check($input)) {
-                echo 1;
                 $msg = $validate->getError();
             }else {
-                echo 1;
-                exit;
                 $goods = Model('Rushgoods')->cacheGoods($input['goods_id'],$input['rushdate_id'],$input['rushtime_id']);
                 if($goods) {
-                    if($goods['start_time'] <= self::$serverTimeEnd && $goods['end_time'] <= self::$serverTimeEnd) {
+                    if($goods['start_time'] <= self::$serverTimeEnd && $goods['end_time'] >= self::$serverTimeEnd) {
                         //判断收货地址
                         $address = Model('Useraddress')->userCache(self::$userId);
                         $bool = false;
+                        $data = $input;
                         if($address) { //如果地址存在，判断提交过来的地址ID
-                            if(!empty($input['adder_id'])) {
+                            if(!empty($input['useraddress_id'])) {
                                 foreach($address as $v) {
-                                    if($v['useraddress_id'] == $input['adder_id']) {
+                                    if($v['useraddress_id'] == $input['useraddress_id']) {
                                         $bool = true;
                                         $data['username'] = $v['username'];
                                         $data['tel'] = $v['tel'];
@@ -106,7 +121,6 @@ class Order extends Common
                             }
                         }
                         //判断地址数据
-
                         if(!$validate->scene('user')->check($data)) {
                             $msg = $validate->getError();
                         }else {

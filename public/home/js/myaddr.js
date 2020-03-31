@@ -29,3 +29,8 @@ if (addressData) {
 } else {
     noContent.show();
 }
+
+$('.add-btn').on('click', function(e) {
+    e.preventDefault();
+    location.replace($(this).href)
+})

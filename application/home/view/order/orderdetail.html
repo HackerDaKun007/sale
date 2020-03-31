@@ -16,7 +16,7 @@
         <main class="main">
             <section class="order-status" id="delivery-copy">
                 <p class="status">已发货</p>
-                <p class="info">物流信息： 嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎</p>
+                <p class="info">物流公司： 嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎</p>
                 <p class="delivery-num">快递单号： 123456789</p>
             </section>
 
@@ -48,7 +48,11 @@
                 </div>
                 <div>
                     <p>运费：</p>
-                    <p>货到付款</p>
+                    <p>0</p>
+                </div>
+                <div>
+                    <p>优惠折扣：</p>
+                    <p>0</p>
                 </div>
             </div>
             <div class="bottom">
@@ -57,13 +61,19 @@
             </div>
         </section>
 
+        <section class="remark">
+            <p>用户备注：</p>
+            <p class="text">
+                用户备注备注我看见的考虑时间到了
+            </p>
+        </section>
         <section class="order-info">
             <ul>
                 <li class="info-item">
                     <span>下单时间</span>
                     <span>2020-03-12 12:12:12</span>
                 </li>
-                <li class="info-item">
+                <li class="info-item deal-time">
                     <span>付款时间</span>
                     <span>2020-03-12 12:12:12</span>
                 </li>
@@ -83,5 +93,7 @@
 
   </body>
 </html>
+
+<script type="javascript/json" id="data">{:json_encode($data)}</script>
 <script src="__HOME__/public/js/public.js"></script>
 <script src="__HOME__/js/orderdetail.js"></script>

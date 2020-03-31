@@ -128,7 +128,7 @@ class Rushgoods extends Common {
             $data = cache(self::$path['goodsTime']."_$date");
             if(!$data) {
                 $data = self::updateCache($date);
-                cache(self::$path['goodsTime']."_$date", $data,$time+2592000);
+                cache(self::$path['goodsTime']."_$date",$data, self::$path['time30']);
             }
         }
         return $data;

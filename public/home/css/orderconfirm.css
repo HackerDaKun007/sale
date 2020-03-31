@@ -80,11 +80,11 @@
     align-items: center;
 }
 .wx-info .title {
-    flex: 1;
     font-size: 0.9rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-right: 10px;
 }
 .wx-info .title p {
     padding-bottom: 5px;
@@ -92,7 +92,12 @@
 .wx-info .title #wx-id span{
     color: #ee2d2d;
 }
-
+.wx-info .qrcode {
+    flex: 1;
+}
+.wx-info .qrcode img {
+    width: 100%;
+}
 /* tips */
 .tips {
     padding: 10px 10px;

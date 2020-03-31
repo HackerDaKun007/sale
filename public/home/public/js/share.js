@@ -272,3 +272,15 @@ function getJson(val) {
   data = JSON.parse(data);
   return data;
 }
+
+
+// 订单状态
+$order_status = [
+  {code:1, value:'待发货'},
+  {code:2, value:'待收货'},
+  {code:3, value:'确定收货'},
+  {code:4, value:'取消'},
+  {code:5, value:'待确定'},
+  {code:6, value:'退货'},
+  {code:7, value:'售后服务'}
+]
