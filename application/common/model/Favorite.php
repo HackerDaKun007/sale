@@ -192,8 +192,11 @@ class Favorite extends Common {
 
 
     public function show($get,$where=[]) {
-        $data = self::where($where)->field('a.* ,b.username')->order('favorite_id desc')->alias('a')->join('user b','b.user_id=a.user_id')->paginate($get['limit'],true,['page'=>$get['page']])->each(function($user){
+        $data = self::where($where)->field('a.* ,b.username,c.date,d.start_time,d.end_time')->order('favorite_id desc')->alias('a')->join('user b','b.user_id=a.user_id')->join('rushdate c','c.rushdate_id=a.rushdate_id')->join('rushtime d','d.rushtime_id=a.rushtime_id')->paginate($get['limit'],true,['page'=>$get['page']])->each(function($user){
             $user['add_time'] = date('Y-m-d H:i:s', $user['add_time']);
+            $user['date'] = date('Y-m-d', $user['date']);
+            $user['start_time'] = date('H:i:s', $user['start_time']);
+            $user['end_time'] = date('H:i:s', $user['end_time']);
             return $user;
         })->toArray();
         $count = self::where($where)->alias('a')->count();

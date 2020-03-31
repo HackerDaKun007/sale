@@ -13,9 +13,12 @@ layui.use(['form', 'layer', 'table'], function() {
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , cols: [[
             {field: 'favorite_id', width: 100, title: 'ID', sort: true}
-            , {field: 'username', width: '', title: '用户名称'}
+            , {field: 'username', width: '', minWidth:160, title: '用户名称'}
             , {field: 'user_id', width:140, title: '用户ID'}
             , {field: 'goods_id', width: 140, title: '产品ID'}
+            , {field: 'date', width: 140, title: '抢购日期'}
+            , {field: 'start_time', width: 140, title: '抢购开始时间'}
+            , {field: 'end_time', width: 140, title: '抢购结束时间'}
             , {field: 'add_time', width: 170, title: '添加时间'}
         ]]
         , limit: 10

@@ -33,7 +33,6 @@ class Favorite extends Common {
                 if(!empty($input['user_id'])) {
                     $where[] = ['a.user_id','eq',$input['user_id']];
                 }
-
                 $modelData = $model->show($input,$where);
                 $data = $modelData['data']['data'];
                 $count = $modelData['data']['count'];
