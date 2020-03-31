@@ -248,6 +248,7 @@ id          order_id
 款式         goods_style
 数量         number
 产品金额      price
+总金额       zoprice
 运费         freight
 订单状态      order_status(1、待发货，2、待收货，3、确定收货，4、取消，5、待确定，6、退货，7、售后服务)
 快递公司      express
@@ -258,6 +259,7 @@ id          order_id
 系统备注     os_back
 ip         ip
 ip地址      ipadder
+产品图片      img
 添加时间:    create_time
 修改时间:    update_time
 

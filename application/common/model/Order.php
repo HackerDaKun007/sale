@@ -34,10 +34,13 @@ class Order extends Common {
                 ['user_id','eq',$data['user_id']],
                 ['goods_id','eq',$data['goods_id']]
             ];
-            $user = self::where($where)->count();
-            
-            if($user >= 5) {
-                $msg = '同一天重复购买的商品不能超过5次';
+            $user = self::where($where)->select()->toArray();
+            $userNumber = 0;
+            foreach ($user as $v) {
+                $userNumber += $v['number'];
+            }
+            if($userNumber >= 5) {
+                $msg = '同一天重复购买的商品数量不能超过5件';
             }else {
             //获取款式ID和名称
             $price = 0;
@@ -48,7 +51,7 @@ class Order extends Common {
                 if($data['goodsstyle_id'] == $v['goodsstyle_id']) {
                     $price = $v['price'];
                     $goods_style = $v['username'];
-                    $goods['sty'][$k]['available'] = $goods['sty'][$k]['available']-1;
+                    $goods['sty'][$k]['available'] = $goods['sty'][$k]['available']-$data['number'];
                     $number[] = $goods['sty'][$k]['available'];
                     $styleNum = $goods['sty'][$k]['available'];
                 }else {
@@ -72,12 +75,14 @@ class Order extends Common {
                         'goods_user' => $goods['username'],
                         'goods_style' => $goods_style,
                         'price' => $price,
+                        'zoprice' => $price*$data['number'],
                         'freight' => $goods['freight'],
                         'order_status' => 1,
                         'order_number' => $num,
                         'express' => '尚未有快递公司',
                         'express_number' => '无',
                         'time' => $timeR,
+                        'img' => $goods['home_img'],
                         'user_back' => $data['user_back'],
                         'number' => $data['number'],
                         'ip' => self::passIp($ip['ip']),
@@ -121,6 +126,25 @@ class Order extends Common {
                                ];
                                cache($options);
                                 cache(self::$path['Userorder']."_$num",$arr);
+                                $userDataArray = [
+                                    'user_id' => $data['user_id'],
+                                    'payment' => 1,
+                                    'goods_user' => $goods['username'],
+                                    'number' => $data['number'],
+                                    'order_number' => $num,
+                                    'price' => $price,
+                                    'zoprice' => $price*$data['number'],
+                                    'img' => $goods['home_img'],
+                                    'order_number_pass' => self::respass($num),
+                                ];
+                                $userData = cache(self::$path['UserOrderId']."_$data[user_id]");
+                                $userDataArr = [];
+                                if($userData) {
+                                    $userDataArr[count($userData)] = $userDataArray;
+                                }else {
+                                    $userDataArr[0] = $userDataArray;
+                                }
+                                cache(self::$path['UserOrderId']."_$data[user_id]",$userDataArr);
                             };
                             self::commit();
                         }
