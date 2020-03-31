@@ -40,6 +40,9 @@
     font-size: 0.8rem;
 }
 /* form */
+.wrapper {
+  overflow: hidden;
+}
 .address-form{
     display: flex;
     flex-direction: column;
@@ -68,7 +71,8 @@
 }
 
 
-.default {
+.defaul
+t {
   display: flex;
   align-items: center;
 }

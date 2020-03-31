@@ -30,7 +30,8 @@ if (addressData) {
     noContent.show();
 }
 
-$('.add-btn').on('click', function(e) {
+$('.add-btn').on('click', function (e) {
+    // 不添加目标URL到历史URL堆栈
     e.preventDefault();
-    location.replace($(this).href)
-})
+    location.replace(this.href);
+});
