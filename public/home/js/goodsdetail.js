@@ -41,7 +41,7 @@ $(function () {
 			if (k == 0) {
 				active = 'active';
 				selectGoodsInfoHtml = `
-					<img src=${goods.home_img} alt="">
+					<img src=${imageUrl + goods.home_img} alt="">
 					<div>
 						<p class="price">￥${e.price}</p>
 						<p class="stock">库存${e.available}件</p>
@@ -59,9 +59,9 @@ $(function () {
 
 		goods.images.forEach(function (e) {
 			swiperWrapperHtml += `
-				<div class="swiper-slide"><img class="swiper-image" src=${e.img}></div>
+				<div class="swiper-slide"><img class="swiper-image" src=${imageUrl + e.img}></div>
 				`;
-			goodsImagesHtml += `<img src='/home/temp-images/default.jpg' data-src=${e.img}>`
+			goodsImagesHtml += `<img src='/home/temp-images/default.jpg' data-src=${imageUrl + e.img}>`
 		});
 
 		if (goods.start_time > nowTime && goods.end_time > nowTime) {
@@ -147,7 +147,7 @@ $(function () {
 			for (let i=1; i<=6; i++) {
 				if (e['img'+i] != '') {
 					html += `
-					<div class="img-item"><img src=${e['img'+i]}></div>
+					<div class="img-item"><img src=${imageUrl + e['img'+i]}></div>
 					`;
 				}
 			}
@@ -388,7 +388,7 @@ $(function () {
 		$this.addClass('active');
 		selectValueId = i.goodsstyle_id;
 		selectGoodsInfoHtml = `
-		<img src=${i.home_img} alt="">
+		<img src=${imageUrl + i.home_img} alt="">
 		<div>
 			<p class="price">￥${i.price}</p>
 			<p class="stock">库存${i.available}件</p>
