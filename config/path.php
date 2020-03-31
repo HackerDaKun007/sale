@@ -122,8 +122,9 @@ return [
     //单个订单缓存
     'Userorder' => 'Userorder',
 
-    //用户缓存
+    //用户订单缓存
     'UserOrderId' => 'UserOrderId',
+    'UserOrderIdUser' => 'UserOrderIdUser',
     /**
      * 微信客服缓存
      */

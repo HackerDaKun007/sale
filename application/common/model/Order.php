@@ -131,20 +131,21 @@ class Order extends Common {
                                     'payment' => 1,
                                     'goods_user' => $goods['username'],
                                     'number' => $data['number'],
+                                    'order_status' => 1,
                                     'order_number' => $num,
                                     'price' => $price,
                                     'zoprice' => $price*$data['number'],
                                     'img' => $goods['home_img'],
                                     'order_number_pass' => self::respass($num),
                                 ];
-                                $userData = cache(self::$path['UserOrderId']."_$data[user_id]");
+                                $userData = cache(self::$path['UserOrderIdUser']."_$data[user_id]");
                                 $userDataArr = [];
                                 if($userData) {
                                     $userDataArr[count($userData)] = $userDataArray;
                                 }else {
                                     $userDataArr[0] = $userDataArray;
                                 }
-                                cache(self::$path['UserOrderId']."_$data[user_id]",$userDataArr);
+                                cache(self::$path['UserOrderIdUser']."_$data[user_id]",$userDataArr);
                             };
                             self::commit();
                         }
@@ -238,12 +239,75 @@ class Order extends Common {
                     break;
                 }
             }
-//            $user['ip'] =
+            $user['ip'] = Long2ip($user['ip']);
             return $user;
         })->toArray();
         $count = self::where($where)->count();
         return self::dataJson(1, 'success', ['data'=>$select['data'], 'count'=>$count], '', true);
     }
+
+
+    //系统修改
+    public function osedit($data) {
+        $code = 0;
+        $msg = '修改失败';
+        $allow = ['username','tel','area','adder','order_status','os_back','user_back','express','express_number'];
+
+        self::startTrans();
+        try {
+            if(self::isUpdate(true)->allowField($allow)->save($data,['order_id'=>$data['order_id']])) {
+                $find = self::where('order_id','=',$data['order_id'])->find();
+                if($find) {
+                    $find = json_decode($find,true);
+                    $options = [
+                        // 缓存类型为File
+                        'type'   => 'File',
+                        // 缓存有效期为永久有效
+                        'expire' => 0,
+                        // 指定缓存目录
+                        'path'   => dirname(getcwd()).'/runtime/cache/',
+                    ];
+                    cache($options);
+                    cache(self::$path['Userorder']."_$find[order_number]",$find);
+                    $sel = self::where('order_id','=',$data['order_id'])->order('order_id asc')->field('user_id,payment,goods_user,number,order_status,order_number,price,zoprice,img')->select()->each(function($user) {
+                        $user['order_number_pass'] =  self::respass($user['order_number']);
+                    })->toArray();
+                    cache(self::$path['UserOrderIdUser']."_$find[user_id]",$sel);
+                }
+                 self::commit();
+                $msg = '修改成功';
+                $code = 1;
+            }
+        }catch (Exception $e) {
+            $msg = '服务器异常';
+            self::rollback();
+        }
+        return self::dataJson($code,$msg,'','',true);
+    }
+
+    //更新订单所有缓存
+    public function uploadOrder() {
+        $options = [
+            // 缓存类型为File
+            'type'   => 'File',
+            // 缓存有效期为永久有效
+            'expire' => 0,
+            // 指定缓存目录
+            'path'   => dirname(getcwd()).'/runtime/cache/',
+        ];
+        cache($options);
+        $select = self::order('order_id asc')->select()->each(function($user){
+            //更新所有单个缓存
+            cache(self::$path['Userorder']."_$user[order_number]",$user);
+        })->toArray();
+        $user_id = array_column($select,'user_id');
+        $unique = array_unique($user_id);
+        foreach ($unique as $v) {
+            $select = self::where('user_id','=',$v)->field('user_id,payment,goods_user,number,order_status,order_number,price,zoprice,img')->order('order_id asc')->select()->toArray();
+            cache(self::$path['UserOrderIdUser']."_$v",$select);
+        }
+    }
+
 }
 
 ?>

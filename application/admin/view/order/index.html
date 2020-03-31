@@ -1,3 +1,8 @@
+<style>
+    .layui-disabled, .layui-disabled:hover {
+        color: #666666!important;
+    }
+</style>
 
 <div class="public-backdrop-white">
 
@@ -22,6 +27,10 @@
 
     <!--  内容   -->
     <div class="public-content">
+        <!--    添加等操作    -->
+        <div class="public-column-bottom-10">
+            <button class="layui-btn public-btn-sm upload" >更新全部订单缓存</button>
+        </div>
 
         <div class="public-content-table">
             <table class="layui-hide" id="content" lay-filter="content"></table>
@@ -94,6 +103,7 @@
         }
         table.on('tool(content)',function(obj) {
             let data = obj.data;
+            console.info(data)
             if (obj.event == 'edit') { //修改产品
                 let add_url = public_url + 'edit.html';
                 $.Public.yzPost({
@@ -113,7 +123,7 @@
                             , zIndex: 50
                             , content: '<div class="public-padding-10">' +
                                 '<form class="layui-form layui-form-pane" action="'+add_url+'">' +
-                                '   <input name="order_id" type="hidden" value="1" />' +
+                                '   <input name="order_id" type="hidden" value="'+data.order_id+'" />' +
                                 '   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">\n' +
                                 '       <legend>用户信息</legend>\n' +
                                 '   </fieldset>' +
@@ -156,49 +166,75 @@
                                 '    </div>\n' +
                                 '  </div>' +
                                 '   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">\n' +
+                                '       <legend>快递信息</legend>\n' +
+                                '   </fieldset>' +
+                                '  <div class="layui-form-item">\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">快递公司</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" name="express"  value="'+data.express+'" autocomplete="off" class="layui-input ">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '    <div class="layui-inline">\n' +
+                                '      <label class="layui-form-label">快递单号</label>\n' +
+                                '      <div class="layui-input-inline">\n' +
+                                '        <input type="text" name="express_number"  value="'+data.express_number+'" autocomplete="off" class="layui-input ">\n' +
+                                '      </div>\n' +
+                                '    </div>\n' +
+                                '</div>' +
+                                '   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">\n' +
+                                '       <legend>系统备注</legend>\n' +
+                                '   </fieldset>' +
+                                '<div class="layui-form-item layui-form-text">\n' +
+                                '    <label class="layui-form-label">系统备注</label>\n' +
+                                '    <div class="layui-input-block">\n' +
+                                '      <textarea placeholder="请输入内容" name="os_back" class="layui-textarea" >'+$.Public.values(data.os_back)+'</textarea>\n' +
+                                '    </div>\n' +
+                                '  </div>' +
+                                '   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">\n' +
                                 '       <legend>产品信息</legend>\n' +
                                 '   </fieldset>' +
                                 '  <div class="layui-form-item">\n' +
                                 '    <div class="layui-inline">\n' +
                                 '      <label class="layui-form-label">产品ID</label>\n' +
                                 '      <div class="layui-input-inline">\n' +
-                                '        <input type="text" disabled value="'+data.goods_id+'" autocomplete="off" class="layui-input">\n' +
+                                '        <input type="text" disabled value="'+data.goods_id+'" autocomplete="off" class="layui-input layui-disabled">\n' +
                                 '      </div>\n' +
                                 '    </div>\n' +
                                 '    <div class="layui-inline">\n' +
                                 '      <label class="layui-form-label">产品名称</label>\n' +
                                 '      <div class="layui-input-inline">\n' +
-                                '        <input type="text" disabled value="'+data.goods_user+'" autocomplete="off" class="layui-input">\n' +
+                                '        <input type="text" disabled value="'+data.goods_user+'" autocomplete="off" class="layui-input layui-disabled">\n' +
                                 '      </div>\n' +
                                 '    </div>\n' +
                                 '    <div class="layui-inline">\n' +
                                 '      <label class="layui-form-label">款式</label>\n' +
                                 '      <div class="layui-input-inline">\n' +
-                                '        <input type="text" disabled  value="'+data.goods_style+'" autocomplete="off" class="layui-input">\n' +
+                                '        <input type="text" disabled  value="'+data.goods_style+'" autocomplete="off" class="layui-input layui-disabled">\n' +
                                 '      </div>\n' +
                                 '    </div>\n' +
                                 '    <div class="layui-inline">\n' +
                                 '      <label class="layui-form-label">数量</label>\n' +
                                 '      <div class="layui-input-inline">\n' +
-                                '        <input type="text" disabled value="'+data.number+'" autocomplete="off" class="layui-input">\n' +
+                                '        <input type="text" disabled value="'+data.number+'" autocomplete="off" class="layui-input layui-disabled">\n' +
                                 '      </div>\n' +
                                 '    </div>\n' +
                                 '    <div class="layui-inline">\n' +
                                 '      <label class="layui-form-label">产品金额</label>\n' +
                                 '      <div class="layui-input-inline">\n' +
-                                '        <input type="text" disabled value="'+data.price+'" autocomplete="off" class="layui-input">\n' +
+                                '        <input type="text" disabled value="'+data.price+'" autocomplete="off" class="layui-input layui-disabled">\n' +
                                 '      </div>\n' +
                                 '    </div>\n' +
                                 '    <div class="layui-inline">\n' +
                                 '      <label class="layui-form-label">邮费</label>\n' +
                                 '      <div class="layui-input-inline">\n' +
-                                '        <input type="text" disabled value="'+data.freight+'" autocomplete="off" class="layui-input">\n' +
+                                '        <input type="text" disabled value="'+data.freight+'" autocomplete="off" class="layui-input layui-disabled">\n' +
                                 '      </div>\n' +
                                 '    </div>\n' +
                                 '    <div class="layui-inline">\n' +
                                 '      <label class="layui-form-label">总金额</label>\n' +
                                 '      <div class="layui-input-inline">\n' +
-                                '        <input type="text" disabled value="'+data.zoprice+'" autocomplete="off" class="layui-input">\n' +
+                                '        <input type="text" disabled value="'+data.zoprice+'" autocomplete="off" class="layui-input layui-disabled">\n' +
                                 '      </div>\n' +
                                 '    </div>\n' +
                                 '  </div>' +
@@ -209,28 +245,31 @@
                                 '    <div class="layui-inline">\n' +
                                 '      <label class="layui-form-label">订单号</label>\n' +
                                 '      <div class="layui-input-inline">\n' +
-                                '        <input type="text" disabled value="'+data.order_number+'" autocomplete="off" class="layui-input">\n' +
+                                '        <input type="text" disabled value="'+data.order_number+'" autocomplete="off" class="layui-input layui-radio-disbaled layui-disabled">\n' +
                                 '      </div>\n' +
                                 '    </div>\n' +
                                 '    <div class="layui-inline">\n' +
                                 '      <label class="layui-form-label">ip</label>\n' +
                                 '      <div class="layui-input-inline">\n' +
-                                '        <input type="text" disabled value="'+data.ip+'" autocomplete="off" class="layui-input">\n' +
+                                '        <input type="text" disabled value="'+data.ip+'" autocomplete="off" class="layui-input layui-disabled">\n' +
                                 '      </div>\n' +
                                 '    </div>\n' +
                                 '    <div class="layui-inline">\n' +
                                 '      <label class="layui-form-label">ip地址</label>\n' +
                                 '      <div class="layui-input-inline">\n' +
-                                '        <input type="text" disabled  value="'+data.ipadder+'" autocomplete="off" class="layui-input">\n' +
+                                '        <input type="text" disabled  value="'+data.ipadder+'" autocomplete="off" class="layui-input layui-disabled">\n' +
                                 '      </div>\n' +
                                 '    </div>\n' +
                                 '    <div class="layui-inline">\n' +
                                 '      <label class="layui-form-label">用户ID</label>\n' +
                                 '      <div class="layui-input-inline">\n' +
-                                '        <input type="text" disabled value="'+data.number+'" autocomplete="off" class="layui-input">\n' +
+                                '        <input type="text" disabled value="'+data.number+'" autocomplete="off" class="layui-input layui-disabled">\n' +
                                 '      </div>\n' +
                                 '    </div>\n' +
                                 '  </div>' +
+                                '   <div class="layui-form-item public-center">\n' +
+                                '      <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>\n' +
+                                '    </div>\n' +
                                 '</form>' +
                                 '</div>'
                         })
@@ -244,22 +283,26 @@
         form.on('submit(submit)', function(data){
             var action = data.form.action;
             var field = data.field;
-            field.home_img = Img; //图片
             $.Public.post({
                 type:'post',
                 url: action,
                 data: field,
                 success: function() {
-                    ImgUser = '';
-                    Img = '';
-                    if(typeof field.string == 'string') {
-                        layer.closeAll();
-                        $.Public.locationHref();
-                    }
+                    layer.closeAll();
+                    $.Public.locationHref();
                 },
             });
             return false;
         });
+
+
+        $('.upload').on('click',function () {
+            $.Public.post({
+                type: 'post',
+                url: public_url + 'uploadselect.html',
+            })
+        });
+
 
     })
 
