@@ -65,9 +65,11 @@ class Order extends Common
 
         $input = self::$reques->get();
         if(!empty($input['id'])) {
-            $id = self::repassJie($input['id']);
-            if(is_numeric($id)) {
-                $data = cache(self::$path['Userorder']."_".$id );
+
+            // $id = self::repassJie($input['id']);
+            
+            if(is_numeric($input['id'])) {
+                $data = cache(self::$path['Userorder']."_".$input['id'] );
                 if($data) {
                     if($data['user_id'] == self::$userId) {
                         unset($data['user_id']);
@@ -129,7 +131,7 @@ class Order extends Common
                             $model = Model('Order')->add($data,$goods,$bool);
                             $msg = $model['msg'];
                             $code = $model['code'];
-                            $url = '/home/order/orderconfirm.html?id='.self::respass($model['data']);
+                            $url = '/home/order/orderconfirm.html?id='.$model['data'];
                         }
                     }
                 }

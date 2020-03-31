@@ -3,8 +3,7 @@ $(function () {
 	var goods = getJson($('#goods'));
 	var comment = getJson($('#comment'));
 	var favorite = getJson($('#favorite'));
-	console.log(goods);
-	
+
 	var nowTime = serverTimeEnd; //服务器现在时间
 
 	var swiperWrapper = $('.swiper-wrapper');
@@ -296,6 +295,10 @@ $(function () {
 	});
 
 	//收藏
+	var goods_id = getSearchWord('id');
+	var rushdate_id = getSearchWord('date_id');
+	var rushtime_id = getSearchWord('time_id');
+
 	var collect = favorite;
 	function isCollect(val) {
 		if (collect) {
@@ -311,12 +314,18 @@ $(function () {
 	isCollect(isCollectBtn);
 
 	isCollectBtn.on('click', function () {
+		num ++;
 		let $this = $(this);
 		isCollect($this);
 		if (collect != favorite) {
 			_post({
-				url: '/home/goods/favorite',
-				data: {favorite: favorite},
+				url: '/home/goods/favorite.html',
+				data: {
+					goods_id: goods_id,
+					rushdate_id: rushdate_id,
+					rushtime_id: rushtime_id,
+					favorite: favorite,
+				},
 				success: function(msg) {
 					console.log(msg);
 				}

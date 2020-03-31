@@ -1,29 +1,62 @@
 var data = getJson($('#data'));
-console.log(data);
 
 var totalList = $('#total');
 var notDeliveryList = $('#not-delivery');
 var deliveryList = $('#delivery');
 
+var navList = $('.order-nav ul li');
+var orderList = $('.order-list');
+
+var hashValue = location.hash;
+
+if (hashValue != '' && hashValue != null) {
+    let a = navList.dataset == hashValue;
+    navList.removeClass('active');
+    navList.each(function(e) {
+        let $this = $(this);
+        let value = $this.data().hash;
+        if (value == hashValue) {
+            $this.addClass('active');
+        }
+    })
+    
+    orderList.removeClass('active');
+    // navList.eq(navIndex).addClass('active');
+    $('.main').find(hashValue).addClass('active');
+    
+}
+
+navList.on('click', function () {
+    let $this = $(this);
+    let index = $this.index();
+
+    navList.removeClass('active');
+    $this.addClass('active');
+    orderList.removeClass('active');
+    orderList.eq(index).addClass('active');
+});
+
 var totalListHtml = '';
 var notDeliveryListHtml = '';
-var DeliveryListHtml = '';
+var deliveryListHtml = '';
 
 if (data) {
+    // 保留原数组并翻转数组
+    let newData = JSON.parse(JSON.stringify(data));
+    newData.reverse();
 
-    // data.reverse();
-    // console.log(data);
-    let statusText = '';
-    if (data.length > 0) {
-        data.forEach(function (e) {
+    if (newData.length > 0) {   
+        let statusText = '';
+        newData.forEach(function (e) {
             for (let i of order_status) {
                 if (i.code == e.order_status) {
                     statusText = i.value;
                 }
             }
+            
             totalListHtml += `
             <li class="list-item">
-                <a href="/home/order/orderdetail.html?id=${order_number_pass}">
+                <a href="/home/order/orderdetail.html?id=${e.order_number}">
                     <img src=${imageUrl + e.img}>
                     <div class="order-info">
                         <p class="name">${e.goods_user}</p>
@@ -40,7 +73,7 @@ if (data) {
             if (e.order_status == 1) {
                 notDeliveryListHtml += `
                 <li class="list-item">
-                    <a href="/home/order/orderdetail.html?id=${order_number_pass}">
+                    <a href="/home/order/orderdetail.html?id=${e.order_number}">
                         <img src=${imageUrl + e.img}>
                         <div class="order-info">
                             <p class="name">${e.goods_user}</p>
@@ -57,7 +90,7 @@ if (data) {
             if (e.order_status == 2) {
                 deliveryListHtml += `
                 <li class="list-item">
-                    <a href="/home/order/orderdetail.html?id=${order_number_pass}">
+                    <a href="/home/order/orderdetail.html?id=${e.order_number}">
                         <img src=${imageUrl + e.img}>
                         <div class="order-info">
                             <p class="name">${e.goods_user}</p>
@@ -77,34 +110,23 @@ if (data) {
         notDeliveryList.append(notDeliveryListHtml);
         deliveryList.append(deliveryListHtml);
     }
-    // else {
-    //     let html = `<div class="no-content">
-    //         <i class="iconfont icon-border_color_px_rounded"></i>
-    //         <p>您还没有相关的订单</p>
-    //     </div>`;
-    //     $('.main').after(html);
-    // }
+    else {
+        let html = `<div class="no-content">
+            <i class="iconfont icon-border_color_px_rounded"></i>
+            <p>您还没有相关的订单</p>
+        </div>`;
+        $('.main').after(html);
+    }
 }
-// else {
-//     let html = `<div class="no-content">
-//         <i class="iconfont icon-border_color_px_rounded"></i>
-//         <p>您还没有相关的订单</p>
-//     </div>`;
-//     $('.main').after(html);
-// }
+else {
+    let html = `<div class="no-content">
+        <i class="iconfont icon-border_color_px_rounded"></i>
+        <p>您还没有相关的订单</p>
+    </div>`;
+    $('.main').after(html);
+}
 
-var navList = $('.order-nav ul li');
-var orderList = $('.order-list');
 
-navList.on('click', function () {
-    let $this = $(this);
-    let index = $this.index();
-
-    navList.removeClass('active');
-    $this.addClass('active');
-    orderList.removeClass('active');
-    orderList.eq(index).addClass('active');
-});
 
 
 // var aLink = $('a');
