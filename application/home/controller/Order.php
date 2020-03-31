@@ -76,9 +76,13 @@ class Order extends Common
         if(self::yzPost()) {
             $input = self::$reques->post();
             $validate = Validate('Order');
+
             if(!$validate->scene('goods')->check($input)) {
+                echo 1;
                 $msg = $validate->getError();
             }else {
+                echo 1;
+                exit;
                 $goods = Model('Rushgoods')->cacheGoods($input['goods_id'],$input['rushdate_id'],$input['rushtime_id']);
                 if($goods) {
                     if($goods['start_time'] <= self::$serverTimeEnd && $goods['end_time'] <= self::$serverTimeEnd) {
@@ -102,6 +106,7 @@ class Order extends Common
                             }
                         }
                         //判断地址数据
+
                         if(!$validate->scene('user')->check($data)) {
                             $msg = $validate->getError();
                         }else {

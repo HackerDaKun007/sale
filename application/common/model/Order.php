@@ -40,12 +40,15 @@ class Order extends Common {
             $price = 0;
             $goods_style = '';
             if($goods['num'] > 0) {//判断库存是否
-
+                $number = [];
                 foreach($goods['sty'] as $k => $v) {
-                    if($data['goodsstyle_id'] = $v['goodsstyle_id']) {
+                    if($data['goodsstyle_id'] == $v['goodsstyle_id']) {
                         $price = $v['price'];
                         $goods_style = $v['username'];
                         $goods['sty'][$k]['available'] = $goods['sty'][$k]['available']-1;
+                        $number[] = $goods['sty'][$k]['available']-1;
+                    }else {
+                        $number[] = $goods['sty'][$k]['available'];
                     }
                 }
                 $goods['num'] = $goods['num']-1;
@@ -85,7 +88,7 @@ class Order extends Common {
                                 'num' =>$sty
                             ];
                             if(Model('Rushgoods')->save($rushgoods,['rushgoods_id',$goods['rushgoods_id']])){
-                                cache(self::$path['goodsTig']."_$data[goods_id]_$data[rushdate_id]_$data[rushtime_id]",$goods,$time+(2592000*24));
+                                cache(self::$path['goodsTig']."_$data[goods_id]_$data[rushdate_id]_$data[rushtime_id]",$goods,2592000);
                                 self::addCache($arr);
                             };
                             $msg = '添加成功';
@@ -95,6 +98,9 @@ class Order extends Common {
                             if(!$bool) {
                                 Model('Useraddress')->editAdd($data);
                             }
+
+                            //更新数据库
+                            Model('Rushgoods')->isUpdate(true)->save(['num'=>implode('/',$number)],['rushgoods_id'=>$goods['rushgoods_id']]);
                             self::commit();
                         }
                     }catch (Exception $e) {

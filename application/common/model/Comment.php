@@ -141,6 +141,7 @@ class Comment extends Common {
                     }
                 }
                 unlink(self::$path['upload'].'/'.$find['home_img']);
+                self::cacheSelect(true,$find['goods_id']);
                 $msg = '删除成功';
                 $code = 1;
                 self::commit();
