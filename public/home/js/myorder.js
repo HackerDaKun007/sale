@@ -1,15 +1,18 @@
-$(function() {
-    var navList = $('.order-nav ul li');
-    var orderList = $('.order-list');
+var data = getJson($('#data'));
+console.log(data);
 
-    navList.on('click',function() {
-        let $this = $(this);
-        let index = $this.index();
-        
-        navList.removeClass('active');
-        $this.addClass('active');
-        orderList.removeClass('active');
-        orderList.eq(index).addClass('active');
-    });
 
-})
+
+var navList = $('.order-nav ul li');
+var orderList = $('.order-list');
+
+navList.on('click',function() {
+    let $this = $(this);
+    let index = $this.index();
+    
+    navList.removeClass('active');
+    $this.addClass('active');
+    orderList.removeClass('active');
+    orderList.eq(index).addClass('active');
+});
+

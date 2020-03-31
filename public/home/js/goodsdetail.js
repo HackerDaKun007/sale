@@ -3,7 +3,8 @@ $(function () {
 	var goods = getJson($('#goods'));
 	var comment = getJson($('#comment'));
 	var favorite = getJson($('#favorite'));
-
+	console.log(goods);
+	
 	var nowTime = serverTimeEnd; //服务器现在时间
 
 	var swiperWrapper = $('.swiper-wrapper');
@@ -322,7 +323,6 @@ $(function () {
 			})
 		}
 	});
-	console.log(favorite);
 
 	// 弹出选择栏
 	var popSelectBtn = $('#pop-select');

@@ -17,6 +17,7 @@ class Order extends Common
     public function myorder() {
 
         return view('',[
+            'data' => cache(self::$path['UserOrderId']."_".self::$userId),
         ]);
     }
 

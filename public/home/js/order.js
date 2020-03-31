@@ -5,6 +5,7 @@ var goodsStyleId = getSearchWord('goodsstyle_id');
 var buyNumber = $('#buynumber');
 buyNumber.val(buyNum);
 
+console.log(goodsData,addressData);
 
 
 var goodsId = $('#goods_id');
@@ -28,12 +29,26 @@ var price = $('.payment-bar .price');
 var priceHtml = '';
 
 if (addressData) {
-    addressData.forEach(function (e, k) {
-        if (k == 0) {
-            addressId.val(e.useraddress_id);
-            addressInfoHtml = `
-                <div class="address-detail" id="haveaddress">
-                    <i class="iconfont icon-iconfontdingwei"></i>
+    if (addressData.length > 0) {
+        addressData.forEach(function (e, k) {
+            if (k == 0) {
+                addressId.val(e.useraddress_id);
+                addressInfoHtml = `
+                    <div class="address-detail" id="haveaddress">
+                        <i class="iconfont icon-iconfontdingwei"></i>
+                        <div class="address">
+                        <div class="top">
+                            <span class="name">${e.username}</span>
+                            <span class="telnum">${e.tel}</span>
+                        </div>
+                        <div class="bottom">${e.area + e.adder}</div>
+                        </div>
+                        <i class="iconfont icon-right"></i>
+                    </div>`;
+            }
+            addressListHtml += `
+                <li class="address-item">
+                    <div class="first-word">${e.username[0]}</div>
                     <div class="address">
                     <div class="top">
                         <span class="name">${e.username}</span>
@@ -41,22 +56,31 @@ if (addressData) {
                     </div>
                     <div class="bottom">${e.area + e.adder}</div>
                     </div>
-                    <i class="iconfont icon-right"></i>
-                </div>`;
-        }
-        addressListHtml += `
-            <li class="address-item">
-                <div class="first-word">${e.username[0]}</div>
-                <div class="address">
-                <div class="top">
-                    <span class="name">${e.username}</span>
-                    <span class="telnum">${e.tel}</span>
-                </div>
-                <div class="bottom">${e.area + e.adder}</div>
-                </div>
-            </li>
-            `;
-    })
+                </li>
+                `;
+        })
+    } else {
+        addressInfoHtml = `<div id="noaddress">
+        <form action="">
+          <div class="form-item">
+            <label for="username">姓　　名：</label>
+            <input type="text" id="username" name="username" placeholder="请输入收货人姓名" />
+          </div>
+          <div class="form-item">
+            <label for="telnum">手机号码：</label>
+            <input type="text" id="telnum" name="tel" placeholder="请输入手机号码" />
+          </div>
+          <div class="form-item">
+            <label for="region">所在地区：</label>
+            <input type="text" id="city-picker" name="area" readonly placeholder="点击选择所在地区" />
+          </div>
+          <div class="form-item">
+            <label for="address">详细地址：</label>
+            <input type="text" id="address" name="adder" placeholder="请输入详细地址" />
+          </div>
+        </form>
+      </div>`
+    }
 } else {
     addressInfoHtml = `<div id="noaddress">
     <form action="">
@@ -253,8 +277,8 @@ $('#toPay').on('click', function (e) {
     let nowTime = Math.floor(Date.now() / 1000);
     storeData = JSON.parse(localStorage.getItem('order'));
     let bool = false;
-    if(storeData != null && storeData != '') {
-         // 判断order里的时间戳是否过期，如果超过24小时就删除这个localstorage
+    if (storeData != null && storeData != '') {
+        // 判断order里的时间戳是否过期，如果超过24小时就删除这个localstorage
         if (storeData) {
             let a = storeData[storeData.length - 1].date;
             a += 86400;
@@ -264,46 +288,46 @@ $('#toPay').on('click', function (e) {
             bool = true;
         }
         // 如果超过3条则不允许购买
-        else if (storeData.length >= 5 ) {
+        else if (storeData.length >= 5) {
             alertInfo('已超过购买限制');
             setTimeout(function () {
                 location.replace('/');
             }, 1000)
-        }else {
+        } else {
             bool = true;
         }
-    }else {
+    } else {
         bool = true;
     }
     console.log(bool);
-    
-    if(bool) {
+
+    if (bool) {
         // 提交数据
-    _post({
-        url: '/home/order/addorder.html',
-        data: form,
-        success: function (msg) {
-            if (msg.code == 1) {
+        _post({
+            url: '/home/order/addorder.html',
+            data: form,
+            success: function (msg) {
+                if (msg.code == 1) {
 
-                // 设置localstorage
-                if (storeData == null || storeData.length < 3) {
-                    let orderInfo = {
-                        goodsId: goodsData.goods_id,
-                        num,
-                        date: nowTime
+                    // 设置localstorage
+                    if (storeData == null || storeData.length < 3) {
+                        let orderInfo = {
+                            goodsId: goodsData.goods_id,
+                            num,
+                            date: nowTime
+                        }
+                        orderStore.push(orderInfo);
+                        num++;
+                        localStorage.setItem('order', JSON.stringify(orderStore));
+
                     }
-                    orderStore.push(orderInfo);
-                    num++;
-                    localStorage.setItem('order', JSON.stringify(orderStore));
-
+                    location.replace(msg.url);
                 }
-                location.replace(msg.url);
             }
-        }
-    })
+        })
     }
 
-    
+
 })
 
 // 用户在页面停留5分钟后跳出提示框

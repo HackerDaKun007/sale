@@ -102,15 +102,15 @@ $(function () {
 			})
 			if (newArr.length > 0) {
 				newArr.forEach(function (e, k) {
-					let bool = ''
+					let bool = '';
 					if (e.start_time < time && e.end_time > time) {
 						startHtml = `<div class="sale-list"></div>`
 						activeStr = e.start_time
 						activeEnd = e.end_time
 						e.goods.map(function (i) {
 							let sold = (i.num_back - i.num) / i.num_back;
-							soldPercent = sold > 0.1 ? Math.floor(sold) *100 : sold * 100; //换算成已售百分比
-
+							soldPercent = sold > 0.1 ? Math.floor(sold) *100 : sold.toFixed(4) * 100; //换算成已售百分比
+							
 							startListHtml += `
 			  <a class="list-item" href="/home/goods/goodsdetail.html?id=${
           i.goods_id
@@ -143,8 +143,8 @@ $(function () {
 						if (k == key + 1) {
 							bool = 'active'
 							e.goods.map(function (i) {
-								let sold = (i.num_back - i.num) / i.num_back;
-							soldPercent = sold > 0.1 ? Math.floor(sold) *100 : sold * 100;//换算成已售百分比
+								let sold = (i.num_back - i.num) / i.num_back;								
+							soldPercent = sold > 0.1 ? Math.floor(sold) *100 : sold.toFixed(4) * 100;//换算成已售百分比
 								activeSaleHtml += `
 				  <a class="list-item" href="/home/goods/goodsdetail.html?id=${
             i.goods_id
@@ -245,7 +245,7 @@ $(function () {
 
 		goodsArr[num].map(function (i) {
 			let sold = (i.num_back - i.num) / i.num_back;
-							soldPercent = sold > 0.1 ? Math.floor(sold) *100 : sold * 100; //换算成已售百分比
+							soldPercent = sold > 0.1 ? Math.floor(sold) *100 : sold.toFixed(4) * 100; //换算成已售百分比
 			saleListHtml += `
           <a class="list-item" href="/home/goods/goodsdetail.html?id=${
             i.goods_id
