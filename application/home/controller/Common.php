@@ -40,6 +40,7 @@ class Common extends Controller
         self::$dateTimeEnd = (self::$dateTime+60*60*24)-1;//获取今天结束时间
 
 
+
         //404页面
         self::$server404 = dirname(getcwd()).'/thinkphp/tpl/home_404.html';
         $url = self::$reques->server()['REQUEST_URI'];

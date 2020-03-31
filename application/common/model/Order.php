@@ -18,7 +18,7 @@ class Order extends Common {
      * 添加
      */
     public function add($data,$goods,$bool) {
-        $allow = ['ip','ipadder','user_id','payment','username','tel','area','adder','goods_id','goods_user','price','freight','order_status','express','express_number','order_number','user_back','goods_style','number','time'];
+        $allow = ['ip','ipadder','user_id','payment','username','tel','area','adder','goods_id','goods_user','price','freight','order_status','express','express_number','order_number','user_back','goods_style','number','time','zoprice','img'];
         $timeR = strtotime(date('Ymd'));
         $times = strtotime(date('His'));
         $time = strtotime(date('YmdHis'));
