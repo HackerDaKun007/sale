@@ -35,6 +35,21 @@ class Goods extends Common
 
     //更新收藏
     public function favorite() {
-
+        $code = 0;
+        $msg = '删除失败';
+        if(self::yzPost()){
+            $input = self::$reques->post();
+            $validate = Validate('Favorite');
+            if(!$validate->check($input)) {
+                $msg = $validate->getError();
+            }else {
+                $input['user_id'] = self::$userId;
+                $model = Model('Favorite');
+                $data = $model->add($input);
+                $msg = $data['msg'];
+                $code = $data['code'];
+            }
+        }
+        echo self::dataJson($code,$msg);
     }
 }
