@@ -299,7 +299,23 @@ $(function () {
 	var rushdate_id = getSearchWord('date_id');
 	var rushtime_id = getSearchWord('time_id');
 
-	var collect = favorite;
+	var collect = false;
+	if (!favorite) {
+		collect = false;
+	} else {
+		favorite.forEach(function(e) {
+			if (e.goods_id == goods_id) {
+				// favorNum = e.cancel;
+				if (e.cancel == 1) {
+					collect = true;
+				} else if (e.cancel == 2) {
+					collect = false;
+				}
+			}
+		})
+	}
+
+
 	function isCollect(val) {
 		if (collect) {
 			collect = false;
@@ -317,20 +333,17 @@ $(function () {
 		num ++;
 		let $this = $(this);
 		isCollect($this);
-		if (collect != favorite) {
-			_post({
-				url: '/home/goods/favorite.html',
-				data: {
-					goods_id: goods_id,
-					rushdate_id: rushdate_id,
-					rushtime_id: rushtime_id,
-					favorite: favorite,
-				},
-				success: function(msg) {
-					console.log(msg);
-				}
-			})
-		}
+		_post({
+			url: '/home/goods/favorite.html',
+			data: {
+				goods_id: goods_id,
+				rushdate_id: rushdate_id,
+				rushtime_id: rushtime_id,
+			},
+			success: function(msg) {
+				
+			}
+		})
 	});
 
 	// 弹出选择栏

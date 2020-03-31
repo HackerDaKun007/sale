@@ -26,9 +26,9 @@ class Favorite extends Common {
                 'rushdate_id' => $data['rushdate_id'],
                 'goods_id' => $data['goods_id'],
                 'rushtime_id' => $data['rushtime_id'],
-                'price' => $data['user_id'],
-                'orprice' => $data['user_id'],
-                'img' => $data['user_id'],
+                'price' =>  $goods['sty'][0]['price'],
+                'orprice' => $goods['sty'][0]['regular_price'],
+                'img' => $goods['home_img'],
                 'cancel' => 1,
                 'add_time' => time(),
             ];
@@ -41,7 +41,7 @@ class Favorite extends Common {
                 'path'   => dirname(getcwd()).'/runtime/cache/',
             ];
             cache($options);
-            $user = cache(self::$path['dateFlow']."_$data[user_id]");
+            $user = cache(self::$path['userFavorite']."_$data[user_id]");
             $arr = [];
             if(!$user) { //不存在，添加缓存
                 if(self::isUpdate(false)->save($data)) {
@@ -52,30 +52,36 @@ class Favorite extends Common {
                     $msg = '收藏成功';
                 }
             }else {
-                $bool = false;
-                $id = false;
-                $key = '';
+                $bool = true;
                 foreach ($user as $k => $v) {
                     if($v['goods_id'] == $data['goods_id'] && $v['rushdate_id'] == $data['rushdate_id'] && $v['rushtime_id'] == $data['rushtime_id']) {
-                        $bool = true;
-                        $key = $k;
-                        $id = $v['favorite_id'];
+                        if($v['cancel'] == 1) { //取消收藏
+                            $garr['cancel'] = 2;
+                            if(self::isUpdate(true)->save($garr,['favorite_id'=>$v['favorite_id']])) {
+                                $user[$k]['cancel'] = 2;
+                                cache(self::$path['userFavorite']."_$data[user_id]",$user);
+                                $code = 1;
+                                $msg = '取消收藏成功';
+                                $bool = false;
+                            }
+                        }else { //修改收藏
+                            $garr['cancel'] = 1;
+                            if(self::isUpdate(true)->save($garr,['favorite_id'=>$v['favorite_id']])) {
+                                $user[$k]['cancel'] = 1;
+                                cache(self::$path['userFavorite']."_$data[user_id]",$user);
+                                $code = 1;
+                                $msg = '收藏成功';
+                                $bool = false;
+                            }
+                        }
                         break;
                     }
                 }
-                if($bool) { //有存在就删除
-                    $garr['cancel'] = 2;
-                    if(self::isUpdate(true)->save($garr,['favorite_id'=>$id])) {
-                        $user[$key]['cancel'] = 2;
-                        cache(self::$path['userFavorite']."_$data[user_id]",$user);
-                        $code = 1;
-                        $msg = '取消收藏成功';
-                    }
-                }else {
-                    if(self::isUpdate(false)->save($data)) { //不存在添加
+                if($bool) {
+                    if(self::isUpdate(false)->save($data)) {
                         $data['favorite_id'] = $this->id;
-                        $arr[count($data)] = $data;
-                        cache(self::$path['userFavorite']."_$data[user_id]",$arr);
+                        $user[count($user)] = $data;
+                        cache(self::$path['userFavorite']."_$data[user_id]",$user);
                         $code = 1;
                         $msg = '收藏成功';
                     }

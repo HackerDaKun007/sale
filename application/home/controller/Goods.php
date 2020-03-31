@@ -21,6 +21,8 @@ class Goods extends Common
 
                 if($goods) {
                     //
+                    // cache(self::$path['userFavorite']."_".self::$userId,null);
+                    // exit;
                     return view('',[
                         'goods' => $goods,
                         'comment' => Model('Comment')->cacheSelect(false,$input['id']),

@@ -125,14 +125,3 @@ else {
     </div>`;
     $('.main').after(html);
 }
-
-
-
-
-// var aLink = $('a');
-// console.log(aLink);
-
-// aLink.on('click', function(e) {
-//     e.preventDefault();
-//     location.replace(this.href);
-// })
