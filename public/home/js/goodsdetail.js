@@ -3,7 +3,7 @@ $(function () {
 	var goods = getJson($('#goods'));
 	var comment = getJson($('#comment'));
 	var favorite = getJson($('#favorite'));
-	console.log(comment);
+	console.log(goods);
 	
 	var nowTime = serverTimeEnd; //服务器现在时间
 
@@ -120,14 +120,16 @@ $(function () {
 					 <span class="tip">全国包邮</span>
 				 </div>
 				 `;
-
-		for (let i of goods.parameter) {
-			goodsValueListHtml += `
-					<li class="item">
-						<p class="item-name">${i.title}</p>
-						<p class="item-value">${i.content}</p>
-					</li>
-					`;
+		
+		if (goods.parameter.length > 0 || goods.parameter) {
+			for (let i of goods.parameter) {
+				goodsValueListHtml += `
+						<li class="item">
+							<p class="item-name">${i.title}</p>
+							<p class="item-value">${i.content}</p>
+						</li>
+						`;
+			}
 		}
 		goodsTextHtml = `${goods.details}`;
 	
