@@ -14,7 +14,6 @@ namespace app\common\model;
 class Flowdate extends Common {
 
     public function add($url) {
-
         $date = strtotime(date('Ymd')); //今天日期
         $dateFlow = cache(self::$path['dateFlow']."_$date");
         $timedate = time();
@@ -48,6 +47,8 @@ class Flowdate extends Common {
             Model('Uv')->add($dateFlow,true,$timedate);
         }
     }
+
+
 
 
     //展示

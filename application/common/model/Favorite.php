@@ -15,52 +15,74 @@ use think\Exception;
 
 class Favorite extends Common {
 
-    //添加收藏
+    //dateFlow
     public function add($data) {
-        $msg = '收藏失败';
+        $goods = cache(self::$path['goodsTig']."_$data[goods_id]_$data[rushdate_id]_$data[rushtime_id]");
         $code = 0;
-        $favorite = cache(self::$path['userFavorite']."_$data[user_id]");
-        $bool = false;
-        if($favorite) {
-            //判断缓存是否存在
-            foreach($favorite as $k => $v) {
-                if($data['user_id'] == $v['user_id'] && $data['$goods_id'] == $v['$goods_id'] && $data['$rushdate_id'] == $v['$rushdate_id'] && $data['rushtime_id'] == $v['rushtime_id']) {
-                    $bool = true;
-                    break;
-                }
-            }
-            if(!$bool) {
-                $find = Model('Rushgoods')->cacheGoods($data['goods_id'],$data['rushdate_id'],$data['rushtime_id']);
-                if($find) {
-                    $data = [
-                        'user_id' => $data['user_id'],
-                        'rushdate_id' => $data['rushdate_id'],
-                        'goods_id' => $data['goods_id'],
-                        'rushtime_id' => $data['rushtime_id'],
-                        'price' => $find['sty'][0]['price'],
-                        'orprice' => $find['sty'][0]['regular_price'],
-                        'img' => $find['home_img'],
-                        'add_time' => time(),
-                    ];
-                    self::startTrans();
-                    try {
-                        if(slef::isUpdate(false)->save($data)) {
-                            $data['favorite_id'] = $this->id;
-                            slef::cacheAdd($data);
-                            $msg = '收藏成功';
-                            $code = 1;
-                            self::commit();
-                        }
-                    }catch (Exception $e) {
-                        $msg = '服务器异常';
-                        self::rollback();
-                    }
+        $msg = '收藏失败';
+        if($goods) {
+            $data = [
+                'user_id' => $data['user_id'],
+                'rushdate_id' => $data['rushdate_id'],
+                'goods_id' => $data['goods_id'],
+                'rushtime_id' => $data['rushtime_id'],
+                'price' => $data['user_id'],
+                'orprice' => $data['user_id'],
+                'img' => $data['user_id'],
+                'cancel' => 1,
+                'add_time' => time(),
+            ];
+            $options = [
+                // 缓存类型为File
+                'type'   => 'File',
+                // 缓存有效期为永久有效
+                'expire' => 0,
+                // 指定缓存目录
+                'path'   => dirname(getcwd()).'/runtime/cache/',
+            ];
+            cache($options);
+            $user = cache(self::$path['dateFlow']."_$data[user_id]");
+            $arr = [];
+            if(!$user) { //不存在，添加缓存
+                if(self::isUpdate(false)->save($data)) {
+                    $data['favorite_id'] = $this->id;
+                    $arr[0] = $data;
+                    cache(self::$path['userFavorite']."_$data[user_id]",$arr);
+                    $code = 1;
+                    $msg = '收藏成功';
                 }
             }else {
-                $msg = '当前收藏已存在';
+                $bool = false;
+                $id = false;
+                $key = '';
+                foreach ($user as $k => $v) {
+                    if($v['goods_id'] == $data['goods_id'] && $v['rushdate_id'] == $data['rushdate_id'] && $v['rushtime_id'] == $data['rushtime_id']) {
+                        $bool = true;
+                        $key = $k;
+                        $id = $v['favorite_id'];
+                        break;
+                    }
+                }
+                if($bool) { //有存在就删除
+                    $garr['cancel'] = 2;
+                    if(self::isUpdate(true)->save($garr,['favorite_id'=>$id])) {
+                        $user[$key]['cancel'] = 2;
+                        cache(self::$path['userFavorite']."_$data[user_id]",$user);
+                        $code = 1;
+                        $msg = '取消收藏成功';
+                    }
+                }else {
+                    if(self::isUpdate(false)->save($data)) { //不存在添加
+                        $data['favorite_id'] = $this->id;
+                        $arr[count($data)] = $data;
+                        cache(self::$path['userFavorite']."_$data[user_id]",$arr);
+                        $code = 1;
+                        $msg = '收藏成功';
+                    }
+                }
             }
         }
-        return self::dataJson($code, $msg,'','',true);
+        return self::dataJson($code,$msg,'','',true);
     }
 
     //添加用户收藏缓存
