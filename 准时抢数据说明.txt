@@ -222,6 +222,7 @@ ID      favorite_id
 原价金额    orprice
 展示图片    img
 添加时间:   add_time
+是否取消    cancel(1不是，2是)
 
 /** 用户收货地址 **/
 表名:sa_useraddress

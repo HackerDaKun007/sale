@@ -29,6 +29,7 @@ class Favorite extends Common {
                 'price' => $data['user_id'],
                 'orprice' => $data['user_id'],
                 'img' => $data['user_id'],
+                'cancel' => 1,
                 'add_time' => time(),
             ];
             $options = [
@@ -63,8 +64,9 @@ class Favorite extends Common {
                     }
                 }
                 if($bool) { //有存在就删除
-                    if(self::where('favorite_id','=',$id)->delete()) {
-                        array_splice($user,$key,1);
+                    $garr['cancel'] = 2;
+                    if(self::isUpdate(true)->save($garr,['favorite_id'=>$id])) {
+                        $user[$key]['cancel'] = 2;
                         cache(self::$path['userFavorite']."_$data[user_id]",$user);
                         $code = 1;
                         $msg = '取消收藏成功';
