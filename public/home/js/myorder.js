@@ -105,3 +105,12 @@ navList.on('click', function () {
     orderList.removeClass('active');
     orderList.eq(index).addClass('active');
 });
+
+
+// var aLink = $('a');
+// console.log(aLink);
+
+// aLink.on('click', function(e) {
+//     e.preventDefault();
+//     location.replace(this.href);
+// })

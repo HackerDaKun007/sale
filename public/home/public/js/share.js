@@ -265,7 +265,6 @@ function getSearchWord(name) {
   return '';
 }
 
-
 // 获取JSON
 function getJson(val) {
   let data = decodeURIComponent(val.html(), true);
@@ -306,7 +305,6 @@ var order_status = [{
 ];
 
 // 转换时间日期格式
-
 Date.prototype.format = function (fmt) {
   var o = {
     "M+": this.getMonth() + 1, //月份 
