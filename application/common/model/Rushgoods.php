@@ -93,7 +93,7 @@ class Rushgoods extends Common {
                         $goodsData['start_time'] = $user['start_time'];
                         $goodsData['end_time'] = $user['end_time'];
 //                    echo self::$path['goodsTig']."_$user[goods_id]_$user[rushdate_id]_$user[rushtime_id]";
-                        cache(self::$path['goodsTig']."_$user[goods_id]_$user[rushdate_id]_$user[rushtime_id]",$goodsData,$time+62208000);
+                        cache(self::$path['goodsTig']."_$user[goods_id]_$user[rushdate_id]_$user[rushtime_id]",$goodsData,62208000);
                         $image = $user['home_img'];
                         $user['price_val'] = intval($price_val[0]);
                         $user['num'] = $SnapAvailable;

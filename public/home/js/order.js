@@ -5,8 +5,6 @@ var goodsStyleId = getSearchWord('goodsstyle_id');
 var buyNumber = $('#buynumber');
 buyNumber.val(buyNum);
 
-console.log(goodsData,addressData);
-
 
 var goodsId = $('#goods_id');
 var addressId = $('#address_id');
@@ -27,11 +25,26 @@ var goodsDetail = $('.goods-detail');
 var goodsDetailHtml = '';
 var price = $('.payment-bar .price');
 var priceHtml = '';
-
+var useraddressId = getCookie('useraddressId');
 if (addressData) {
     if (addressData.length > 0) {
         addressData.forEach(function (e, k) {
-            if (k == 0) {
+            if(e.useraddress_id == useraddressId) {
+                addressId.val(e.useraddress_id);
+                addressInfoHtml = `
+                    <div class="address-detail" id="haveaddress">
+                        <i class="iconfont icon-iconfontdingwei"></i>
+                        <div class="address">
+                        <div class="top">
+                            <span class="name">${e.username}</span>
+                            <span class="telnum">${e.tel}</span>
+                        </div>
+                        <div class="bottom">${e.area + e.adder}</div>
+                        </div>
+                        <i class="iconfont icon-right"></i>
+                    </div>`;
+            }
+            else if (k == 0) {
                 addressId.val(e.useraddress_id);
                 addressInfoHtml = `
                     <div class="address-detail" id="haveaddress">
@@ -299,7 +312,6 @@ $('#toPay').on('click', function (e) {
     } else {
         bool = true;
     }
-    console.log(bool);
 
     if (bool) {
         // 提交数据

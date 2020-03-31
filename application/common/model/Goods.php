@@ -90,12 +90,13 @@ class Goods extends Common {
             ['style' ,'eq', 1],
         ];
         self::where($where)->order('goods_id desc')->select()->each(function ($user) {
-            $user['images'] = Model('Goodscarousel')->order('sort desc')->where('goods_id', '=', $user['goods_id'])->select()->toArray();
+            $ars = json_decode($user,true);
+            $ars['images'] = Model('Goodscarousel')->order('sort desc')->where('goods_id', '=', $user['goods_id'])->select()->toArray();
             //产品款式
-            $user['sty'] = Model('Goodsstyle')->order('sort desc')->where('goods_id', '=', $user['goods_id'])->select()->toArray();
+            $ars['sty'] = Model('Goodsstyle')->order('sort desc')->where('goods_id', '=', $user['goods_id'])->select()->toArray();
             //参数
-            $user['parameter'] = Model('Rarameter')->order('sort desc')->where('goods_id', '=', $user['goods_id'])->select()->toArray();
-            cache(self::$path['goodsSelect']. "_".$user['goods_id'], $user);
+            $ars['parameter'] = Model('Rarameter')->order('sort desc')->where('goods_id', '=', $user['goods_id'])->select()->toArray();
+            cache(self::$path['goodsSelect']. "_".$ars['goods_id'], $ars);
         })->toArray();
     }
 
