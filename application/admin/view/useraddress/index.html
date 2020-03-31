@@ -22,7 +22,9 @@
 
     <!--  内容   -->
     <div class="public-content">
-
+        <div class="public-column-bottom-10">
+            <button class="layui-btn public-btn-sm upload" >更新缓存</button>
+        </div>
         <div class="public-content-table">
             <table class="layui-hide" id="content" lay-filter="content"></table>
         </div>
@@ -47,13 +49,13 @@
             , url: public_url + 'index.html'
             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
             , cols: [[
-                {field: 'useraddress_id', width: 100, title: 'ID', sort: true}
-                , {field: 'user', width: 120, title: '用户名称'}
+                {field: 'useraddress_id', width: 80, title: 'ID', sort: true}
+                , {field: 'user', width: 140, title: '用户名称'}
                 , {field: 'user_id', width:100, title: '用户ID'}
-                , {field: 'goods_id', width: 120, title: '收货人'}
+                , {field: 'username', width: 120, title: '收货人'}
                 , {field: 'tel', width: 120, title: '手机号码'}
-                , {field: 'area', width: 150, title: '所在地区'}
-                , {field: 'adder', width: '', title: '详情地址'}
+                , {field: 'area', width: 180, title: '所在地区'}
+                , {field: 'adder', width: '', minWidth:180, title: '详情地址'}
                 , {field: 'create_time', width: 170, title: '添加时间'}
             ]]
             , limit: 10
@@ -71,6 +73,14 @@
                 }
             });
             return false;
+        });
+
+
+        $('.upload').on('click',function () {
+            $.Public.post({
+                type: 'post',
+                url: public_url + 'uploadselect.html',
+            })
         });
 
     })

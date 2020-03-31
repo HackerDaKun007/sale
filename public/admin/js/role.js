@@ -13,7 +13,7 @@ layui.use(['form', 'layer', 'table'], function(){
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , cols: [[
             {field: 'role_id', width: 80, title: 'ID', sort: true}
-            , {field: 'username', width: '', title: '角色名称'}
+            , {field: 'username', width: '', minWidth:180, title: '角色名称'}
             , {field: 'create_time', width: 200, title: '添加时间'}
             , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
         ]]

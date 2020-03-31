@@ -14,7 +14,7 @@ layui.use(['form', 'layer', 'table', 'upload'], function() {
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , cols: [[
             {field: 'carousel_id', width: 80, title: 'ID', sort: true}
-            , {field: 'username', width: '', title: '名称'}
+            , {field: 'username', width: '', minWidth:180, title: '名称'}
             , {field: 'img', width: 140, title: '图片', toolbar: '#img'}
             , {field: 'sort', width: 150, title: '排序'}
             , {field: 'create_time', width: 200, title: '添加时间'}

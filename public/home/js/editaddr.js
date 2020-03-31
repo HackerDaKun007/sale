@@ -10,6 +10,12 @@ if (dataEl.length > 0) {
     addressForm.find('#city-picker').val(data.area);
     addressForm.find('#address').val(data.adder);
     addressForm.find('#addrid').val(data.useraddress_id);
+    var useraddressId = getCookie('useraddressId');
+    if(useraddressId != '' && useraddressId != null) {
+        if(useraddressId == data.useraddress_id) {
+            $('#is_default').prop('checked',true);
+        }
+    }
 }
 
 // 阻止双击事件

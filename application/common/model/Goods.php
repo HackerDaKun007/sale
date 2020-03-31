@@ -83,6 +83,22 @@ class Goods extends Common {
         return $data;
     }
 
+    //更新全部产品
+    public function cacheUpdate() {
+        $where = [
+            ['carousel' ,'eq', 1],
+            ['style' ,'eq', 1],
+        ];
+        self::where($where)->order('goods_id desc')->select()->each(function ($user) {
+            $user['images'] = Model('Goodscarousel')->order('sort desc')->where('goods_id', '=', $user['goods_id'])->select()->toArray();
+            //产品款式
+            $user['sty'] = Model('Goodsstyle')->order('sort desc')->where('goods_id', '=', $user['goods_id'])->select()->toArray();
+            //参数
+            $user['parameter'] = Model('Rarameter')->order('sort desc')->where('goods_id', '=', $user['goods_id'])->select()->toArray();
+            cache(self::$path['goodsSelect']. "_".$user['goods_id'], $user);
+        })->toArray();
+    }
+
     //更新抢购
 
     //写入前后操作

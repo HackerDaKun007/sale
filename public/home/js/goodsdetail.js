@@ -304,7 +304,7 @@ $(function () {
 		collect = false;
 	} else {
 		favorite.forEach(function(e) {
-			if (e.goods_id == goods_id) {
+			if (e.goods_id == goods_id && e.rushdate_id == rushdate_id && e.rushtime_id == rushtime_id ) {
 				// favorNum = e.cancel;
 				if (e.cancel == 1) {
 					collect = true;

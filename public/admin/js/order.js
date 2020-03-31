@@ -13,7 +13,7 @@ layui.use(['form', 'layer', 'table'], function() {
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , cols: [[
             {field: 'order_id', width: 100, title: 'ID', sort: true}
-            , {field: 'goods_user', width: '', title: '产品名称'}
+            , {field: 'goods_user', width: '', minWidth:180, title: '产品名称'}
             , {field: 'goods_style', width:130, title: '产品款式'}
             , {field: 'number', width: 120, title: '数量'}
             , {field: 'price', width: 120, title: '金额'}

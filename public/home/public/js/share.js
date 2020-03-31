@@ -329,3 +329,10 @@ Date.prototype.format = function (fmt) {
   }
   return fmt;
 }
+
+function publicMycollect(val) {
+  return `<div class="no-content">
+      <i class="iconfont icon-border_color_px_rounded"></i>
+      <p>您还没有相关的${val}</p>
+      </div>`;
+}

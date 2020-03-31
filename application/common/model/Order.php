@@ -107,13 +107,15 @@ class Order extends Common {
                                 cache(self::$path['goodsTig']."_$data[goods_id]"."_$data[rushdate_id]"."_$data[rushtime_id]",$goods,self::$path['time30']);
                                 //更新首页推荐
                                 $recoGoods = cache(self::$path['recoGoods']."_$timeR");
-                                foreach ($recoGoods as $k => $v) {
-                                     if($v['rushgoods_id'] == $goods['rushgoods_id']) {
-                                         $recoGoods[$k]['num'] = $recoGoods[$k]['num']-1;
-                                         break;
-                                     }
+                                if($recoGoods) {
+                                    foreach ($recoGoods as $k => $v) {
+                                        if($v['rushgoods_id'] == $goods['rushgoods_id']) {
+                                            $recoGoods[$k]['num'] = $recoGoods[$k]['num']-1;
+                                            break;
+                                        }
+                                    }
+                                    cache(self::$path['recoGoods']."_$timeR",$recoGoods,self::$path['time30']);
                                 }
-                                cache(self::$path['recoGoods']."_$timeR",$recoGoods,self::$path['time30']);
                                 //更新首页抢购商品缓存
                                 Model('Rushgoods')->updateCache($timeR);
                                 $options = [
@@ -300,11 +302,13 @@ class Order extends Common {
             //更新所有单个缓存
             cache(self::$path['Userorder']."_$user[order_number]",$user);
         })->toArray();
-        $user_id = array_column($select,'user_id');
-        $unique = array_unique($user_id);
-        foreach ($unique as $v) {
-            $select = self::where('user_id','=',$v)->field('user_id,payment,goods_user,number,order_status,order_number,price,zoprice,img')->order('order_id asc')->select()->toArray();
-            cache(self::$path['UserOrderIdUser']."_$v",$select);
+        if($select) {
+            $user_id = array_column($select,'user_id');
+            $unique = array_unique($user_id);
+            foreach ($unique as $v) {
+                $select = self::where('user_id','=',$v)->field('user_id,payment,goods_user,number,order_status,order_number,price,zoprice,img')->order('order_id asc')->select()->toArray();
+                cache(self::$path['UserOrderIdUser']."_$v",$select);
+            }
         }
     }
 

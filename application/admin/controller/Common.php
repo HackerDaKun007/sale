@@ -39,13 +39,16 @@ class Common extends Controller {
         // print_r(self::$reques); param全部，get,post
         // exit;
         $controller = self::$reques->controller() .'/'. self::$reques->action(); //获取控制名称, 方法名称
-        
+
         //访问admin模块,全部必须要ajax访问，除了index/index
         self::$gethttp = self::$reques->server();
         if( $controller != 'Index/index' && !self::$reques->isPost() && !self::$reques->isAjax() && empty(self::$gethttp['HTTP_ADDDATE'])) {
             echo self::dataJson(0, '访问的连接不存在', [],'');
             exit;
         }
+
+//        var_dump(Model('Comment')->cacheUpdate(12));
+//        exit;
 
         //判断cookie信息,以及是否登陆
         self::yzCookie();

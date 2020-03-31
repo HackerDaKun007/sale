@@ -94,11 +94,29 @@ class Rushgoods extends Common {
                         $goodsData['end_time'] = $user['end_time'];
 //                    echo self::$path['goodsTig']."_$user[goods_id]_$user[rushdate_id]_$user[rushtime_id]";
                         cache(self::$path['goodsTig']."_$user[goods_id]_$user[rushdate_id]_$user[rushtime_id]",$goodsData,$time+62208000);
+                        $image = $user['home_img'];
                         $user['price_val'] = intval($price_val[0]);
                         $user['num'] = $SnapAvailable;
                         $user['num_back'] = $num_back_num;
                         $user['orprice_val'] = intval($orprice_val[0]);
-                        $user['home_img'] = self::$path['uploadEnd'].$user['home_img'];
+                        $user['home_img'] = self::$path['uploadEnd'].$image;
+                        $favoriteWhere = [
+                            'goods_id' => $user['goods_id'],
+                            'rushdate_id' => $user['rushdate_id'],
+                            'rushtime_id' =>$user['rushtime_id'],
+                        ];
+                        $FavoriteModel = Model('Favorite');
+                        $favorite = $FavoriteModel->where($favoriteWhere)->select()->toArray();
+                        if($favorite) {
+                            foreach ($favorite as $v) {
+                                $favoriteData = [
+                                    'price' => intval($price_val[0]),
+                                    'orprice' => intval($orprice_val[0]),
+                                    'img' => $image,
+                                ];
+                                $FavoriteModel->isUpdate(true)->save($favoriteData,['favorite_id'=>$v['favorite_id']]);
+                            }
+                        }
                         return $user;
                     })->toArray();
                     if(!empty($arr)) {
@@ -108,6 +126,7 @@ class Rushgoods extends Common {
                     }
                 }
                 $rushdate['rushtime'] = $wh;
+                Model('Favorite')->cacheUpdate();
                 cache(self::$path['goodsTime']."_$date",$rushdate,$time+62208000);
             }else {
                 cache(self::$path['goodsTime']."_$date",null);

@@ -32,7 +32,7 @@ layui.use(['form', 'layer', 'table', 'upload'], function() {
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , cols: [[
             {field: 'goods_id', width: 80, title: 'ID', sort: true}
-            , {field: 'username', width: '', title: '产品名称'}
+            , {field: 'username', width: '',  minWidth:180,title: '产品名称'}
             , {field: 'home_img', width: 140, title: '展示图片', toolbar: '#img'}
             , {field: 'shelves', width: 100, title: '上下架', toolbar:'#disable'}
             , {field: 'create_time', width: 200, title: '添加时间'}
@@ -862,5 +862,11 @@ layui.use(['form', 'layer', 'table', 'upload'], function() {
         return false;
     });
 
+    $('.upload').on('click',function () {
+        $.Public.post({
+            type: 'post',
+            url: public_url + 'uploadselect.html',
+        })
+    });
 
 })

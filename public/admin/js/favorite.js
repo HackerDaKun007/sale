@@ -38,4 +38,11 @@ layui.use(['form', 'layer', 'table'], function() {
         return false;
     });
 
+    $('.upload').on('click',function () {
+        $.Public.post({
+            type: 'post',
+            url: public_url + 'uploadselect.html',
+        })
+    });
+
 })

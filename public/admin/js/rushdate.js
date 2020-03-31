@@ -18,7 +18,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function() {
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , cols: [[
             {field: 'rushdate_id', width: 80, title: 'ID', sort: true}
-            , {field: 'date', width: '', title: '日期' , toolbar: '#recordTime'}
+            , {field: 'date', width: '', minWidth:180, title: '日期' , toolbar: '#recordTime'}
             , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
         ]]
         , limit: 10

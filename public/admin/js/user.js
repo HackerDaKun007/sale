@@ -14,7 +14,7 @@
         , cellMinWidth: 80 
         , cols: [[
             {field: 'user_id', width: 80, title: 'ID', sort: true}
-            , {field: 'username', width: '', title: '用户名称'}
+            , {field: 'username', width: '', minWidth:180, title: '用户名称'}
             , {field: 'member_user', width: 160, title: '会员名称'}
             , {field: 'sex', width: 80, title: '性别', toolbar:'#sex'}
             , {field: 'tel', width: 130, title: '手机号码', toolbar:'#tel'}

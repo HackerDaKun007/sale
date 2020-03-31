@@ -32,7 +32,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function() {
             {field: 'rushgoods_id', width: 80, title: 'ID', sort: true}
             , {field: 'title', width: '', title: '短文标题'}
             , {field: 'rushgoods_id', width: 100, title: '抢购ID'}
-            , {field: 'username', width: '', title: '产品名称',toolbar: '#goodsId'}
+            , {field: 'username', width: '', minWidth:180, title: '产品名称',toolbar: '#goodsId'}
             , {field: 'sort', width: 100, title: '排序'}
             , {field: 'date', width: 110, title: '日期',toolbar: '#rushsTime'}
             , {field: 'start_time', width: 110, title: '开始时间',toolbar: '#startTime'}

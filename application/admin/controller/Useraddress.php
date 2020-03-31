@@ -42,6 +42,19 @@ class Useraddress extends Common {
         }
         return view();
     }
+
+    //更新全部缓存
+    public function uploadselect() {
+        $msg = 'error';
+        $code = 0;
+        if(self::yzPostAdd()) {
+            $model = new modelUseraddress();
+            $model->cacheUpdate();
+            $msg = '更新成功';
+            $code = 1;
+        }
+        echo self::dataJson($code, $msg);
+    }
 }
 
 ?>

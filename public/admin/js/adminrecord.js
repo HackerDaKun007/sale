@@ -13,7 +13,7 @@ layui.use(['form', 'layer', 'table'], function(){
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度
         , cols: [[
             {field: 'admin_id', width: 100, title: '用户ID', sort: true}
-            , {field: 'username', width: '', title: '用户名称'}
+            , {field: 'username', width: '', minWidth:180, title: '用户名称'}
             , {field: 'ip', width: 120, title: '登陆IP'}
             , {field: 'ipaddr', width: 200, title: '登陆IP地区'}
             , {field: 'os', width: 100, title: '登陆系统'}

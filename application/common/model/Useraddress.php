@@ -26,7 +26,11 @@ class Useraddress extends Common {
         self::startTrans();
         try {
             if(self::isUpdate($bool)->allowField($allow)->save($data,$id)) {
-//                $data['useraddress_id'] = $bool?$data['useraddress_id']:$this->id;
+                $ids = $bool?$data['useraddress_id']:$this->id;
+                if(!empty($data['is_default'])) {
+                    Model('User')->isUpdate(true)->save(['useraddress_id'=>$ids],['user_id'=>$data['user_id']]);
+                    cookie(self::$path['useraddressId'],$ids);//收货地址ID
+                }
                 $msg = $bool?'修改成功':'添加成功';
                 $code = 1;
                 self::addCache(true,$data['user_id']);
@@ -79,11 +83,13 @@ class Useraddress extends Common {
 
     //更新全部缓存
     public static function cacheUpdate() {
-        $user = Model('User')->field('user_id')->select()->toArray();
-        if($user) {
-            foreach($user as $k => $v) {
-                $data = self::where('user_id','=',$v['user_id'])->field('user_id,username,tel,area,adder,useraddress_id')->select()->toArray();
-                cache(self::$path['UserAdder']."$v[user_id]",$data);
+        $select = self::select()->toArray();
+        if($select) {
+            $user_id = array_column($select,'user_id');
+            $unique = array_unique($user_id);
+            foreach ($unique as $k => $v) {
+                $data = self::where('user_id','=',$v)->select()->toArray();
+                cache(self::$path['UserAdder'].$v,$data);
             }
         }
     }

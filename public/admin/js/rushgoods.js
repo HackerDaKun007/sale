@@ -31,7 +31,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function() {
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , cols: [[
             {field: 'rushgoods_id', width: 80, title: 'ID', sort: true}
-            , {field: 'username', width: '', title: '产品名称',toolbar: '#goodsId'}
+            , {field: 'username', width: '', minWidth:180, title: '产品名称',toolbar: '#goodsId'}
             , {field: 'price_val', width: 150, title: '金额'}
             , {field: 'num', width: 150, title: '数量'}
             , {field: 'date', width: 110, title: '日期',toolbar: '#rushsTime'}

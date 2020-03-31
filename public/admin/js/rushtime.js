@@ -31,7 +31,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function() {
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , cols: [[
             {field: 'rushtime_id', width: 80, title: 'ID', sort: true}
-            , {field: 'username', width: '', title: '名称'}
+            , {field: 'username', width: '', minWidth:180, title: '名称'}
             , {field: 'date', width: 120, title: '日期',toolbar: '#rushsTime'}
             , {field: 'start_time', width: 120, title: '开始时间',toolbar: '#startTime'}
             , {field: 'end_time', width: 120, title: '结束时间',toolbar: '#endTime'}
@@ -117,7 +117,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function() {
                 layer.open({
                     title: '添加抢购时间'
                     , type: 1
-                    , area: ['700px', '300px']
+                    , area: ['700px', '400px']
                     , closeBtn: 1
                     , shade: 0.3
                     , id: 'LA_layer'
@@ -170,7 +170,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function() {
                     layer.open({
                         title: '修改日期'
                         , type: 1
-                        , area: ['700px', '300px']
+                        , area: ['700px', '400px']
                         , closeBtn: 1
                         , shade: 0.3
                         , id: 'LA_layer'

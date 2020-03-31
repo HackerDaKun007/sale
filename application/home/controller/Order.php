@@ -43,9 +43,9 @@ class Order extends Common
     public function orderconfirm() {
         $input = self::$reques->get();
         if(!empty($input['id'])) {
-            $id = self::repassJie($input['id']);
-            if(is_numeric($id)) {
-                $data = cache(self::$path['Userorder']."_".$id );
+//            $id = self::repassJie($input['id']);
+            if(is_numeric($input['id'])) {
+                $data = cache(self::$path['Userorder']."_".$input['id'] );
                 if($data) {
                     if($data['user_id'] == self::$userId) {
                         return view('',[

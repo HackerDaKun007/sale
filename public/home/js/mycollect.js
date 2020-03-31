@@ -13,7 +13,6 @@ if (data) {
 						<img src=${imageUrl + e.img}>
 						<div class="price">
 							<span>￥${e.price}</span>
-							<span>￥${e.orprice}</span>
 						</div>
 					</a>
 				</li>
@@ -22,16 +21,8 @@ if (data) {
 	})
 	list.append(listHtml);
   } else {
-    let html = `<div class="no-content">
-            <i class="iconfont icon-border_color_px_rounded"></i>
-            <p>您还没有相关的收藏</p>
-        </div>`
-    list.after(html);
+      list.after(publicMycollect('收藏'));
   }
 } else {
-  let html = `<div class="no-content">
-        <i class="iconfont icon-border_color_px_rounded"></i>
-        <p>您还没有相关的收藏</p>
-    </div>`
-  $list.after(html);
+  list.after(publicMycollect('收藏'));
 }

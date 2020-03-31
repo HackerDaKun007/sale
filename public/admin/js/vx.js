@@ -16,7 +16,7 @@ layui.use(['form', 'layer', 'table', 'upload'], function() {
         , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
         , cols: [[
             {field: 'vx_id', width: 80, title: 'ID', sort: true}
-            , {field: 'username', width: '', title: '微信名称'}
+            , {field: 'username', width: '', minWidth:180, title: '微信名称'}
             , {field: 'vx_user', width: 160, title: '微信号'}
             , {field: 'img', width: 140, title: '头像', toolbar: '#img'}
             , {field: 'disable', width: 100, title: '启用/禁用', toolbar:'#disable'}

@@ -103,30 +103,25 @@ class Favorite extends Common {
     }
 
     //所有缓存更新缓存
-    public static function cacheUpdate($data) {
-        Model('User')->field('user_id')->cache(function($user) {
-            $data = self::where('user_id','=',$user['user_id'])->order('favorite_id desc')->select()->toArray();
-            $arr = [];
-            foreach($data as $v) {
-                $find = Model('Rushgoods')->cacheGoods($v['goods_id'],$v['rushdate_id'],$v['rushtime_id']);
-                $arr[] = [
-                    'user_id' => $data['user_id'],
-                    'rushdate_id' => $data['rushdate_id'],
-                    'goods_id' => $data['goods_id'],
-                    'rushtime_id' => $data['rushtime_id'],
-                    'price' => $find['sty'][0]['price'],
-                    'orprice' => $find['sty'][0]['regular_price'],
-                    'img' => $find['home_img'],
-                    'add_time' => $data['add_time'],
-                ];
-            }
-            cache(self::$path['userFavorite']."_$user[user_id]",$arr);
-
-        })->select();
-//        $k = '';
-//        if($favorite) {
-//
-//        }
+    public static function cacheUpdate() {
+        $options = [
+            // 缓存类型为File
+            'type'   => 'File',
+            // 缓存有效期为永久有效
+            'expire' => 0,
+            // 指定缓存目录
+            'path'   => dirname(getcwd()).'/runtime/cache/',
+        ];
+        cache($options);
+       $select = self::select()->toArray();
+       if($select) {
+           $user_id = array_column($select,'user_id');
+           $unique = array_unique($user_id);
+           foreach ($unique as $k => $v) {
+                $data = self::where('user_id','=',$v)->select()->toArray();
+                cache(self::$path['userFavorite']."_$v",$data);
+           }
+       }
     }
 
     //更新单用户缓存,用户$id

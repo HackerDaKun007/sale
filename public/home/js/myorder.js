@@ -106,22 +106,26 @@ if (data) {
             }
 
         });
-        totalList.append(totalListHtml);
-        notDeliveryList.append(notDeliveryListHtml);
-        deliveryList.append(deliveryListHtml);
+        if(totalListHtml != '') {
+            totalList.append(totalListHtml);
+        }else {
+            totalList.append(publicMycollect('订单'));
+        }
+        if(notDeliveryListHtml != '') {
+            notDeliveryList.append(notDeliveryListHtml);
+        }else {
+            notDeliveryList.append(publicMycollect('订单'));
+        }
+        if(deliveryListHtml != '') {
+            deliveryList.append(deliveryListHtml);
+        }else {
+            deliveryList.append(publicMycollect('订单'));
+        }
     }
     else {
-        let html = `<div class="no-content">
-            <i class="iconfont icon-border_color_px_rounded"></i>
-            <p>您还没有相关的订单</p>
-        </div>`;
-        $('.main').after(html);
+        $('.main').after(publicMycollect('订单'));
     }
 }
 else {
-    let html = `<div class="no-content">
-        <i class="iconfont icon-border_color_px_rounded"></i>
-        <p>您还没有相关的订单</p>
-    </div>`;
-    $('.main').after(html);
+    $('.main').after(publicMycollect('订单'));
 }

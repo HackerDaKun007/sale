@@ -170,6 +170,18 @@ class Comment extends Common {
         return self::dataJson(1, 'success', ['data'=>$select['data'], 'count'=>$count], '', true);
     }
 
+    //所有缓存更新缓存
+    public static function cacheUpdate() {
+        $select = self::select()->toArray();
+        if($select) {
+            $user_id = array_column($select,'goods_id');
+            $unique = array_unique($user_id);
+            foreach ($unique as $k => $v) {
+                $data = self::where('goods_id','=',$v)->select()->toArray();
+                cache(self::$path['cacehComment']."_$v",$data);
+            }
+        }
+    }
 }
 
 ?>
