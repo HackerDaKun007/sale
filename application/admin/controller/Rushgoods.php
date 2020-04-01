@@ -72,8 +72,11 @@ class Rushgoods extends Common {
                     $data = $goods->show($input,$where);
                 }else { //默认
                     $where = [];
+                    if(!empty($input['rushdate_id'])) {
+                        $where[] = ['a.rushdate_id','eq',$input['rushdate_id']];
+                    }
                     if(!empty($input['goods_id'])) {
-                        $where[] = ['goods_id', 'like', "%$input[goods_id]%"];
+                        $where[] = ['a.goods_id', 'eq', $input['goods_id']];
                     }
                     $data = $model->show($input,$where);
                 }
