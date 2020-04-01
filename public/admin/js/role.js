@@ -15,7 +15,7 @@ layui.use(['form', 'layer', 'table'], function(){
             {field: 'role_id', width: 80, title: 'ID', sort: true}
             , {field: 'username', width: '', minWidth:180, title: '角色名称'}
             , {field: 'create_time', width: 200, title: '添加时间'}
-            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
+            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
         ]]
         , limit: 10
         , page: true

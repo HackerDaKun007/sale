@@ -19,7 +19,7 @@ layui.use(['form', 'layer', 'table', 'upload'], function() {
             , {field: 'name', width: 150, title: '姓名'}
             , {field: 'disable', width: 100, title: '启用/禁用', toolbar:'#disable'}
             , {field: 'create_time', width: 200, title: '添加时间'}
-            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
+            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
         ]]
         , limit: 10
         , page: true

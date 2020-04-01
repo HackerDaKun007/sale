@@ -19,7 +19,7 @@ layui.use(['form', 'layer', 'table'], function() {
             , {field: 'date', width: 140, title: '抢购日期'}
             , {field: 'start_time', width: 140, title: '抢购开始时间'}
             , {field: 'end_time', width: 140, title: '抢购结束时间'}
-            , {field: 'add_time', width: 170, title: '添加时间'}
+            , {field: 'add_time', width: 200, title: '添加时间'}
         ]]
         , limit: 10
         , page: true
