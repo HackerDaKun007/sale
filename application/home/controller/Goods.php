@@ -18,7 +18,8 @@ class Goods extends Common
         if(!empty($input['id']) && !empty($input['date_id']) && !empty($input['time_id'])) {
             if(is_numeric($input['id']) && is_numeric($input['time_id']) && is_numeric($input['date_id']) ) {
                 $goods = Model('Rushgoods')->cacheGoods($input['id'],$input['date_id'],$input['time_id']);
-
+                // var_dump($goods);
+                // exit;
                 if($goods) {
                     //
                     // cache(self::$path['userFavorite']."_".self::$userId,null);
@@ -27,6 +28,7 @@ class Goods extends Common
                         'goods' => $goods,
                         'comment' => Model('Comment')->cacheSelect(false,$input['id']),
                         'favorite' => Model('Favorite')->userCache(self::$userId), //收藏
+                        'service' => Model('service')->cacheSelect(false), //服务说明
                     ]);
                     exit;
                 }

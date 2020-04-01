@@ -3,7 +3,8 @@ $(function () {
 	var goods = getJson($('#goods'));
 	var comment = getJson($('#comment'));
 	var favorite = getJson($('#favorite'));
-
+	var service = getJson($('#service'));
+	
 	var nowTime = serverTimeEnd; //服务器现在时间
 
 	var swiperWrapper = $('.swiper-wrapper');
@@ -18,6 +19,10 @@ $(function () {
 	var selectGoodsInfo = $('.select-goodsvalue .goodsinfo');
 	var commentList = $('.comment-list .content');
 	var showComment = $('#show-comment');
+	var serviceDesc = $('.service-desc .detail-list');
+	var showService = $('#show-service');
+	var showServiceHtml = '';
+	var serviceDescHtml = '';
 	var showCommentHtml = '';
 	var commentListHtml = '';
 	var swiperWrapperHtml = '';
@@ -201,12 +206,41 @@ $(function () {
 		showComment.append(showCommentHtml);
 	}
 
+	if (service != null && service) {
+		service.forEach(function(e) {
+			serviceDescHtml += `
+			<div class="list-item">
+					<i class="iconfont icon-dian"></i>
+					<div class="desc-deatil">
+						<p>${e.title}</p>
+						<p class="desc">${e.content}</p>
+					</div>
+				</div>
+			`;
+		});
+
+		if (service.length == 1) {
+			showServiceHtml = `<p>${service[0].title}</p>
+			<i class="iconfont icon-right"></i>`;
+		} else if (service.length == 2){
+			showServiceHtml = `<p>${service[0].title}· ${service[1].title}</p>
+			<i class="iconfont icon-right"></i>`;
+		} else {
+			showServiceHtml = `<p>${service[0].title} · ${service[1].title} · ${service[2].title}</p>
+			<i class="iconfont icon-right"></i>`;
+		}
+
+	} else {
+		showServiceHtml = `<p>服务说明</p>
+		<i class="iconfont icon-right"></i>`;
+	}
+	showService.append(showServiceHtml);
+	serviceDesc.append(serviceDescHtml);
 
 	var toCommentList = $('.to-comment-list')
 	var main = $('.main')
 	var pageHeader = $('#page-header')
 	var commentWrapper = $('.comment-wrapper')
-	var showService = $('#show-service')
 	var serviceDesc = $('.service-desc')
 	var closeBtn = $('.close-btn')
 	var showMoreBtn = $('.showmore')
@@ -294,6 +328,133 @@ $(function () {
 		leftValueItem.show();
 	});
 
+	// 弹出选择栏
+	var popSelectBtn = $('#pop-select');
+
+	var selectEl = $('.select-goodsvalue');
+	var selectCloseBtn = $('#select-close');
+
+	popSelectBtn.on('click', function () {
+		$('body').css('overflow', 'hidden');
+		selectEl.addClass('active');
+
+		selectEl.stop().animate({
+				bottom: '0'
+			},
+			200,
+			function () {
+				$('body').append(maskHtml)
+				mask = $('.mask');
+				mask.on('click', function () {
+					hideService(selectEl, '-80%')
+				});
+			}
+		)
+	})
+
+	selectCloseBtn.on('click', function () {
+		hideService(selectEl, '-80%')
+	})
+
+	// 增加和减少购买数量
+	var decreaseBtn = $('#decrease');
+	var increaseBtn = $('#increase');
+	var buyNumber = $('#buynumber');
+	var selectItem = goods.sty[0];
+	
+	decreaseBtn.on('click', function () {
+		let val = buyNumber.val() * 1;
+		let num = val > 1 ? val - 1 : 1;
+
+		buyNumber.val(num);
+		toOrderUrl = url + '&goodsstyle_id=' + selectValueId + '&num=' + buyNumber.val();
+		submitBtn.attr('href', toOrderUrl);
+		return false;
+	})
+	increaseBtn.on('click', function () {
+		let val = buyNumber.val() * 1;
+		let num = 0;
+		if (selectItem.available > 0) {
+			num = val < 5 ? val + 1 : 5;
+		}
+		buyNumber.val(num)
+		toOrderUrl = url + '&goodsstyle_id=' + selectValueId + '&num=' + buyNumber.val();
+		submitBtn.attr('href', toOrderUrl);
+		return false;
+	})
+
+	decreaseBtn.on('doubleclick', function (e) {
+		e.preventDefault()
+	})
+	increaseBtn.on('doubleclick', function (e) {
+		e.preventDefault()
+	})
+
+	var selectValues = $('.select-value ul li');
+
+	var selectValueId = goods.sty[0].goodsstyle_id;
+	var url = `/home/order/order.html${location.search}`;
+	var submitBtn = $('.submit-btn');
+	var toOrderUrl = url + '&goodsstyle_id=' + selectValueId + '&num=' + buyNumber.val();
+	submitBtn.attr('href', toOrderUrl);
+
+	
+	selectValues.on('click', function () {
+		let $this = $(this);
+		let index = $this.index();
+		let i = goods.sty[index];
+		selectItem = goods.sty[index];
+		selectGoodsInfoHtml = '';
+		selectValues.removeClass('active');
+		$this.addClass('active');
+		selectValueId = i.goodsstyle_id;
+		selectGoodsInfoHtml = `
+		<img src=${imageUrl + goods.home_img} alt="">
+		<div>
+			<p class="price">￥${i.price}</p>
+			<p class="stock">库存${i.available}件</p>
+			<p class="selected">
+				已选：
+				<span>${i.username}</span>
+			</p>
+		</div>
+		`;
+		selectGoodsInfo.html(selectGoodsInfoHtml);
+		toOrderUrl = url + '&goodsstyle_id=' + selectValueId + '&num=' + buyNumber.val();
+		submitBtn.attr('href', toOrderUrl);
+	});
+
+	// 隐藏底部弹框
+	function hideService(el, originBottom) {
+		if (el.is('.active')) {
+			$('body').css('overflow-y', 'scroll')
+			el.stop().animate({
+					bottom: originBottom
+				},
+				200
+			)
+			let timer = setTimeout(function () {
+				el.removeClass('active');
+				mask.remove();
+				clearTimeout(timer);
+			}, 500)
+		}
+	}
+
+
+	// 倒计时
+	var timerEl = $('.timer');
+	var num = 0;
+	countDown(num, nowTime, goodsEndTime, timerEl);
+
+	setInterval(function () {
+		num++;
+		countDown(num, nowTime, goodsEndTime, timerEl);
+	}, 1000);
+
+
+
+
 	//收藏
 	var goods_id = getSearchWord('id');
 	var rushdate_id = getSearchWord('date_id');
@@ -345,123 +506,5 @@ $(function () {
 			}
 		})
 	});
-
-	// 弹出选择栏
-	var popSelectBtn = $('#pop-select');
-
-	var selectEl = $('.select-goodsvalue');
-	var selectCloseBtn = $('#select-close');
-
-	popSelectBtn.on('click', function () {
-		$('body').css('overflow', 'hidden');
-		selectEl.addClass('active');
-
-		selectEl.stop().animate({
-				bottom: '0'
-			},
-			200,
-			function () {
-				$('body').append(maskHtml)
-				mask = $('.mask');
-				mask.on('click', function () {
-					hideService(selectEl, '-80%')
-				});
-			}
-		)
-	})
-
-	selectCloseBtn.on('click', function () {
-		hideService(selectEl, '-80%')
-	})
-
-	// 增加和减少购买数量
-	var decreaseBtn = $('#decrease')
-	var increaseBtn = $('#increase')
-	var buyNumber = $('#buynumber')
-
-	decreaseBtn.on('click', function () {
-		let val = buyNumber.val() * 1
-		let num = val > 1 ? val - 1 : 1
-		buyNumber.val(num)
-		toOrderUrl = url + '&goodsstyle_id=' + selectValueId + '&num=' + buyNumber.val();
-		submitBtn.attr('href', toOrderUrl);
-		return false;
-	})
-	increaseBtn.on('click', function () {
-		let val = buyNumber.val() * 1
-		let num = val < 5 ? val + 1 : 5
-		buyNumber.val(num)
-		toOrderUrl = url + '&goodsstyle_id=' + selectValueId + '&num=' + buyNumber.val();
-		submitBtn.attr('href', toOrderUrl);
-		return false;
-	})
-
-	decreaseBtn.on('doubleclick', function (e) {
-		e.preventDefault()
-	})
-	increaseBtn.on('doubleclick', function (e) {
-		e.preventDefault()
-	})
-
-	var selectValues = $('.select-value ul li');
-
-	var selectValueId = goods.sty[0].goodsstyle_id;
-	var url = `/home/order/order.html${location.search}`;
-	var submitBtn = $('.submit-btn');
-	var toOrderUrl = url + '&goodsstyle_id=' + selectValueId + '&num=' + buyNumber.val();
-	submitBtn.attr('href', toOrderUrl);
-
-	
-	selectValues.on('click', function () {
-		let $this = $(this);
-		let index = $this.index();
-		let i = goods.sty[index];
-		selectGoodsInfoHtml = '';
-		selectValues.removeClass('active');
-		$this.addClass('active');
-		selectValueId = i.goodsstyle_id;
-		selectGoodsInfoHtml = `
-		<img src=${imageUrl + goods.home_img} alt="">
-		<div>
-			<p class="price">￥${i.price}</p>
-			<p class="stock">库存${i.available}件</p>
-			<p class="selected">
-				已选：
-				<span>${i.username}</span>
-			</p>
-		</div>
-		`;
-		selectGoodsInfo.html(selectGoodsInfoHtml);
-		toOrderUrl = url + '&goodsstyle_id=' + selectValueId + '&num=' + buyNumber.val();
-		submitBtn.attr('href', toOrderUrl);
-	});
-
-	// 隐藏底部弹框
-	function hideService(el, originBottom) {
-		if (el.is('.active')) {
-			$('body').css('overflow-y', 'scroll')
-			el.stop().animate({
-					bottom: originBottom
-				},
-				200
-			)
-			let timer = setTimeout(function () {
-				el.removeClass('active');
-				mask.remove();
-				clearTimeout(timer);
-			}, 500)
-		}
-	}
-
-
-	// 倒计时
-	var timerEl = $('.timer');
-	var num = 0;
-	countDown(num, nowTime, goodsEndTime, timerEl);
-
-	setInterval(function () {
-		num++;
-		countDown(num, nowTime, goodsEndTime, timerEl);
-	}, 1000);
 
 })

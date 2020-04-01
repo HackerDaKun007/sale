@@ -29,8 +29,12 @@ class Rushtime extends Common {
         if($datar) {
             $datar = json_decode($datar,true);
             $date = date('Y-m-d',$datar['date']);
+            // var_dump($date);
             $data['start_time'] = strtotime($date . $data['start_time']);
             $data['end_time'] = strtotime($date . $data['end_time']);
+
+            // var_dump($data);
+            // exit;
             if($data['start_time'] < $data['end_time']) {
                 $where = [
                     ['start_time','elt',$data['end_time']],

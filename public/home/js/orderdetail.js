@@ -1,14 +1,12 @@
 var orderStatus = $('.order-status');
-var deliveryNum = 1224544444; //测试
 orderStatus.bind('click', function () {
-    copy(deliveryNum);
+    copy(data.express_number);
 });
 
 var data = getJson($('#data'));
 $('#data').remove();
-console.log(data);
 
-var orderTime = new Date(data.create_time * 1000).format("yyyy-MM-dd hh:mm:ss");
+var orderTime = typeof data.create_time == 'number' ? new Date(data.create_time * 1000).format("yyyy-MM-dd hh:mm:ss") : data.create_time;
 
 var clientDetail = $('.client-detail .detail');
 var goodsDetail = $('.goods-detail');

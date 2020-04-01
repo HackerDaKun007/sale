@@ -3,13 +3,13 @@ $(function () {
 	var endTime = dateTimeEnd // 服务器今天结束时间
 
 	// 插入数据
-	var scrollList = $('.scroll-list')
-
+	var scrollList = $('.scroll-list');
+	
 	function getNewGoods() {
 		let scrollListHtml = ''
-		let goodsEnd = []
+		let goodsEnd = [];
 		if (recogoods) {
-			let newGoodsArr = JSON.parse(JSON.stringify(recogoods))
+			let newGoodsArr = JSON.parse(JSON.stringify(recogoods));
 			newGoodsArr.sort(function (a, b) {
 				return a.end_time - b.end_time
 			})
