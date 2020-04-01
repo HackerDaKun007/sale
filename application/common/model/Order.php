@@ -39,7 +39,7 @@ class Order extends Common {
             foreach ($user as $v) {
                 $userNumber += $v['number'];
             }
-            if($userNumber >= 5) {
+            if($userNumber >= 100) {
                 $msg = '同一天重复购买的商品数量不能超过5件';
             }else {
             //获取款式ID和名称
@@ -143,6 +143,7 @@ class Order extends Common {
                                 $userData = cache(self::$path['UserOrderIdUser']."_$data[user_id]");
                                 $userDataArr = [];
                                 if($userData) {
+                                    $userDataArr = $userData;
                                     $userDataArr[count($userData)] = $userDataArray;
                                 }else {
                                     $userDataArr[0] = $userDataArray;

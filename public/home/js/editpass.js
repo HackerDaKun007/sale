@@ -44,11 +44,9 @@ verifyImg.on('click', function () {
 });
 
 function getYZM() {
-    console.log(111);
     
     let imgUrl = '/home/manage/yzm.html';
     let code = Math.random() * 1000;
     verifyImg.attr('src', imgUrl + '?id=' + code);
-    console.log(verifyImg);
     
 }

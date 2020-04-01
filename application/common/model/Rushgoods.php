@@ -120,6 +120,7 @@ class Rushgoods extends Common {
                         return $user;
                     })->toArray();
                     if(!empty($arr)) {
+                        
                         $wh[$num] = $v;
                         $wh[$num]['goods'] = $arr;
                         $num ++;

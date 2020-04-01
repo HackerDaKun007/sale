@@ -45,10 +45,11 @@ class Recogoods extends Common {
     public static function cacheUpdate() {
         $time = strtotime(date('Ymd'));
         $date = Model('Rushdate')->cacheSelect();
+        
         foreach($date as $v) {
             if($v["date"] >= $time) {
-                $field = 'a.rushgoods_id,a.rushdate_id,a.title,g.home_img,c.start_time,c.end_time,c.rushtime_id,b.price_val,b.orprice_val,b.num,b.num_back,b.goods_id';
-                $data = self::where('a.rushdate_id','=',$v['rushdate_id'])->alias('a')->field($field)->join('rushgoods b','b.rushgoods_id = a.rushgoods_id')->join('goods g','g.goods_id=b.goods_id')->join('rushtime c','c.rushtime_id=b.rushtime_id')->order('sort desc')->select()->each(function ($user) {
+                $field = 'b.rushgoods_id,b.rushdate_id,a.title,g.home_img,c.start_time,c.end_time,c.rushtime_id,b.price_val,b.orprice_val,b.num,b.num_back,b.goods_id';
+                $data = self::alias('a')->field($field)->join('rushgoods b','b.rushgoods_id = a.rushgoods_id')->join('goods g','g.goods_id=b.goods_id')->join('rushtime c','c.rushtime_id=b.rushtime_id')->order('sort desc')->select()->each(function ($user) {
                     $user['home_img'] = self::$path['uploadEnd'].$user['home_img'];
 //                    $user['price_val'] = self::$path['uploadEnd'].$user['home_img'];
 //                    $user['home_img'] = self::$path['uploadEnd'].$user['home_img'];
@@ -66,6 +67,9 @@ class Recogoods extends Common {
                     $user['num'] = $SnapAvailable;
                     $user['num_back'] = $num_back_num;
                     $user['orprice_val'] = intval($orprice_val[0]);
+                    // var_dump($user['rushgoods_id']);
+                    // var_dump($user['rushdate_id']);
+                    // var_dump($user['goods_id']);
                     return $user;
                 })->toArray();
                 if($data) {

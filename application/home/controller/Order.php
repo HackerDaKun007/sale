@@ -28,12 +28,15 @@ class Order extends Common
         if(!empty($input['id']) && !empty($input['date_id']) && !empty($input['time_id'])) {
             if(is_numeric($input['id']) && is_numeric($input['time_id']) && is_numeric($input['date_id']) ) {
                 $goods = Model('Rushgoods')->cacheGoods($input['id'],$input['date_id'],$input['time_id']);
+
                 if($goods) {
-                    return view('',[
-                        'goods' => $goods,
-                        'useraddress' => Model('Useraddress')->userCache(self::$userId),
-                    ]);
-                    exit;
+                    if($goods['start_time'] <= self::$serverTimeEnd && $goods['end_time'] >= self::$serverTimeEnd) {
+                        return view('',[
+                            'goods' => $goods,
+                            'useraddress' => Model('Useraddress')->userCache(self::$userId),
+                        ]);
+                        exit;
+                    }
                 }
             }
         }
@@ -133,6 +136,8 @@ class Order extends Common
                             $code = $model['code'];
                             $url = '/home/order/orderconfirm.html?id='.$model['data'];
                         }
+                    }else {
+                        $msg = '提交失败，当前商品尚未开始抢购';
                     }
                 }
             }

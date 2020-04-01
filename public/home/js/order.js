@@ -2,6 +2,9 @@ var goodsData = getJson($('#goods'));
 var addressData = getJson($('#useraddress'));
 var buyNum = getSearchWord('num');
 var goodsStyleId = getSearchWord('goodsstyle_id');
+
+var availableNum;  // 当前订单的商品参数的剩余库存
+
 var buyNumber = $('#buynumber');
 buyNumber.val(buyNum);
 
@@ -122,6 +125,7 @@ var priceText = '';
 var goodsPrice = 0;
 for (let i of goodsData.sty) {
     if (i.goodsstyle_id == goodsStyleId) {
+        availableNum = i.available;
         goodsPrice = i.price;
         goodsStyleName = `
         <p class="goodstype">${i.username}</p>
@@ -187,6 +191,7 @@ addressItem.on('click', function () {
 var decreaseBtn = $('#decrease');
 var increaseBtn = $('#increase');
 var totalPrice = $('#total-price');
+
 decreaseBtn.on('click', function () {
     let val = buyNumber.val() * 1;
     let num = val > 1 ? val - 1 : 1;
@@ -196,7 +201,10 @@ decreaseBtn.on('click', function () {
 })
 increaseBtn.on('click', function () {
     let val = buyNumber.val() * 1;
-    let num = val < 5 ? val + 1 : 5;
+    let num = 0;
+    if ( availableNum > 0) {
+        num = val < 5 ? val + 1 : 5;
+    }
     buyNumber.val(num);
     totalPrice.text('￥' + num * goodsPrice);
     return false;

@@ -2,7 +2,6 @@ var wxInfo = $('.wx-info');
 
 wxInfo.on('click', function() {
     let id = $(this).find('#wx-id span').text();
-    console.log(id);
     
     copy(id)
     popConfirm({

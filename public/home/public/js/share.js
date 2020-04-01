@@ -9,6 +9,7 @@ var vxId = vxId; //微信号
 var vxImg = vxImg; //微信图片
 
 $('#ServerTime').remove();
+
 // 提醒弹窗
 function alertInfo(val) {
   let timer;
@@ -76,7 +77,6 @@ function singleConfirm(info) {
   $('.wrapper').after(confirmHtml);
 
   $('#single').bind('click', function () {
-    console.log(12);
 
     // 移除问询框的HTML
     $('.public-confirm').remove();
@@ -118,7 +118,7 @@ function notFound() {
 }
 
 // 复制内容到剪贴板
-var timer
+var timer;
 
 function copy(info) {
   var wrapper = $('.wrapper')
@@ -173,7 +173,17 @@ function selectText(textbox, startIndex, stopIndex) {
 }
 
 // 加载动画
+function loading(e) {
+  let timer;
+  $('#loading').remove();
+  let loadingHtml = '<div id="loading"><div></div><p>加载中...</p></div>';
+  $('.wrapper').after(loadingHtml);
 
+  // timer = setTimeout(function () {
+  //   $('#loading').remove();
+  //   clearTimeout(timer);
+  // }, 10000);
+}
 
 
 var ajax = '';
@@ -190,6 +200,7 @@ var _post = function (load) {
     cache: false,
     beforeSend: function (xhr) {
       xhr.setRequestHeader("key", KeyPassword);
+      loading();
     },
     headers: load.header,
     url: load.url,
@@ -197,6 +208,7 @@ var _post = function (load) {
     async: true,
     timeout: 10000,
     success: function (msg) {
+      $('#loading').remove();
       if (typeof msg == 'object') {
         if (msg.code == 1) {
           alertInfo(msg.msg);
@@ -223,6 +235,7 @@ var _post = function (load) {
       }
     },
     error: function (err) {
+      $('#loading').remove();
       alertInfo('服务器请求失败');
       if (load.error != null && load.error != '') {
         load.error();
@@ -230,6 +243,7 @@ var _post = function (load) {
     },
     complete: function (XMLHttpRequest, status) {
       if (status == 'timeout') {
+        $('#loading').remove();
         ajaxTimeoutTest.abort();
         alertInfo('服务器请求超时，请稍后再操作！')
       }
