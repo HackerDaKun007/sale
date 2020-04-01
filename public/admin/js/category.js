@@ -17,7 +17,7 @@ layui.use(['form', 'layer', 'table', 'upload'], function() {
             , {field: 'username', width: '', minWidth:180, title: '类别名称'}
             , {field: 'sort', width: 120, title: '排序'}
             , {field: 'create_time', width: 200, title: '添加时间'}
-            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
+            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
         ]]
         , limit: 10
         , page: true

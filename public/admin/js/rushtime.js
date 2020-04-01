@@ -35,7 +35,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function() {
             , {field: 'date', width: 120, title: '日期',toolbar: '#rushsTime'}
             , {field: 'start_time', width: 120, title: '开始时间',toolbar: '#startTime'}
             , {field: 'end_time', width: 120, title: '结束时间',toolbar: '#endTime'}
-            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
+            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
         ]]
         , limit: 10
         , page: true

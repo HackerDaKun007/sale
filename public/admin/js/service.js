@@ -18,7 +18,7 @@ layui.use(['form', 'layer', 'table'], function() {
             , {field: 'content', width: '', minWidth:180, title: '内容'}
             , {field: 'sort', width: 100, title: '排序'}
             , {field: 'create_time', width: 170, title: '添加时间'}
-            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 150}
+            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
         ]]
         , limit: 10
         , page: true

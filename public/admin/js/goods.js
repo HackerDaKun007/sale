@@ -36,7 +36,7 @@ layui.use(['form', 'layer', 'table', 'upload'], function() {
             , {field: 'home_img', width: 140, title: '展示图片', toolbar: '#img'}
             , {field: 'shelves', width: 100, title: '上下架', toolbar:'#disable'}
             , {field: 'create_time', width: 200, title: '添加时间'}
-            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 360}
+            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 380}
         ]]
         , limit: 10
         , page: true

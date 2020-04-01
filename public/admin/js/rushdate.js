@@ -19,7 +19,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function() {
         , cols: [[
             {field: 'rushdate_id', width: 80, title: 'ID', sort: true}
             , {field: 'date', width: '', minWidth:180, title: '日期' , toolbar: '#recordTime'}
-            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
+            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
         ]]
         , limit: 10
         , page: true

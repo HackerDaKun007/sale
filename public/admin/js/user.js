@@ -20,7 +20,7 @@
             , {field: 'tel', width: 130, title: '手机号码', toolbar:'#tel'}
             , {field: 'initial_pass', width: 150, title: '初始密码', toolbar:'#initial_pass'}
             , {field: 'create_time', width: 170, title: '添加时间'}
-            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 180}
+            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200}
         ]]
         , limit: 10
         , page: true
