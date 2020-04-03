@@ -301,7 +301,7 @@ $(function () {
 	// // 返回首页并刷新
 	pushHistory()
 	window.addEventListener('popstate', function() {
-		location.replace(document.referrer);
+		location.href = '/';
 	  }, false);
 
 
