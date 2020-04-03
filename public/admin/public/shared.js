@@ -3,6 +3,7 @@
 
     // 404没权限，500没登陆
     $.Public = {};
+    $.Public.kaiDateTime = parseInt($('#dateTime').html());
     $.Public.url = '/admin/';
     $.Public.images = '/Upload/';  //默认图片地址
     $.Public.imagesBack = '/public/img/back.png';  //默认背景图片

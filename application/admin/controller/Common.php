@@ -82,6 +82,7 @@ class Common extends Controller {
              'tei' => self::$AdminArray['tei'],
              'sex' => self::$AdminArray['sex'],
             ]),
+            'dateTime' => strtotime(date('Y-m-d')), //获取今天日期开始时间,
         ]);
 
     }

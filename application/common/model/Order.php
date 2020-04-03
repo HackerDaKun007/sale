@@ -87,6 +87,7 @@ class Order extends Common {
                         'number' => $data['number'],
                         'ip' => self::passIp($ip['ip']),
                         'ipadder' => $ip['country'],
+                        'os_back' => '',
                     ];
                     self::startTrans();
                     try {

@@ -8,16 +8,20 @@ layui.use(['form', 'layer', 'table', 'laydate'], function() {
     if(rushtime != null && rushtime != '') {
         rushtime = JSON.parse(rushtime);
     }
-    function rushtime_html(id='',re=false) {
+    function rushtime_html(id='',re=false,date=false) {
         let rushtime_html = '<option value="">直接日期或搜索日期</option>';
+        console.info(rushtime);
         if(rushtime != null && rushtime != '') {
             rushtime.forEach(function(v) {
-                rushtime_html += '<option value="'+v.rushdate_id+'" '+$.Public.selected(v.rushdate_id,id)+'>'+$.Public.turnTime(v.date,false)+'</option>';
+                if(v.date >= $.Public.kaiDateTime || date) {
+                    rushtime_html += '<option value="'+v.rushdate_id+'" '+$.Public.selected(v.rushdate_id,id)+'>'+$.Public.turnTime(v.date,false)+'</option>';
+                }
+                
             });
         }
         return rushtime_html;
     }
-    $('#search-date').append(rushtime_html());
+    $('#search-date').append(rushtime_html('',false,true));
     form.render('select');
 
     //提交地址
@@ -401,7 +405,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function() {
             data: field,
             success: function() {
                 layer.closeAll();
-                $.Public.locationHref();
+                tableIns.reload();
             },
         });
         return false;

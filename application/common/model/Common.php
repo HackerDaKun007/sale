@@ -26,6 +26,14 @@ class Common extends Model {
         self::$path = config('path.');
         $this->autoWriteTimestamp = $this->timeUpdate;
     }
+
+
+    //写入前删除ID操作
+    protected static function init() {
+        self::event('before_write', function($user) {
+            unset($user['id']);
+        });
+    }
 }
 
 ?>

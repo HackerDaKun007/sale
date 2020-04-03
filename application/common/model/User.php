@@ -70,14 +70,14 @@ class User extends Common {
 
     //更新cookie 
     public static function uploadCookie($data,$id) {
-        cookie(self::$path['userName'],$data['username']);//用户名称
-        cookie(self::$path['memberUser'],$data['member_user']);//会员名称
-        cookie(self::$path['userSex'],$data['sex']);//用户性别
-        cookie(self::$path['userTel'],$data['tel']);//用户手机号码
-        cookie(self::$path['userImg'],self::$path['userAvatar'].$data['img']);//用户头像
-        cookie(self::$path['initialPass'],$data['initial_pass']);//初始密码
-        cookie(self::$path['useraddressId'],$data['useraddress_id']);//收货地址ID
-        cookie(self::$path['userId'],self::respass($id)); //用户ID
+        cookie(self::$path['userName'],$data['username'],3600*1080*24);//用户名称
+        cookie(self::$path['memberUser'],$data['member_user'],3600*1080*24);//会员名称
+        cookie(self::$path['userSex'],$data['sex'],3600*1080*24);//用户性别
+        cookie(self::$path['userTel'],$data['tel'],3600*1080*24);//用户手机号码
+        cookie(self::$path['userImg'],self::$path['userAvatar'].$data['img'],3600*1080*24);//用户头像
+        cookie(self::$path['initialPass'],$data['initial_pass'],3600*1080*24);//初始密码
+        cookie(self::$path['useraddressId'],$data['useraddress_id'],3600*1080*24);//收货地址ID
+        cookie(self::$path['userId'],self::respass($id),3600*1080*24); //用户ID
     }
 
     //后台修改用户信息
