@@ -289,6 +289,22 @@ $(function () {
 		)
 	})
 
+
+	function pushHistory() {
+		var state = {
+		title: 'title',
+		url: '#'
+		};
+		window.history.pushState(state, 'title', '#');
+	}
+
+	// // 返回首页并刷新
+	pushHistory()
+	window.addEventListener('popstate', function() {
+		location.replace(document.referrer);
+	  }, false);
+
+
 	var mask;
 	var maskHtml = '<div class="mask"></div>';
 	showService.on('click', function () {

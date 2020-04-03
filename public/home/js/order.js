@@ -57,7 +57,7 @@ if (addressData) {
                             <span class="name">${e.username}</span>
                             <span class="telnum">${e.tel}</span>
                         </div>
-                        <div class="bottom">${e.area + e.adder}</div>
+                xiad        <div class="bottom">${e.area + e.adder}</div>
                         </div>
                         <i class="iconfont icon-right"></i>
                     </div>`;
@@ -232,7 +232,7 @@ window.addEventListener("popstate", function (e) {
             info: '确认取消这条订单吗？',
             success: function () {
                 window.history.replaceState(state, "title", "#");
-                window.history.go(-1);
+                window.location.replace(document.referrer);
                 return false;
             },
             error: function () {

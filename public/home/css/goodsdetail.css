@@ -24,7 +24,9 @@
     text-align: center;
     padding: 10px;
 }
-.header .header-bar button.icon-right {
+.header .header-bar a.icon-right {
+    color: #000;
+    display: inline-block;
     transform: rotate(180deg);
     font-size: 1.5rem;
 }
