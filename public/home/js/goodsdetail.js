@@ -4,9 +4,7 @@ $(function () {
 	var comment = getJson($('#comment'));
 	var favorite = getJson($('#favorite'));
 	var service = getJson($('#service'));
-	
 	var nowTime = serverTimeEnd; //服务器现在时间
-
 	var swiperWrapper = $('.swiper-wrapper');
 	var promotion = $('.promotion');
 	var goodsDesc = $('.goods-desc');
@@ -69,37 +67,40 @@ $(function () {
 				`;
 			goodsImagesHtml += `<img src='/home/temp-images/default.jpg' data-src=${imageUrl + e.img}>`
 		});
-
+		function promotionH(nowTime) {
+			let availableH = '';
 		if (goods.start_time > nowTime && goods.end_time > nowTime) {
 			timeHtml = `<span>即将开抢</span>`;
-			paymentHtml = `
+			paymentHtml = `<input name='add'  type='hidden' id='code' value='1' />
 					<div class="payment-c disabled">
 						<span class="price">￥${goods.sty[0].price}</span>
 						${timeHtml}
 					</div>
 					`;
+			availableH = `库存${goods.sty[0].bak_available}件`;
 		} else if (goods.end_time < nowTime && goods.start_time < nowTime) {
 			timeHtml = `<span>已结束</span>`;
-			paymentHtml = `
+			paymentHtml = `<input name='add'  type='hidden' id='code' value='2' />
 					<div class="payment-c disabled">
 						<span class="price">￥${goods.sty[0].price}</span>
 						${timeHtml}
 					</div>
 					`;
+			availableH = `活动已结束`;
 		} else if (goods.start_time < nowTime && goods.end_time > nowTime) {
 			timeHtml = `
 					<span class="hours">00</span> :
 					<span class="minutes">00</span> :
 					<span class="seconds">00</span>
 					`
-			paymentHtml = `
+			paymentHtml = `<input name='add' type='hidden' id='code' value='3' />
 					<div class="payment-c" id="pop-select">
 						<span class="price">￥${goods.sty[0].price}</span>
 						<span class="text"><i class="iconfont icon-clock_fill"></i>立即秒杀</span>
 					</div>
 					`
+			availableH = `仅剩${goods.sty[0].available}件`;
 		}
-
 		promotionHtml = `
 				<div class="price-detail">
 					<div class="top">
@@ -107,7 +108,7 @@ $(function () {
 						<p class="old-price">￥${goods.sty[0].regular_price}</p>
 					</div>
 					<div class="bottom">
-						仅剩${goods.sty[0].available}件
+						${availableH}
 					</div>
 				</div>
 				<div class="promotion-name">
@@ -117,7 +118,10 @@ $(function () {
 					</div>
 				</div>
 				`;
-
+			promotion.html(promotionHtml);
+			payment.html(paymentHtml);
+		}
+		promotionH(nowTime);
 		goodsDescHtml = `
 				<p class="desc"><i class="iconfont icon-huo" style="color: orangered"></i>${goods.username} </p>
 				 <div class="tips">
@@ -147,11 +151,11 @@ $(function () {
 	
 		goodsValueList.append(goodsValueListHtml);
 		swiperWrapper.append(swiperWrapperHtml);
-		promotion.append(promotionHtml);
+		
 		goodsDesc.append(goodsDescHtml);
 		goodsText.append(goodsTextHtml);
 		goodsImages.append(goodsImagesHtml);
-		payment.append(paymentHtml);
+		
 		selectGoodsValue.append(selectGoodsValueHtml);
 		selectGoodsInfo.html(selectGoodsInfoHtml);
 	}
@@ -345,32 +349,37 @@ $(function () {
 	});
 
 	// 弹出选择栏
-	var popSelectBtn = $('#pop-select');
+	
 
 	var selectEl = $('.select-goodsvalue');
-	var selectCloseBtn = $('#select-close');
+	
+	function pop_select() {
+		var selectCloseBtn = $('#select-close');
+		var popSelectBtn = $('#pop-select');
+		popSelectBtn.bind('click', function () {
+			$('body').css('overflow', 'hidden');
+			selectEl.addClass('active');
 
-	popSelectBtn.on('click', function () {
-		$('body').css('overflow', 'hidden');
-		selectEl.addClass('active');
+			selectEl.stop().animate({
+					bottom: '0'
+				},
+				200,
+				function () {
+					$('body').append(maskHtml)
+					mask = $('.mask');
+					mask.on('click', function () {
+						hideService(selectEl, '-80%')
+					});
+				}
+			)
+		})
+		selectCloseBtn.bind('click', function () {
+			hideService(selectEl, '-80%')
+		})
+	}
+	
+	pop_select();
 
-		selectEl.stop().animate({
-				bottom: '0'
-			},
-			200,
-			function () {
-				$('body').append(maskHtml)
-				mask = $('.mask');
-				mask.on('click', function () {
-					hideService(selectEl, '-80%')
-				});
-			}
-		)
-	})
-
-	selectCloseBtn.on('click', function () {
-		hideService(selectEl, '-80%')
-	})
 
 	// 增加和减少购买数量
 	var decreaseBtn = $('#decrease');
@@ -462,9 +471,23 @@ $(function () {
 	var timerEl = $('.timer');
 	var num = 0;
 	countDown(num, nowTime, goodsEndTime, timerEl);
-
+	var nowTimeNum = nowTime;
+	var code = $('#code');
 	setInterval(function () {
 		num++;
+		nowTimeNum += 1;
+		// console.info(nowTimeNum);
+	if(nowTimeNum >= goods.start_time && code.val() == 1) {
+		code = $('#code');
+		promotionH(nowTimeNum);
+		timerEl = $('.timer');
+		pop_select();
+	}else if(nowTimeNum >= goods.end_time && code.val() == 3) {
+		code = $('#code');
+		promotionH(nowTimeNum);
+		timerEl = $('.timer');
+		pop_select();
+	}
 		countDown(num, nowTime, goodsEndTime, timerEl);
 	}, 1000);
 

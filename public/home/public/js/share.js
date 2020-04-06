@@ -89,9 +89,7 @@ function countDown(n, nowtime, endtime, el) {
   let hours = el.eq(0).find('.hours');
   let minutes = el.eq(0).find('.minutes');
   let seconds = el.eq(0).find('.seconds');
-
   let leftTime = endtime - (nowtime + n);
-
   let h = parseInt((leftTime / (60 * 60)) % 24);
   let m = parseInt((leftTime / 60) % 60);
   let s = parseInt(leftTime % 60);

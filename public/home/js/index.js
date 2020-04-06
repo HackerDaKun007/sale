@@ -19,6 +19,12 @@ $(function () {
 				if (e.start_time < endTime && e.end_time > nowTime) {
 					title = '距结束还剩'
 					goodsEnd.push(e.end_time)
+					let TimeHtml_ = '';
+					if(e.start_time <= nowTime) {
+						TimeHtml_ = `<div class="tips">已抢${e.num_back - e.num}件</div>`;
+					}else {
+						TimeHtml_ = '<div class="tips">已抢0件</div>';
+					}
 					scrollListHtml += `
 					<a class="item" href="/home/goods/goodsdetail.html?id=${e.goods_id}&date_id=${
             e.rushdate_id
@@ -36,7 +42,7 @@ $(function () {
 							<div class="goods-detail">
 								<div class="price">￥<span>${e.price_val}</span></div>
 								<div class="name">${e.title}</div>
-								<div class="tips">已抢${e.num_back - e.num}件</div>
+								${TimeHtml_}
 							</div>
 						</div>
 					</a>
@@ -110,9 +116,9 @@ $(function () {
 						e.goods.map(function (i) {
 							let sold = (i.num_back - i.num) / i.num_back;
 							if(sold > 0.1) {
-								soldPercent = Math.round(Math.round(sold) *100);
+								soldPercent = Math.round(sold *100);
 							}else {
-								let ar = sold.toFixed(4) * 100;
+								let ar = sold * 100;
 								soldPercent = ar.toFixed(2);
 							}
 							startListHtml += `
@@ -149,9 +155,9 @@ $(function () {
 							e.goods.map(function (i) {
 								let sold = (i.num_back - i.num) / i.num_back;								
 								if(sold > 0.1) {
-									soldPercent = Math.round(Math.round(sold) *100);
+									soldPercent = Math.round(sold *100);
 								}else {
-									let ar = sold.toFixed(4) * 100;
+									let ar = sold * 100;
 									soldPercent = ar.toFixed(2);
 								}
 								activeSaleHtml += `
@@ -163,10 +169,8 @@ $(function () {
 				  <div class="sale-top">
 					  <div class="name">${i.username}</div>
 					  <div class="sale-progress">
-						  <span class="progress-bar" style="--progressWidth:${
-                soldPercent <= 5 ? 5 : soldPercent
-              }%" data-percent="${soldPercent}%"></span>
-						  <div class="sold">已抢${i.num_back - i.num}件</div>
+						  <span class="progress-bar" style="--progressWidth:0%" data-percent="0%"></span>
+						  <div class="sold">已抢0件</div>
 					  </div>
 				  </div>
 				  <div class="sale-bottom">
@@ -257,9 +261,9 @@ $(function () {
 		goodsArr[num].map(function (i) {
 			let sold = (i.num_back - i.num) / i.num_back;
 			if(sold > 0.1) {
-				soldPercent = Math.round(Math.round(sold) *100);
+				soldPercent = Math.round(sold *100);
 			}else {
-				let ar = sold.toFixed(4) * 100;
+				let ar = sold * 100;
 				soldPercent = ar.toFixed(2);
 			}
 			saleListHtml += `
@@ -271,10 +275,8 @@ $(function () {
               <div class="sale-top">
                   <div class="name">${i.username}</div>
                   <div class="sale-progress">
-                      <span class="progress-bar" style="--progressWidth:${
-                        soldPercent <= 5 ? 5 : soldPercent
-                      }%" data-percent="${soldPercent}%"></span>
-                      <div class="sold">已抢${i.num_back - i.num}件</div>
+                      <span class="progress-bar" style="--progressWidth:0%" data-percent="0%"></span>
+                      <div class="sold">已抢0件</div>
                   </div>
               </div>
               <div class="sale-bottom">
@@ -305,17 +307,57 @@ $(function () {
 		reload(numb)
 		countDown(num, nowTime, activeEnd, topTimer)
 	}, 1000)
-
-	goodsEnd.forEach(function (e, k) {
-		recogoods.forEach(function (sube) {
-			if (sube.end_time == e) {
-				let nTimer = recomTimer.eq(k)
-				countDown(num, nowTime, e, nTimer)
-				setInterval(function () {
-					countDown(num, nowTime, e, nTimer)
-				}, 1000)
-			}
-		})
+	// goodsEnd.forEach(function (e, k) {
+	// 	// if(k == 0) {
+	// 	// 	e = 1586153060;
+	// 	// }
+	// 	recogoods.forEach(function (sube) {
+	// 		// if(k == 0) {
+	// 		// 	sube.end_time = 1586153060;
+	// 		// }
+	// 		if (sube.end_time == e && sube.end_time > serverTimeEnd) {
+	// 			numRecogoods ++;
+	// 			let nTimer = recomTimer.eq(k)
+	// 			console.info(nTimer);
+	// 			console.info(sube.end_time);
+	// 			countDown(num, nowTime, e, nTimer);
+	// 			let nodwTime = nowTime;
+	// 			let ar = setInterval(function () {
+	// 				nodwTime = nodwTime+1;
+	// 				if(nodwTime >=  e) {
+	// 					console.info(k);
+	// 					$('.scroll-list .item').eq(k).remove();
+	// 					clearInterval(ar);
+	// 				}
+	// 				countDown(num, nowTime, e, nTimer)
+	// 			}, 1000)
+	// 		}
+	// 	})
+	// })
+	var numRecogoods = 0;
+	var nowTimeRecogoods = 0;
+	recogoods.forEach(function (sube,k) {
+		if (sube.end_time > serverTimeEnd) {
+			let nTimer = recomTimer.eq(numRecogoods)
+			countDown(num, nowTime, sube.end_time, nTimer);
+			let ar = setInterval(function () {
+				nowTimeRecogoods = nowTime + num;
+				if(nowTimeRecogoods >=  sube.end_time) {
+					$('.scroll-list').find('a.item').each(function() {
+						let $this = $(this);
+						let hours = $this.find('.hours').html();
+						let minutes = $this.find('.minutes').html();
+						let seconds = $this.find('.seconds').html();
+						if(hours == '00' && minutes == '00' && seconds == '00' ) {
+							$this.remove();
+							clearInterval(ar);
+						}
+					});
+				}
+				countDown(num, nowTime, sube.end_time, nTimer)
+			}, 1000)
+			numRecogoods ++;
+		}
 	})
 
 	function reload(num) {
