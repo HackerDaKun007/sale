@@ -4,7 +4,7 @@ $(function () {
 
 	// 插入数据
 	var scrollList = $('.scroll-list');
-	
+
 	function getNewGoods() {
 		let scrollListHtml = ''
 		let goodsEnd = [];
@@ -288,7 +288,7 @@ $(function () {
               </div>
           </div>
       </a> 
-          `
+          `;
 
 			notstartLists.eq(num).html(saleListHtml)
 		})
