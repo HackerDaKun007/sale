@@ -4,7 +4,7 @@ $(function () {
 
 	// 插入数据
 	var scrollList = $('.scroll-list');
-	
+
 	function getNewGoods() {
 		let scrollListHtml = ''
 		let goodsEnd = [];
@@ -18,7 +18,7 @@ $(function () {
 				let title = ''
 				if (e.start_time < endTime && e.end_time > nowTime) {
 					title = '距结束还剩'
-					goodsEnd.push(e.end_time)
+					goodsEnd.push(e.end_time);
 					scrollListHtml += `
 					<a class="item" href="/home/goods/goodsdetail.html?id=${e.goods_id}&date_id=${
             e.rushdate_id
@@ -143,8 +143,6 @@ $(function () {
 						if (k == key + 1) {
 							bool = 'active'
 							e.goods.map(function (i) {
-								let sold = (i.num_back - i.num) / i.num_back;								
-							soldPercent = sold > 0.1 ? Math.floor(sold) *100 : sold.toFixed(4) * 100;//换算成已售百分比
 								activeSaleHtml += `
 				  <a class="list-item" href="/home/goods/goodsdetail.html?id=${
             i.goods_id
@@ -153,12 +151,6 @@ $(function () {
 			  <div class="detail">
 				  <div class="sale-top">
 					  <div class="name">${i.username}</div>
-					  <div class="sale-progress">
-						  <span class="progress-bar" style="--progressWidth:${
-                soldPercent <= 5 ? 5 : soldPercent
-              }%" data-percent="${soldPercent}%"></span>
-						  <div class="sold">已抢${i.num_back - i.num}件</div>
-					  </div>
 				  </div>
 				  <div class="sale-bottom">
 					  <div class="price">
@@ -244,8 +236,6 @@ $(function () {
 			.addClass('active')
 
 		goodsArr[num].map(function (i) {
-			let sold = (i.num_back - i.num) / i.num_back;
-							soldPercent = sold > 0.1 ? Math.floor(sold) *100 : sold.toFixed(4) * 100; //换算成已售百分比
 			saleListHtml += `
           <a class="list-item" href="/home/goods/goodsdetail.html?id=${
             i.goods_id
@@ -254,12 +244,6 @@ $(function () {
           <div class="detail">
               <div class="sale-top">
                   <div class="name">${i.username}</div>
-                  <div class="sale-progress">
-                      <span class="progress-bar" style="--progressWidth:${
-                        soldPercent <= 5 ? 5 : soldPercent
-                      }%" data-percent="${soldPercent}%"></span>
-                      <div class="sold">已抢${i.num_back - i.num}件</div>
-                  </div>
               </div>
               <div class="sale-bottom">
                   <div class="price">
@@ -270,7 +254,7 @@ $(function () {
               </div>
           </div>
       </a> 
-          `
+          `;
 
 			notstartLists.eq(num).html(saleListHtml)
 		})
