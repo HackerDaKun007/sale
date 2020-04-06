@@ -125,7 +125,7 @@ $(function () {
 			  <a class="list-item" href="/home/goods/goodsdetail.html?id=${
           i.goods_id
         }&date_id=${i.rushdate_id}&time_id=${i.rushtime_id}">
-			  <img src='_HOME_/temp-images/default.jpg' data-src=${i.home_img} alt="" />
+			  <img src='${homeImg}/temp-images/default.jpg' data-src=${i.home_img} alt="" />
 			  <div class="detail">
 				  <div class="sale-top">
 					  <div class="name">${i.username}</div>
@@ -164,7 +164,7 @@ $(function () {
 				  <a class="list-item" href="/home/goods/goodsdetail.html?id=${
             i.goods_id
           }&date_id=${i.rushdate_id}&time_id=${i.rushtime_id}">
-				  <img src='/temp-images/default.jpg' data-src=${i.home_img} alt="" />
+				  <img src='${homeImg}/temp-images/default.jpg' data-src=${i.home_img} alt="" />
 			  <div class="detail">
 				  <div class="sale-top">
 					  <div class="name">${i.username}</div>

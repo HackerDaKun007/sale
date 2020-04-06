@@ -1,4 +1,5 @@
 var imageUrl = '/Upload/';
+var homeImg = '/home';
 
 var serverTimeEnd = serverTimeEnd; //服务器时间
 var dateTime = dateTime; //今天日期开始时间
