@@ -46,7 +46,7 @@ class Vx extends  Common {
                 }
                 //删除原先图片
                 if(!empty($find['img'])) {
-                    unlink(self::$path['uploadEnd'].$find);
+                    unlink(self::$path['upload'].'/'.$find['img']);
                 }
                 $msg = $bool?'修改成功':'添加成功';
                 $code = 1;
@@ -87,7 +87,7 @@ class Vx extends  Common {
     //更新缓存
     public static function cacheSelect($bool=false) {
         $data = cache(self::$path['vxUser']);
-        if(!$data && $bool) {
+        if(!$data || $bool) {
             $data = self::where('disable','=',1)->field('username,vx_user,img')->select()->toArray();
             cache(self::$path['vxUser'],$data);
         }

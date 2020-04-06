@@ -15,6 +15,10 @@ class Uv extends Common {
     public function add($data,$bool=false,$time) {
         $ip = self::Ipaddr();
         $path = cache(self::$path['uv']."_$data[date]");
+        // var_dump($path);
+        // exit;
+        // var_dump($data);
+        // exit;
         if(!$bool) { //添加
             $arr = [
                 'ip' => self::passIp($ip['ip']),
@@ -22,17 +26,21 @@ class Uv extends Common {
                 'addtime' => time(),
                 'flowdate_id' => $data['flowdate_id'],
             ];
+            
             if(self::isUpdate(false)->save($arr)) {
                 $arr['uv_id'] = $this->id;
                 if($path) {
-                    $path[count($path)] = $arr;
-                    $num['uv'] = $data['uv']+1;
+                    $data['uv'] = $data['uv']+1;
+                    $num['uv'] = $data['uv'];
                     Model('Flowdate')->isUpdate(true)->save($num,['flowdate_id'=>$data['flowdate_id']]);
+                    $path[count($path)] = $arr;
+                    cache(self::$path['dateFlow']."_$data[date]",$data,$time);
                 }else {
                     $path = [];
                     $path[0] = $arr;
                 }
                 cache(self::$path['uv']."_$data[date]",$path,$time);
+
                 //修改流量日期uv次数
 
             }
@@ -46,6 +54,8 @@ class Uv extends Common {
                     }
                 }
             }
+            // var_dump($path);
+            // exit;
             if(!$bool) {
                 $this->add($data,false,$time);
             }

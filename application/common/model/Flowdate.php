@@ -18,6 +18,10 @@ class Flowdate extends Common {
     public function add($url) {
         $date = strtotime(date('Ymd')); //今天日期
         $dateFlow = cache(self::$path['dateFlow']."_$date");
+        // cache(self::$path['dateFlow']."_$date",null);
+        // cache(self::$path['uv']."_$date",null);
+        // cache(self::$path['pv']."_$date",null);
+        // exit;
         $timedate = time();
         $time = self::$path['time1'];
         self::startTrans();

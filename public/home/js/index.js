@@ -109,8 +109,12 @@ $(function () {
 						activeEnd = e.end_time
 						e.goods.map(function (i) {
 							let sold = (i.num_back - i.num) / i.num_back;
-							soldPercent = sold > 0.1 ? Math.floor(sold) *100 : sold.toFixed(4) * 100; //换算成已售百分比
-							
+							if(sold > 0.1) {
+								soldPercent = Math.round(Math.round(sold) *100);
+							}else {
+								let ar = sold.toFixed(4) * 100;
+								soldPercent = ar.toFixed(2);
+							}
 							startListHtml += `
 			  <a class="list-item" href="/home/goods/goodsdetail.html?id=${
           i.goods_id
@@ -144,7 +148,12 @@ $(function () {
 							bool = 'active'
 							e.goods.map(function (i) {
 								let sold = (i.num_back - i.num) / i.num_back;								
-							soldPercent = sold > 0.1 ? Math.floor(sold) *100 : sold.toFixed(4) * 100;//换算成已售百分比
+								if(sold > 0.1) {
+									soldPercent = Math.round(Math.round(sold) *100);
+								}else {
+									let ar = sold.toFixed(4) * 100;
+									soldPercent = ar.toFixed(2);
+								}
 								activeSaleHtml += `
 				  <a class="list-item" href="/home/goods/goodsdetail.html?id=${
             i.goods_id
@@ -221,6 +230,8 @@ $(function () {
 		totalBtn.show()
 	}
 
+
+
 	// category时间item点击事件
 	var notstartLists = $('.notstart .sale-list')
 	categoryTimesList.find('.item').on('click', function () {
@@ -245,7 +256,12 @@ $(function () {
 
 		goodsArr[num].map(function (i) {
 			let sold = (i.num_back - i.num) / i.num_back;
-							soldPercent = sold > 0.1 ? Math.floor(sold) *100 : sold.toFixed(4) * 100; //换算成已售百分比
+			if(sold > 0.1) {
+				soldPercent = Math.round(Math.round(sold) *100);
+			}else {
+				let ar = sold.toFixed(4) * 100;
+				soldPercent = ar.toFixed(2);
+			}
 			saleListHtml += `
           <a class="list-item" href="/home/goods/goodsdetail.html?id=${
             i.goods_id

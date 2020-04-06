@@ -102,7 +102,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function() {
                         '    <div class="layui-inline">\n' +
                         '      <label class="layui-form-label">抢购数量</label>\n' +
                         '      <div class="layui-input-inline">\n' +
-                        '        <input type="text" readonly name="num" value="" id="num" autocomplete="off" class="layui-input">\n' +
+                        '        <input type="text"  name="num" value="" id="num" autocomplete="off" class="layui-input">\n' +
                         '        <input type="hidden" name="num_back" value="" id="num_back" >\n' +
                         '      </div>\n' +
                         '    </div>\n' +
@@ -380,7 +380,7 @@ layui.use(['form', 'layer', 'table', 'laydate'], function() {
                             '    <div class="layui-inline">\n' +
                             '      <label class="layui-form-label">抢购数量</label>\n' +
                             '      <div class="layui-input-inline">\n' +
-                            '        <input type="text" value="'+data.num+'" readonly name="num" value="" id="num" autocomplete="off" class="layui-input">\n' +
+                            '        <input type="text" value="'+data.num+'" name="num" value="" id="num" autocomplete="off" class="layui-input">\n' +
                             '        <input type="hidden" value="'+data.num_back+'" name="num_back" value="" id="num_back" >\n' +
                             '      </div>\n' +
                             '    </div>\n' +
