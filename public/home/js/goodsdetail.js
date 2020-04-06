@@ -65,7 +65,7 @@ $(function () {
 			swiperWrapperHtml += `
 				<div class="swiper-slide"><img class="swiper-image" src=${imageUrl + e.img}></div>
 				`;
-			goodsImagesHtml += `<img src='/home/temp-images/default.jpg' data-src=${imageUrl + e.img}>`
+			goodsImagesHtml += `<img src='${homeImg}/home/temp-images/default.jpg' data-src=${imageUrl + e.img}>`
 		});
 		function promotionH(nowTime) {
 			let availableH = '';
