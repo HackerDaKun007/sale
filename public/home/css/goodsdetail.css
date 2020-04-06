@@ -1,6 +1,12 @@
 .wrapper {
     display: block;
 }
+
+.goods-detail .goods-text img {
+    width: 100%;
+    display: block;
+}
+
 /* header */
 .header {
     position: fixed;

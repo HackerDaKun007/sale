@@ -61,11 +61,12 @@ class Common extends Controller
         $web = Model('Web')->cacheSelect();
 
         //客服
-        $vx = Model('Vx')->cacheSelect();
+        $vx = Model('Vx')->cacheSelect(false);
         $vxVal = '';
         if(!empty($vx)) {
             $vxVal = $vx[rand(0,count($vx)-1)];
         }
+       
         $this->assign([
             'web' => $web,
             'serverTimeEnd' => self::$serverTimeEnd,
