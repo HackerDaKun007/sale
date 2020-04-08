@@ -110,7 +110,7 @@
 				newArr.forEach(function (e, k) {
 					let bool = '';
 					let tempArr = [];
-					let newGoods = e.goods;
+					let newGoods = JSON.parse(JSON.stringify(e.goods));
 
 					if (newGoods.length > 3) {
 						tempArr = newGoods.splice(0, 3);
