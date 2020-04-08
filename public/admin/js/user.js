@@ -6,7 +6,7 @@
 
         //提交地址
         var public_url = $.Public.url + 'user/';
-
+        form.render('radio');
         var tableIns = table.render({
         elem: '#content'
         ,where:{request:200}

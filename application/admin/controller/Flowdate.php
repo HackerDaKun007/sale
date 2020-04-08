@@ -88,6 +88,10 @@ class Flowdate extends Common {
                     $where[] = ['ip', 'eq', $input['ip']];
                 }if(!empty($input['ipadder'])) {
                     $where[] = ['ipadder', 'like', "%$input[ipadder]%"];
+                }if(!empty($input['url'])) {
+                    $where[] = ['url', 'like', "%$input[url]%"];
+                }if(!empty($input['urladd'])) {
+                    $where[] = ['url', 'like', "%$input[urladd]%"];
                 }
                 $model = Model('Pv');
                 $data = $model->show($input,$where);

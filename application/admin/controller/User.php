@@ -38,6 +38,8 @@ class User extends Common {
                     $where[] = ['member_user', 'like', "%$input[member_user]%"];
                 }if(!empty($input['tel'])) {
                     $where[] = ['tel', 'eq', $input['tel']];
+                }if(!empty($input['effective'])) {
+                    $where[] = ['tel','neq', "0"];
                 }
                 $data = $model->show($input,$where);
                 $array = $data['data']['data'];

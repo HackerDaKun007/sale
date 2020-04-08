@@ -118,6 +118,17 @@
                                 '                    </div>\n' +
                                 '                </div>\n' +
                                 '                <div class="layui-inline">\n' +
+                                '                    <label class="layui-form-label">URL地址</label>\n' +
+                                '                    <div class="layui-input-inline">\n' +
+                                '                        <input type="text" name="url"  placeholder="请输入URL地址" autocomplete="off" class="layui-input">\n' +
+                                '                    </div>\n' +
+                                '                </div>\n' +
+                                '                <div class="layui-inline">\n' +
+                                '                    <label class="layui-form-label">URL地址</label>\n' +
+                                '                    <div class="layui-input-inline">\n<select name="urladd" >  <option value=""></option> <option value="/home/goods/goodsdetail.html">产品地址</option> <option value="/home/order/order.html">订单地址</option></select>' +
+                                '                    </div>\n' +
+                                '                </div>\n' +
+                                '                <div class="layui-inline">\n' +
                                 '                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit="" lay-filter="pv-search">\n' +
                                 '                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>\n' +
                                 '                    </button>\n' +
@@ -137,17 +148,19 @@
                                 '\n'+
                                 '</div>'
                         })
+                        form.render('select');
                         //提交地址
                         var tableIns = table.render({
                             elem: '#pv-content'
+                            ,totalRow: true
                             ,where:{request:200,flowdate_id:data.flowdate_id}
                             , url: public_url + 'pv.html'
                             , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
                             , cols: [[
-                                {field: 'pv_id', width: 100, title: 'ID', sort: true}
+                                {field: 'pv_id', width: 100, title: 'ID', sort: true, fixed: 'left', totalRowText: '合计行'}
                                 , {field: 'ip', width: 140, title: 'ip地址'}
                                 , {field: 'ipadder', width: 220, title: 'ip地区'}
-                                , {field: 'num', width: 100, title: '访问次数'}
+                                , {field: 'num', width: 100, title: '访问次数', totalRow: true}
                                 , {field: 'url', width: '', title: '访问URL'}
                                 , {field: 'addtime', width: 170, title: '日期', toolbar: '#pv-dateId'}
                             ]]
