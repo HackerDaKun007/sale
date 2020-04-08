@@ -190,13 +190,18 @@ var _post = function (load) {
   if (ajax != '') {
     ajax.abort();
   }
+  if(typeof load.loading == 'undefined') {
+    load.loading = true;
+  }
+  if(load.loading) {
+    loading();
+  }
   ajax = $.ajax({
     type: 'post',
     dataType: 'json',
     cache: false,
     beforeSend: function (xhr) {
       xhr.setRequestHeader("key", KeyPassword);
-      loading();
     },
     headers: load.header,
     url: load.url,

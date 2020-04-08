@@ -515,6 +515,7 @@ function popRecom(val) {
 					}
 				}
 				,alert:false
+				,loading:false
 			})
 		}
 	  })
