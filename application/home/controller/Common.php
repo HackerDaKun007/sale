@@ -14,6 +14,7 @@ namespace app\home\controller;
 use think\Controller;
 use think\Request;
 use app\commonConfig\App;
+use think\facade\Cache;
 use think\facade\Config;
 class Common extends Controller
 {
@@ -27,14 +28,15 @@ class Common extends Controller
     protected static $serverTimeEnd;  //获取今天服务器时间
 
     protected static $server404;  //获取今天服务器时间
+    protected $cache;  //获取今天服务器时间
 
     use App;
-    public function __construct(Request $request,Config $config) {
+    public function __construct(Request $request,Config $config, Cache $cache) {
         parent::__construct();
         self::$reques = $request; //获取http，post/get等信息
 
         self::$path = $config::get('path.');
-
+        $this->cache = $cache;
         self::$serverTimeEnd = strtotime(date('Y-m-d H:i:s'));//获取服务器时间
         self::$dateTime = strtotime(date('Y-m-d'));//获取今天日期开始时间
         self::$dateTimeEnd = (self::$dateTime+60*60*24)-1;//获取今天结束时间
@@ -69,6 +71,8 @@ class Common extends Controller
         if(!empty($vx)) {
             $vxVal = $vx[rand(0,count($vx)-1)];
         }
+
+        Model('Homedate')->add($this->cache);
        
         $this->assign([
             'web' => $web,

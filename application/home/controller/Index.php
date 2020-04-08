@@ -22,4 +22,17 @@ class Index extends Common
             'carousel' => Model('Carousel')->cacheSelect(false), //轮播图
         ]);
     }
+
+
+    //记录器
+    public function recorder() {
+        $code = 0;
+        $msg = 'error';
+        if(self::yzPost()) {
+            Model('Homedate')->add($this->cache);
+            $code = 1;
+            $msg = 'success';
+        }
+        echo self::dataJson($code,$msg);
+    }
 }

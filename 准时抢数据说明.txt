@@ -324,3 +324,18 @@ id           uv_id
 IP地址        ip
 IP地区        ipadder
 添加时间       addtime
+
+/** 获取首页点击事件日期 **/
+表名: sa_homedate
+id           homedate_id
+点击的次数     number
+日期          date
+
+/** 获取首页点击事件 **/
+表名: sa_homeclick
+id           homeclick_id
+日期ID        homedate_id
+IP地址        ip
+IP地区        ipadder
+点击的次数     number
+添加时间       addtime
