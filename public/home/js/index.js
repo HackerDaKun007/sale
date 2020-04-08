@@ -115,11 +115,22 @@
 			if (newArr.length > 0) {
 				newArr.forEach(function (e, k) {
 					let bool = '';
+					let tempArr = [];
+					let newGoodsArr = e.goods;
+
+					if (newGoodsArr.length > 3) {
+						tempArr = newGoodsArr.splice(0, 3);
+						newGoodsArr = newGoodsArr.sort(function(a,b) {
+							return a.goods_id - b.goods_id
+						});
+						newGoodsArr = tempArr.concat(newGoodsArr);				
+					}
+
 					if (e.start_time < time && e.end_time > time) {
 						startHtml = `<div class="sale-list"></div>`
 						activeStr = e.start_time
 						activeEnd = e.end_time
-						e.goods.map(function (i) {
+						newGoodsArr.map(function (i) {
 							let sold = (i.num_back - i.num) / i.num_back;
 							if(sold > 0.1) {
 								soldPercent = Math.round(sold *100);
@@ -158,7 +169,7 @@
 					if (e.end_time > time && activeEnd < e.end_time) {
 						if (k == key + 1) {
 							bool = 'active'
-							e.goods.map(function (i) {
+							newGoodsArr.map(function (i) {
 								let sold = (i.num_back - i.num) / i.num_back;								
 								if(sold > 0.1) {
 									soldPercent = Math.round(sold *100);
@@ -321,7 +332,6 @@
 		if (sube.end_time > nowTime) {
 			let nTimer = recomTimerN.eq(numN);
 			if (sube.start_time < nowTime) {
-			console.info(kk);
 				countDown(num, nowTime, sube.end_time, nTimer);
 				let ar = setInterval(function () {
 					let nowTimeRecogoods = nowTime + num;
