@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主机： localhost
--- 生成日期： 2020-04-08 05:12:31
+-- 生成日期： 2020-04-08 11:22:35
 -- 服务器版本： 5.7.26
 -- PHP 版本： 7.3.8
 
@@ -120,7 +120,9 @@ INSERT INTO `sa_adminrecord` (`adminrecord_id`, `admin_id`, `ip`, `ipaddr`, `bro
 (29, 6, '2130706433', '本地局网地址', 'Chrome', 'mac', 1585889634),
 (30, 6, '2130706433', '本地局网地址', 'Chrome', 'mac', 1586094830),
 (31, 6, '2130706433', '本地局网地址', 'Chrome', 'mac', 1586094849),
-(32, 6, '2130706433', '本地局网地址', 'Chrome', 'mac', 1586274171);
+(32, 6, '2130706433', '本地局网地址', 'Chrome', 'mac', 1586274171),
+(33, 6, '2130706433', '本地局网地址', 'Chrome', 'mac', 1586315961),
+(34, 6, '2130706433', '本地局网地址', 'Chrome', 'mac', 1586317816);
 
 -- --------------------------------------------------------
 
@@ -275,7 +277,7 @@ INSERT INTO `sa_flowdate` (`flowdate_id`, `date`, `pv`, `uv`) VALUES
 (13, 1586016000, 44, 1),
 (14, 1586102400, 208, 1),
 (15, 1586188800, 1, 1),
-(16, 1586275200, 12, 1);
+(16, 1586275200, 31, 1);
 
 -- --------------------------------------------------------
 
@@ -365,6 +367,33 @@ INSERT INTO `sa_goodsstyle` (`goodsstyle_id`, `goods_id`, `username`, `price`, `
 (6, 10, '001', '100.00', '1000.00', 2000, 10),
 (7, 11, '001', '100.00', '1000.00', 2000, 10),
 (8, 12, '44', '123.00', '11111.00', 2000, 10);
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `sa_homeclick`
+--
+
+CREATE TABLE `sa_homeclick` (
+  `homeclick_id` int(11) NOT NULL,
+  `homedate_id` int(11) NOT NULL,
+  `ip` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `ipadder` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+  `number` int(11) NOT NULL,
+  `addtime` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `sa_homedate`
+--
+
+CREATE TABLE `sa_homedate` (
+  `homedate_id` int(11) NOT NULL,
+  `number` int(11) NOT NULL,
+  `date` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -538,7 +567,9 @@ INSERT INTO `sa_power` (`power_id`, `username`, `whether`, `grade`, `level`, `co
 (113, '查看详情', 2, 3, 112, 'Flowdate', 'pv', 'Flowdate/pv', 10, 1585583490, 1585583490),
 (114, 'Uv', 1, 2, 111, 'Flowdate', 'uvindex', 'Flowdate/uvindex', 10, 1585583502, 1585583502),
 (115, '查看详情', 2, 3, 114, 'Flowdate', 'uv', 'Flowdate/uv', 10, 1585583523, 1585583523),
-(116, '更新缓存', 2, 2, 95, 'Order', 'uploadselect', 'Order/uploadselect', 10, 1585677751, 1585677751);
+(116, '更新缓存', 2, 2, 95, 'Order', 'uploadselect', 'Order/uploadselect', 10, 1585677751, 1585677751),
+(117, '首页点击pv', 1, 2, 111, 'Homedate', 'index', 'Homedate/index', 10, 1586336652, 1586336652),
+(118, '详情', 2, 3, 117, 'Homedate', 'homeclick', 'Homedate/homeclick', 10, 1586336683, 1586336683);
 
 -- --------------------------------------------------------
 
@@ -689,10 +720,12 @@ INSERT INTO `sa_pv` (`pv_id`, `flowdate_id`, `url`, `ip`, `ipadder`, `num`, `add
 (134, 14, '/home/goods/goodsdetail.html?id=9&date_id=11&time_id=30', '2130706433', '本地局网地址', 37, 1586147088),
 (135, 14, '/home/order/order.html?id=9&date_id=11&time_id=30&goodsstyle_id=1&num=1', '2130706433', '本地局网地址', 1, 1586148768),
 (136, 15, '/', '2130706433', '本地局网地址', 1, 1586274227),
-(137, 16, '/', '2130706433', '本地局网地址', 7, 1586276152),
-(138, 16, '/home/mine/mine.html', '2130706433', '本地局网地址', 3, 1586313590),
-(139, 16, '/home/manage/manage.html', '2130706433', '本地局网地址', 1, 1586313594),
-(140, 16, '/home/mine/aboutus.html', '2130706433', '本地局网地址', 1, 1586313600);
+(137, 16, '/', '2130706433', '本地局网地址', 21, 1586276152),
+(138, 16, '/home/mine/mine.html', '2130706433', '本地局网地址', 5, 1586313590),
+(139, 16, '/home/manage/manage.html', '2130706433', '本地局网地址', 2, 1586313594),
+(140, 16, '/home/mine/aboutus.html', '2130706433', '本地局网地址', 1, 1586313600),
+(141, 16, '/home/mine/mycollect.html', '2130706433', '本地局网地址', 1, 1586318828),
+(142, 16, '/home/mine/myaddress.html', '2130706433', '本地局网地址', 1, 1586318830);
 
 -- --------------------------------------------------------
 
@@ -963,7 +996,7 @@ CREATE TABLE `sa_user` (
 --
 
 INSERT INTO `sa_user` (`user_id`, `username`, `member_user`, `sex`, `tel`, `img`, `create_time`, `update_time`, `password`, `encrypt`, `initial_pass`, `useraddress_id`, `initialyes`, `initialimg`) VALUES
-(2, '准会员_pd39617', '准glx095218eh', 1, '0', '3.png', 1585171378, 1585171378, '623f889eb035149fd005c366dbf2f5e4', 'oCRIgZjs', 'dox+5y', NULL, 2, 2),
+(2, '准会员_pd39617', '准glx095218eh', 1, '13', '3.png', 1585171378, 1585171378, '623f889eb035149fd005c366dbf2f5e4', 'oCRIgZjs', 'dox+5y', NULL, 2, 2),
 (3, '准会员_lj24101', '准gam761839mj', 1, '0', '1.png', 1585196482, 1585196482, '0de79fd7af984d56b2351c23f522cce8', 'bLeZfmAz', '6qiluh5t', NULL, 2, 2),
 (4, '准会员_bd26557', '准ucz095724va', 1, '0', '3.png', 1585196524, 1585196524, '8f28ff687334cad37534c0378bbcda9e', '9pjrQMm2', 'xmzgh8', NULL, 2, 2),
 (7, '准会员_uf61520', '准ptg961574pc', 2, '0', '2.png', 1585473019, 1585473019, 'b980989b34382177948decbcd3a4ad25', '47KmIc0p', '_7au3954', NULL, 2, 2),
@@ -1264,6 +1297,19 @@ ALTER TABLE `sa_goodsstyle`
   ADD PRIMARY KEY (`goodsstyle_id`,`goods_id`);
 
 --
+-- 表的索引 `sa_homeclick`
+--
+ALTER TABLE `sa_homeclick`
+  ADD PRIMARY KEY (`homeclick_id`),
+  ADD KEY `flowdate_id` (`homedate_id`);
+
+--
+-- 表的索引 `sa_homedate`
+--
+ALTER TABLE `sa_homedate`
+  ADD PRIMARY KEY (`homedate_id`);
+
+--
 -- 表的索引 `sa_order`
 --
 ALTER TABLE `sa_order`
@@ -1379,7 +1425,7 @@ ALTER TABLE `sa_admin`
 -- 使用表AUTO_INCREMENT `sa_adminrecord`
 --
 ALTER TABLE `sa_adminrecord`
-  MODIFY `adminrecord_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `adminrecord_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- 使用表AUTO_INCREMENT `sa_aftersale`
@@ -1436,6 +1482,18 @@ ALTER TABLE `sa_goodsstyle`
   MODIFY `goodsstyle_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
+-- 使用表AUTO_INCREMENT `sa_homeclick`
+--
+ALTER TABLE `sa_homeclick`
+  MODIFY `homeclick_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- 使用表AUTO_INCREMENT `sa_homedate`
+--
+ALTER TABLE `sa_homedate`
+  MODIFY `homedate_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- 使用表AUTO_INCREMENT `sa_order`
 --
 ALTER TABLE `sa_order`
@@ -1445,13 +1503,13 @@ ALTER TABLE `sa_order`
 -- 使用表AUTO_INCREMENT `sa_power`
 --
 ALTER TABLE `sa_power`
-  MODIFY `power_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=117;
+  MODIFY `power_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
 
 --
 -- 使用表AUTO_INCREMENT `sa_pv`
 --
 ALTER TABLE `sa_pv`
-  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=141;
+  MODIFY `pv_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=143;
 
 --
 -- 使用表AUTO_INCREMENT `sa_rarameter`

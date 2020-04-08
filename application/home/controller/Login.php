@@ -35,4 +35,6 @@ class Login extends Common
         }
         echo self::dataJson($code,$msg);
     }
+
+    
 }
