@@ -1,5 +1,6 @@
 var imageUrl = '/Upload/';
 var homeImg = '/home';
+var defaultImg = homeImg + '/temp-images/default.jpg';  //懒加载图
 
 var serverTimeEnd = serverTimeEnd; //服务器时间
 var dateTime = dateTime; //今天日期开始时间

@@ -53,10 +53,13 @@ class Common extends Controller
 
         //网络UV/pv信息
         Model('Flowdate')->add($url);
-
+        
+        $controller = self::$reques->controller() .'/'. self::$reques->action(); //获取控制名称, 方法名
+        
         //用户信息
-        self::userInfo();
-
+        if($controller != 'Index/index') {
+            self::userInfo();
+        }
         //获取网站设置信息
         $web = Model('Web')->cacheSelect();
 

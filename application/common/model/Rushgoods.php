@@ -17,7 +17,7 @@ class Rushgoods extends Common {
     protected $timeUpdate = true;
     //添加
     public function editAdd($data,$bool=false) {
-        $allow = ['rushdate_id','rushtime_id','goods_id','price_val','num','num_back','style_id','orprice_val'];
+        $allow = ['rushdate_id','rushtime_id','goods_id','price_val','num','num_back','style_id','orprice_val','price'];
         $id = false;
         $code = 0;
         $msg = $bool?'修改失败':'添加失败';
@@ -33,6 +33,7 @@ class Rushgoods extends Common {
         if(self::where($where)->count()) {
             $msg = '当前日期时间抢购商品已存在';
         }else{
+            $data['price'] = explode('/',$data['price_val'])[0];
             if(self::isUpdate($bool)->allowField($allow)->save($data,$id)) {
                 $code = 1;
                 $msg = $bool?'修改成功':'添加成功';
@@ -48,6 +49,7 @@ class Rushgoods extends Common {
      */
     public static function updateCache($date) {
         $time = strtotime(date('Ymd'));
+        // $time = strtotime('2020-04-08');
         $rushdate = false;
         if($date >= $time) {
             $rushdate = Model('Rushtime')->cacheSelect(false,['date'=>$date]);
@@ -60,7 +62,7 @@ class Rushgoods extends Common {
                         ['a.rushdate_id','eq',$rushdate['rushdate_id']],
                         ['a.rushtime_id','eq',$v['rushtime_id']],
                     ];
-                    $arr = $rushgoods->where($where)->where('b.shelves','=',1)->field('a.rushgoods_id,a.rushtime_id,a.rushdate_id,a.num_back,a.price_val,a.num,b.home_img,b.username,a.orprice_val,a.goods_id,c.start_time,c.end_time,d.date')->join('goods b','b.goods_id=a.goods_id')->alias('a')->join('rushtime c','c.rushtime_id = a.rushtime_id')->join('rushdate d','d.rushdate_id=a.rushdate_id')->select()->each(function($user) {
+                    $arr = $rushgoods->where($where)->where('b.shelves','=',1)->field('a.rushgoods_id,a.rushtime_id,a.rushdate_id,a.num_back,a.price_val,a.num,b.home_img,b.username,a.orprice_val,a.goods_id,c.start_time,c.end_time,d.date')->join('goods b','b.goods_id=a.goods_id')->alias('a')->join('rushtime c','c.rushtime_id = a.rushtime_id')->order('price asc')->join('rushdate d','d.rushdate_id=a.rushdate_id')->select()->each(function($user) {
                         $time = strtotime(date('Ymd'));
                         $price_val = explode('/',$user['price_val']);
                         $num = explode('/',$user['num']);
@@ -128,10 +130,11 @@ class Rushgoods extends Common {
                 }
                 $rushdate['rushtime'] = $wh;
                 Model('Favorite')->cacheUpdate();
-                cache(self::$path['goodsTime']."_$date",$rushdate,$time+62208000);
-            }else {
-                cache(self::$path['goodsTime']."_$date",null);
+                cache(self::$path['goodsTime']."_$date",$rushdate,self::$path['time30']);
             }
+            // else {
+            //     cache(self::$path['goodsTime']."_$date",null);
+            // }
         }
         return $rushdate;
     }

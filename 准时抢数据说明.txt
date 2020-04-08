@@ -170,6 +170,7 @@ ID:        rushgoods_id
 产品ID:     goods_id
 抢购金额:    price_val
 抢购原价:    orprice_val
+金额:       price
 抢购数量:    num
 留底抢购数量: num_back
 款式ID:      style_id

@@ -855,7 +855,7 @@ layui.use(['form', 'layer', 'table', 'upload'], function() {
                 Img = '';
                 if(typeof field.string == 'string') {
                     layer.closeAll();
-                    $.Public.locationHref();
+                    tableIns.reload();
                 }
             },
         });
