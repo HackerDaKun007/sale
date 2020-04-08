@@ -472,7 +472,7 @@ function popRecom(val) {
 	let recomHtml = `
 	<div class="pop-recom">
         <i class="iconfont icon-close" id="recom-close"></i>
-            <img src="ad.png" alt="">
+            <img src="/ad.png" alt="">
     </div>`;
 	let maskHtml = `<div class="mask"></div>`;
 	$('.wrapper').after(maskHtml);
