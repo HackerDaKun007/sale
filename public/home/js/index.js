@@ -492,7 +492,8 @@ function popRecom(val) {
 		$('.pop-recom').addClass('show');
 	}, 150);
 
-	$('#recom-close').bind('click', function () {
+
+	$('#recom-close, .mask').bind('click', function () {
 	  // 移除问询框的HTML
 	  $('.pop-recom').remove();
 	  $('.mask').remove();
