@@ -4,12 +4,12 @@
 
 	// 插入数据
 	var scrollList = $('.scroll-list');
-
+	var newGoodsArr = '';
 	function getNewGoods() {
 		let scrollListHtml = ''
 		let goodsEnd = [];
 		if (recogoods) {
-			let newGoodsArr = JSON.parse(JSON.stringify(recogoods));
+			newGoodsArr = JSON.parse(JSON.stringify(recogoods));
 			newGoodsArr.sort(function (a, b) {
 				return a.end_time - b.end_time;
 			})
@@ -19,23 +19,24 @@
 				if (e.start_time < endTime && e.end_time > nowTime) {
 					// goodsEnd.push(e)
 					let TimeHtml_ = '';
-					let timerClass = '';
+					let inputHtml = '';
+
 					if(e.start_time <= nowTime) {
-						timerClass = 'time-n';
 						title = '距结束还剩';
 						TimeHtml_ = `<div class="tips">已抢${e.num_back - e.num}件</div>`;
 					}else {
-
-						console.log(e);
-						timerClass = 'time-n';
+						inputHtml = `<input type="hidden" class="start_time" value="${e.start_time}" />
+						<input type="hidden" class="end_time" value="${e.end_time}" />
+						<input type="hidden" class="num_back" value="${e.num_back}" /><input type="hidden" class="num" value="${e.num}" />`
 						title = '距活动开抢';
 						TimeHtml_ = '<div class="tips">即将开抢</div>';
 					}
 					scrollListHtml += `
 					<a class="item" href="/home/goods/goodsdetail.html?id=${e.goods_id}&date_id=${
             e.rushdate_id
-          }&time_id=${e.rushtime_id}">
-						<div class="timer ${timerClass}">
+		  }&time_id=${e.rushtime_id}">
+		  				${inputHtml}
+						<div class="timer time-n">
 							<div>${title}</div>
 							<span class="hours">00</span> :
 							<span class="minutes">00</span> :
@@ -85,7 +86,6 @@
 	}
 	let goodsFun = getNewGoods()
 	let goodsEnd = goodsFun.goodsEnd
-	console.log(goodsEnd);
 	
 	// 判断在当前小时内的数据并插入HTML中
 	var categoryTimesList = $('.category .list')
@@ -302,9 +302,7 @@
 
 	var topTimer = $('.top .timer')
 	var recomTimerN = scrollList.eq(0).find('.time-n'); // 活动开始的计时器
-	var recomTimerS = scrollList.eq(0).find('.time-s'); // 即将开始的计时器
-	console.log(recomTimerN, recomTimerS);
-	
+
 	var num = 0
 	var numb = nowTime + num
 	countDown(num, nowTime, activeEnd, topTimer)
@@ -314,44 +312,19 @@
 		numb = nowTime + num
 		reload(numb)
 		countDown(num, nowTime, activeEnd, topTimer)
-	}, 1000)
-	// goodsEnd.forEach(function (e, k) {
-	// 	// if(k == 0) {
-	// 	// 	e = 1586153060;
-	// 	// }
-	// 	recogoods.forEach(function (sube) {
-	// 		// if(k == 0) {
-	// 		// 	sube.end_time = 1586153060;
-	// 		// }
-	// 		if (sube.end_time == e && sube.end_time > serverTimeEnd) {
-	// 			numRecogoods ++;
-	// 			let nTimer = recomTimer.eq(k)
-	// 			console.info(nTimer);
-	// 			console.info(sube.end_time);
-	// 			countDown(num, nowTime, e, nTimer);
-	// 			let nodwTime = nowTime;
-	// 			let ar = setInterval(function () {
-	// 				nodwTime = nodwTime+1;
-	// 				if(nodwTime >=  e) {
-	// 					console.info(k);
-	// 					$('.scroll-list .item').eq(k).remove();
-	// 					clearInterval(ar);
-	// 				}
-	// 				countDown(num, nowTime, e, nTimer)
-	// 			}, 1000)
-	// 		}
-	// 	})
-	// })
+	}, 1000);
+
 	var numN = 0;
 	var numS = 0;
 	var nowTimeRecogoods = 0;
-	recogoods.forEach(function (sube,k) {
+	newGoodsArr.forEach(function (sube,kk) {
 		if (sube.end_time > nowTime) {
 			let nTimer = recomTimerN.eq(numN);
 			if (sube.start_time < nowTime) {
+			console.info(kk);
 				countDown(num, nowTime, sube.end_time, nTimer);
 				let ar = setInterval(function () {
-					nowTimeRecogoods = nowTime + num;
+					let nowTimeRecogoods = nowTime + num;
 					if(nowTimeRecogoods >=  sube.end_time) {
 						$('.scroll-list').find('a.item').each(function() {
 							let $this = $(this);
@@ -368,41 +341,51 @@
 				}, 1000)
 			} else {
 				countDown(num, nowTime, sube.start_time, nTimer);
-
-				let ar = setInterval(function () {
-					nowTimeRecogoods = nowTime + num;
-					if(nowTimeRecogoods >=  sube.start_time) {
+				let arrs = setInterval(function () {
+					let nowTimeRecogoods = nowTime + num;
+					if(nowTimeRecogoods >= sube.start_time) {
 						$('.scroll-list').find('a.item').each(function() {
 							let $this = $(this);
 							let hours = $this.find('.hours').html();
 							let minutes = $this.find('.minutes').html();
 							let seconds = $this.find('.seconds').html();
 							if(hours == '00' && minutes == '00' && seconds == '00' ) {
-								$this.remove();
-								clearInterval(ar);
+								/**
+								 * 执行****
+								 */
+								let end_time = $this.find('.end_time').val() * 1;
+								let num_back = $this.find('.num_back').val() * 1;
+								let goodsNum = $this.find('.num').val()  * 1;
+								$this.find('.timer.time-n div').html('距结束还剩');
+								$this.find('.tips').html(`已抢${num_back - goodsNum}件`);
+								/**
+								 * 执行*******
+								 */
+								let arr = setInterval(function () {
+									let nowTimeRecogoods = nowTime + num;
+									if(nowTimeRecogoods >=  end_time) {
+										$('.scroll-list').find('a.item').each(function() {
+											let $this = $(this);
+											let hours = $this.find('.hours').html();
+											let minutes = $this.find('.minutes').html();
+											let seconds = $this.find('.seconds').html();
+											if(hours == '00' && minutes == '00' && seconds == '00' ) {
+												$this.remove();
+												clearInterval(arr);
+											}
+										});
+									}
+									countDown(num, nowTime, end_time, $this)
+								}, 1000)
+								clearInterval(arrs);
 							}
 						});
 					}
 					countDown(num, nowTime, sube.start_time, nTimer)
 				}, 1000)
 			}
-			
 			numN ++;
 		} 
-		// else if (sube.end_time < endTime && sube.start_time > nowTime) {
-		// 	sube.start_time = 1586332000;
-		// 	sube.end_time = 1586332120;
-		// 	let nTimer = recomTimerS.eq(numS);
-			
-		// 	countDown(num, nowTime, sube.start_time, nTimer);
-		// 	let ar = setInterval(function () {
-		// 		if(numS >=  sube.start_time) {
-					
-		// 		}
-		// 		countDown(num, nowTime, sube.start_time, nTimer)
-		// 	}, 1000)
-		// 	numS ++;
-		// }
 	})
 
 	function reload(num) {
@@ -520,6 +503,7 @@ function popRecom(val) {
 						sessionStorage.setItem('loaded', 'loaded');
 					}
 				}
+				,alert:false
 			})
 		}
 	  })

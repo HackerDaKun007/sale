@@ -207,7 +207,14 @@ var _post = function (load) {
       $('#loading').remove();
       if (typeof msg == 'object') {
         if (msg.code == 1) {
-          alertInfo(msg.msg);
+        
+          if(typeof load.alert == 'undefined') {
+            load.alert = true;
+          }
+          if(load.alert == true) {
+            alertInfo(msg.msg);
+          }
+          
           if (load.success != '' || load.success != null) {
             load.success(msg);
           }
