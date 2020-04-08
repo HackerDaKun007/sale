@@ -21,7 +21,7 @@
   cursor: pointer;
 }
 
-.public-pop-wx {
+.public-pop-wx{
   position: fixed;
   top: 50%;
   left: 50%;
@@ -68,6 +68,34 @@
   width: 100%;
 }
 
+.pop-recom  {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  max-width: 414px;
+  min-width: 320px;
+  z-index: 19;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  border-radius: 8px;
+  height: 350px;
+  opacity: 0;
+  transition: opacity .5s linear;
+}
+.pop-recom.show {
+  opacity: 1;
+}
+.pop-recom .icon-close {
+  text-align: end;
+  color: #fff;
+  font-size: 1.5rem;
+  margin-right: 30px;
+}
+.pop-recom img {
+  height: 100%;
+}
 /* 公共提示 */
 .public-pop-info {
   position: fixed;

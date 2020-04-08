@@ -1,4 +1,4 @@
-$(function () {
+
 	var nowTime = serverTimeEnd //服务器现在时间
 	var endTime = dateTimeEnd // 服务器今天结束时间
 
@@ -11,25 +11,31 @@ $(function () {
 		if (recogoods) {
 			let newGoodsArr = JSON.parse(JSON.stringify(recogoods));
 			newGoodsArr.sort(function (a, b) {
-				return a.end_time - b.end_time
+				return a.end_time - b.end_time;
 			})
-			newGoodsArr.forEach(function (e) {
+			newGoodsArr.forEach(function (e,k) {
 				let dayInfo = 0
 				let title = ''
 				if (e.start_time < endTime && e.end_time > nowTime) {
-					title = '距结束还剩'
-					goodsEnd.push(e.end_time)
+					// goodsEnd.push(e)
 					let TimeHtml_ = '';
+					let timerClass = '';
 					if(e.start_time <= nowTime) {
+						timerClass = 'time-n';
+						title = '距结束还剩';
 						TimeHtml_ = `<div class="tips">已抢${e.num_back - e.num}件</div>`;
 					}else {
-						TimeHtml_ = '<div class="tips">已抢0件</div>';
+
+						console.log(e);
+						timerClass = 'time-n';
+						title = '距活动开抢';
+						TimeHtml_ = '<div class="tips">即将开抢</div>';
 					}
 					scrollListHtml += `
 					<a class="item" href="/home/goods/goodsdetail.html?id=${e.goods_id}&date_id=${
             e.rushdate_id
           }&time_id=${e.rushtime_id}">
-						<div class="timer timer-n">
+						<div class="timer ${timerClass}">
 							<div>${title}</div>
 							<span class="hours">00</span> :
 							<span class="minutes">00</span> :
@@ -49,8 +55,7 @@ $(function () {
 					`
 				} else if (e.end_time > nowTime && e.start_time > endTime) {
 					title = '距活动开始还有'
-					dayInfo =
-						new Date(e.start_time * 1000).getDate() - new Date().getDate()
+					dayInfo = new Date(e.start_time * 1000).getDate() - new Date().getDate();
 
 					scrollListHtml += `
 					<a class="item" href="/home/goods/goodsdetail.html?id=${e.goods_id}&date_id=${e.rushdate_id}&time_id=${e.rushtime_id}">
@@ -80,7 +85,8 @@ $(function () {
 	}
 	let goodsFun = getNewGoods()
 	let goodsEnd = goodsFun.goodsEnd
-
+	console.log(goodsEnd);
+	
 	// 判断在当前小时内的数据并插入HTML中
 	var categoryTimesList = $('.category .list')
 	var notstart = $('.sale.notstart')
@@ -295,8 +301,10 @@ $(function () {
 	})
 
 	var topTimer = $('.top .timer')
-	var recomTimer = scrollList.eq(0).find('.timer-n')
-
+	var recomTimerN = scrollList.eq(0).find('.time-n'); // 活动开始的计时器
+	var recomTimerS = scrollList.eq(0).find('.time-s'); // 即将开始的计时器
+	console.log(recomTimerN, recomTimerS);
+	
 	var num = 0
 	var numb = nowTime + num
 	countDown(num, nowTime, activeEnd, topTimer)
@@ -334,30 +342,67 @@ $(function () {
 	// 		}
 	// 	})
 	// })
-	var numRecogoods = 0;
+	var numN = 0;
+	var numS = 0;
 	var nowTimeRecogoods = 0;
 	recogoods.forEach(function (sube,k) {
-		if (sube.end_time > serverTimeEnd) {
-			let nTimer = recomTimer.eq(numRecogoods)
-			countDown(num, nowTime, sube.end_time, nTimer);
-			let ar = setInterval(function () {
-				nowTimeRecogoods = nowTime + num;
-				if(nowTimeRecogoods >=  sube.end_time) {
-					$('.scroll-list').find('a.item').each(function() {
-						let $this = $(this);
-						let hours = $this.find('.hours').html();
-						let minutes = $this.find('.minutes').html();
-						let seconds = $this.find('.seconds').html();
-						if(hours == '00' && minutes == '00' && seconds == '00' ) {
-							$this.remove();
-							clearInterval(ar);
-						}
-					});
-				}
-				countDown(num, nowTime, sube.end_time, nTimer)
-			}, 1000)
-			numRecogoods ++;
-		}
+		if (sube.end_time > nowTime) {
+			let nTimer = recomTimerN.eq(numN);
+			if (sube.start_time < nowTime) {
+				countDown(num, nowTime, sube.end_time, nTimer);
+				let ar = setInterval(function () {
+					nowTimeRecogoods = nowTime + num;
+					if(nowTimeRecogoods >=  sube.end_time) {
+						$('.scroll-list').find('a.item').each(function() {
+							let $this = $(this);
+							let hours = $this.find('.hours').html();
+							let minutes = $this.find('.minutes').html();
+							let seconds = $this.find('.seconds').html();
+							if(hours == '00' && minutes == '00' && seconds == '00' ) {
+								$this.remove();
+								clearInterval(ar);
+							}
+						});
+					}
+					countDown(num, nowTime, sube.end_time, nTimer)
+				}, 1000)
+			} else {
+				countDown(num, nowTime, sube.start_time, nTimer);
+
+				let ar = setInterval(function () {
+					nowTimeRecogoods = nowTime + num;
+					if(nowTimeRecogoods >=  sube.start_time) {
+						$('.scroll-list').find('a.item').each(function() {
+							let $this = $(this);
+							let hours = $this.find('.hours').html();
+							let minutes = $this.find('.minutes').html();
+							let seconds = $this.find('.seconds').html();
+							if(hours == '00' && minutes == '00' && seconds == '00' ) {
+								$this.remove();
+								clearInterval(ar);
+							}
+						});
+					}
+					countDown(num, nowTime, sube.start_time, nTimer)
+				}, 1000)
+			}
+			
+			numN ++;
+		} 
+		// else if (sube.end_time < endTime && sube.start_time > nowTime) {
+		// 	sube.start_time = 1586332000;
+		// 	sube.end_time = 1586332120;
+		// 	let nTimer = recomTimerS.eq(numS);
+			
+		// 	countDown(num, nowTime, sube.start_time, nTimer);
+		// 	let ar = setInterval(function () {
+		// 		if(numS >=  sube.start_time) {
+					
+		// 		}
+		// 		countDown(num, nowTime, sube.start_time, nTimer)
+		// 	}, 1000)
+		// 	numS ++;
+		// }
 	})
 
 	function reload(num) {
@@ -376,11 +421,11 @@ $(function () {
 		}
 	}
 
-	// 初始化变量
+
 	var navItem = $('.nav-item')
 	var category = $('.category')
 	var saleList = $('.sale')
-	//
+
 	navItem.on('click', function () {
 		let $this = $(this)
 		navItem.removeClass('active')
@@ -434,5 +479,48 @@ $(function () {
 				behavior: 'smooth'
 			})
 		}
+	});
+
+
+
+
+// 首次访问时弹出并发送请求
+function popRecom(val) {
+	let recomHtml = `
+	<div class="pop-recom">
+        <i class="iconfont icon-close" id="recom-close"></i>
+            <img src="ad.png" alt="">
+    </div>`;
+	let maskHtml = `<div class="mask"></div>`;
+	$('.wrapper').after(maskHtml);
+	$('.wrapper').after(recomHtml);
+
+	setTimeout(function() {
+		$('.pop-recom').addClass('show');
+	}, 150);
+
+	$('#recom-close').bind('click', function () {
+	  // 移除问询框的HTML
+	  $('.pop-recom').remove();
+	  $('.mask').remove();
+  
+	  // 进行下一步操作
+	  val.success();
 	})
-})
+  };
+
+  let loaded = sessionStorage.getItem('loaded');
+  if (loaded == null || typeof loaded === 'undefined') {
+	popRecom({
+		success: function() {
+			_post({
+				url: '/home/index/recorder.html',
+				success: function(msg){
+					if (msg.code == 1) {
+						sessionStorage.setItem('loaded', 'loaded');
+					}
+				}
+			})
+		}
+	  })
+  }

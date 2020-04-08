@@ -179,10 +179,6 @@ function loading(e) {
   let loadingHtml = '<div id="loading"><div></div><p>加载中...</p></div>';
   $('.wrapper').after(loadingHtml);
 
-  // timer = setTimeout(function () {
-  //   $('#loading').remove();
-  //   clearTimeout(timer);
-  // }, 10000);
 }
 
 
