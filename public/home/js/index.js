@@ -4,10 +4,9 @@
 
 	// 插入数据
 	var scrollList = $('.scroll-list');
-	var newGoodsArr = '';
+	var newGoodsArr = [];
 	function getNewGoods() {
 		let scrollListHtml = ''
-		let goodsEnd = [];
 		if (recogoods) {
 			newGoodsArr = JSON.parse(JSON.stringify(recogoods));
 			newGoodsArr.sort(function (a, b) {
@@ -17,7 +16,6 @@
 				let dayInfo = 0
 				let title = ''
 				if (e.start_time < endTime && e.end_time > nowTime) {
-					// goodsEnd.push(e)
 					let TimeHtml_ = '';
 					let inputHtml = '';
 
@@ -80,12 +78,8 @@
 			})
 			scrollList.append(scrollListHtml)
 		}
-		return {
-			goodsEnd
-		}
 	}
-	let goodsFun = getNewGoods()
-	let goodsEnd = goodsFun.goodsEnd
+	getNewGoods();
 	
 	// 判断在当前小时内的数据并插入HTML中
 	var categoryTimesList = $('.category .list')
@@ -116,21 +110,21 @@
 				newArr.forEach(function (e, k) {
 					let bool = '';
 					let tempArr = [];
-					let newGoodsArr = e.goods;
+					let newGoods = e.goods;
 
-					if (newGoodsArr.length > 3) {
-						tempArr = newGoodsArr.splice(0, 3);
-						newGoodsArr = newGoodsArr.sort(function(a,b) {
+					if (newGoods.length > 3) {
+						tempArr = newGoods.splice(0, 3);
+						newGoods = newGoods.sort(function(a,b) {
 							return a.goods_id - b.goods_id
 						});
-						newGoodsArr = tempArr.concat(newGoodsArr);				
+						newGoods = tempArr.concat(newGoods);				
 					}
 
 					if (e.start_time < time && e.end_time > time) {
 						startHtml = `<div class="sale-list"></div>`
 						activeStr = e.start_time
 						activeEnd = e.end_time
-						newGoodsArr.map(function (i) {
+						newGoods.map(function (i) {
 							let sold = (i.num_back - i.num) / i.num_back;
 							if(sold > 0.1) {
 								soldPercent = Math.round(sold *100);
@@ -169,7 +163,7 @@
 					if (e.end_time > time && activeEnd < e.end_time) {
 						if (k == key + 1) {
 							bool = 'active'
-							newGoodsArr.map(function (i) {
+							newGoods.map(function (i) {
 								let sold = (i.num_back - i.num) / i.num_back;								
 								if(sold > 0.1) {
 									soldPercent = Math.round(sold *100);
@@ -204,7 +198,7 @@
 						}
 						categoryTimeHtml += `<li class="item ${bool}">${e.username}</li>`
 						notstartHtml += `<div class="sale-list ${bool}"></div>`
-						goodsArr.push(e.goods)
+						goodsArr.push(newGoods)
 					}
 				})
 
